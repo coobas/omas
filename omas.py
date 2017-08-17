@@ -248,6 +248,7 @@ def create_json_structure(imas_version, data_structures=None):
         open(imas_json_dir+os.sep+imas_version+os.sep+section+'.json','w').write(json_string)
 
 class omas(Dataset):
+
     def __init__(self, imas_version=None, *args,**kw):
         Dataset.__init__(self)
 
@@ -256,7 +257,9 @@ class omas(Dataset):
 
         self.attrs['imas_version']=imas_version
 
-        self.attrs['structure']={}
+        self._initialized=False
+        self._structure={}
+        self._initialized=True
 
     def consistency_check(self, key, value):
         if key=='time':
@@ -265,12 +268,13 @@ class omas(Dataset):
         data_structure=key.split(separator)[0]
 
         #load the data_structure information if not available
-        if data_structure not in self.attrs['structure']:
+        if data_structure not in self._structure:
             structure=json.loads(open(imas_json_dir+os.sep+self.attrs['imas_version']+os.sep+data_structure+'.json','r').read())
-            self.attrs['structure'][data_structure]=structure
+            self._structure[data_structure]=structure
+            self.attrs['structure_'+data_structure]=repr(self._structure[data_structure])
 
         #consistency checks
-        structure=self.attrs['structure'][data_structure]
+        structure=self._structure[data_structure]
 
         if key not in structure:
             if len(value.dims)==1 and value.dims[0]==key:
@@ -295,7 +299,7 @@ class omas(Dataset):
         if key!='time':
             data_structure=key.split(separator)[0]
 
-            structure=self.attrs['structure'][data_structure]
+            structure=self._structure[data_structure]
 
             if key in structure:
                 if not (len(value.dims)==1 and value.dims[0]==key):
@@ -337,8 +341,8 @@ if __name__ == '__main__':
         ods['time']=DataArray(numpy.atleast_1d(1000),
                               dims=['time'])
 
-        ods['equilibrium/time_slice/global_quantities/ip']=DataArray(numpy.atleast_1d(1E6),
+        ods['equilibrium.time_slice.global_quantities.ip']=DataArray(numpy.atleast_1d(1E6),
                                                              dims=['time'])
 
-        print(ods['equilibrium/time_slice/global_quantities/ip'].attrs['Description'])
+        print(ods['equilibrium.time_slice.global_quantities.ip'].attrs['Description'])
         print(ods)
