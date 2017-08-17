@@ -89,13 +89,13 @@ def create_json_structure(imas_version, data_structures=None):
             tbl=data['Description'][k]
             sections[tbl]=k
     sections[None]=len(data)
-    datas=OrderedDict()
+    datas={}
     for k,(start,stop) in enumerate(zip(sections.values()[:-1],sections.values()[1:])):
         datas[sections.keys()[k]]=data[start+2:stop].reset_index()
 
     #data structures
     if data_structures is None:
-        data_structures=datas.keys()
+        data_structures=sorted(datas.keys())
 
     #loop over the data structures
     structures={}
@@ -105,7 +105,7 @@ def create_json_structure(imas_version, data_structures=None):
         structure=structures[section]={}
 
         #squash rows with nans
-        entries=OrderedDict()
+        entries={}
         cols=[str(col) for col in data if not col.startswith('Unnamed') and col!='index']
         for k in range(len(data[cols[0]])):
             if isinstance(data['Full path name'][k],basestring) and not data['Full path name'][k].startswith('Lifecycle'):
@@ -116,7 +116,7 @@ def create_json_structure(imas_version, data_structures=None):
                     entry[col].append( str( data[col][k].encode('utf-8').decode('ascii',errors='ignore') ) )
 
         #remove obsolescent entries and content of each cell
-        for k in entries.keys():
+        for k in sorted(entries.keys()):
             if k not in entries.keys():
                 continue
 
@@ -149,7 +149,7 @@ def create_json_structure(imas_version, data_structures=None):
 
         #convert to flat dictionary
         for k in entries:
-            structure[entries[k]['Full path name']]=OrderedDict()
+            structure[entries[k]['Full path name']]={}
             for col in cols:
                 if col!='Full path name':
                     structure[entries[k]['Full path name']][col]=entries[k][col]
@@ -176,7 +176,7 @@ def create_json_structure(imas_version, data_structures=None):
             if 'struct_array' in structure[key]['Data Type']:
                 for k,c in enumerate(structure[key]['Coordinates']):
                     struct_array.append(key)
-                    if not c.startswith('1...'):
+                    if not c.startswith('1...'): #add a dimension to this coordinate
                         structure[c]['Coordinates'].append('1...N')
             else:
                 for k in struct_array[::-1]:
