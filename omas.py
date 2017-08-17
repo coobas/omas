@@ -172,9 +172,9 @@ def create_json_structure(imas_version, data_structures=None):
                 if k not in key:
                     struct_array.pop()
             if 'struct_array' in structure[key]['Data Type']:
-                for c in structure[key]['Coordinates']:
+                for k,c in enumerate(structure[key]['Coordinates']):
+                    struct_array.append(key)
                     if not c.startswith('1...'):
-                        struct_array.append(key)
                         structure[c]['Coordinates'].append('1...N')
             else:
                 for k in struct_array[::-1]:
@@ -217,7 +217,10 @@ def create_json_structure(imas_version, data_structures=None):
 
         #prepend structure name to all entries
         for key in structure.keys():
-            structure[key]['Coordinates']=[section+'/'+c for c in structure[key]['Coordinates']]
+            for k,c in enumerate(structure[key]['Coordinates']):
+                if c.startswith('1...'):
+                    continue
+                structure[key]['Coordinates'][k]=section+'/'+c
             structure[section+'/'+key]=structure[key]
             del structure[key]
 
