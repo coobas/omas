@@ -1,15 +1,17 @@
-OMAS (Ordered Multidimensional Array Structure)
+**OMAS** (**O**rdered **M**ultidimensional **A**rray **S**tructure)
+===================================================================
 
-OMAS recast IMAS data structure as N-D labeled arrays and datasets
+OMAS casts IMAS data structure as N-D labeled arrays and datasets:
 * OMAS data can always be mapped to IMAS
 * IMAS data can be mapped to OMAS for many cases of general interest, but not always
 * OMAS python class is based on XARRAY library
 * natively represented as a NetCDF file
- - NetCDF is a computational standard compatible with HPC I/O
- - NetCDF supports dynamic loading and out-of-core parallel calculations
- - it's a file (enables share, remote io)
- - minimal dependencies (NetCDF library) allow use of OMAS anywhere
- - any code/language that can read/write NetCDF can read/write OMAS data
+  - NetCDF is a computational standard compatible with HPC I/O
+  - NetCDF supports dynamic loading and out-of-core parallel calculations
+  - it's a file (enables share, remote io)
+  - minimal dependencies (NetCDF library) allow use of OMAS anywhere
+  - any code/language that can read/write NetCDF can read/write OMAS data
+  - possible to use object-store systems
 * can easily write plugins for storage on different systems (MDS+, IMAS, ...)
 * uniform time allows ODS concatenation, slicing, interpolation
 * prepend data-structure name allows mix and match of ODS
