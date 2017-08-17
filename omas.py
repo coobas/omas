@@ -1,6 +1,6 @@
-__all__=['omas']
+__all__=['omas', 'save_omas_nc', 'load_omas_nc']
 
-from xarray import Dataset, DataArray
+import xarray
 import os
 import sys
 import glob
@@ -9,9 +9,9 @@ import json
 imas_json_dir=str(os.path.abspath(os.path.dirname(unicode(__file__, sys.getfilesystemencoding()))))+'/imas_json/'
 
 fix={}
-fix['ic/surface_current/n_pol']='ic/surface_current/n_tor'
-fix['waveform/value/time']='waveform/time'
-fix['unit/beamlets_group/beamlets/positions/R']='unit/beamlets_group/beamlets/positions/r'
+fix['ic.surface_current.n_pol']='ic.surface_current.n_tor'
+fix['waveform.value.time']='waveform.time'
+fix['unit.beamlets_group.beamlets.positions.R']='unit.beamlets_group.beamlets.positions.r'
 
 separator='.'
 
@@ -247,14 +247,13 @@ def create_json_structure(imas_version, data_structures=None):
         json_string=json.dumps(structure, indent=1, separators=(',',': '))
         open(imas_json_dir+os.sep+imas_version+os.sep+section+'.json','w').write(json_string)
 
-class omas(Dataset):
+class omas(xarray.Dataset):
 
     def __init__(self, imas_version=None, *args,**kw):
-        Dataset.__init__(self)
+        xarray.Dataset.__init__(self)
 
         if imas_version is None:
             imas_version=os.path.split(sorted(glob.glob(imas_json_dir+os.sep+'*'))[-1])[-1]
-
         self.attrs['imas_version']=imas_version
 
         self._initialized=False
@@ -304,11 +303,24 @@ class omas(Dataset):
             if key in structure:
                 if not (len(value.dims)==1 and value.dims[0]==key):
                     coords_dict={c:self[c] for c in value.dims}
-                    value=DataArray(value.values,dims=value.dims,coords=coords_dict)
+                    value=xarray.DataArray(value.values,dims=value.dims,coords=coords_dict)
                 value.attrs['Description']='\n'+structure[key]['Description']
 
-        tmp=Dataset.__setitem__(self, key, value)
+        tmp=xarray.Dataset.__setitem__(self, key, value)
         return tmp
+
+def save_omas_nc(ods, path, *args, **kw):
+    ods.to_netcdf(path=path, *args, **kw)
+
+def load_omas_nc(filename_or_obj, *args, **kw):
+    data = xarray.open_dataset(filename_or_obj,*args,**kw)
+    data.__class__=omas
+    data._initialized=False
+    data._structure={}
+    data._initialized=True
+    for item in [item for item in data.attrs if item.startswith('structure_')]:
+        data._structure[item]=eval(data.attrs[item])
+    return data
 
 #------------------------------
 if __name__ == '__main__':
@@ -338,11 +350,16 @@ if __name__ == '__main__':
 
     elif stage==2:
         ods=omas()
-        ods['time']=DataArray(numpy.atleast_1d(1000),
+        ods['time']=xarray.DataArray(numpy.atleast_1d(1000),
                               dims=['time'])
 
-        ods['equilibrium.time_slice.global_quantities.ip']=DataArray(numpy.atleast_1d(1E6),
+        ods['equilibrium.time_slice.global_quantities.ip']=xarray.DataArray(numpy.atleast_1d(1E6),
                                                              dims=['time'])
 
         print(ods['equilibrium.time_slice.global_quantities.ip'].attrs['Description'])
         print(ods)
+
+        save_omas_nc(ods,'test.nc')
+
+        ods1=load_omas_nc('test.nc')
+        print(ods1)

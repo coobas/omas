@@ -6,3 +6,4 @@ __pycache__/
 
 imas_json/*/clean.html
 imas_json/*/*.json
+test.nc
