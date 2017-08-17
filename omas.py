@@ -13,6 +13,8 @@ fix['ic/surface_current/n_pol']='ic/surface_current/n_tor'
 fix['waveform/value/time']='waveform/time'
 fix['unit/beamlets_group/beamlets/positions/R']='unit/beamlets_group/beamlets/positions/r'
 
+separator='.'
+
 def set_type(dt):
     if any(array([k.lower() in dt.lower() for k in ['FLT','FLOAT','DBL','DOUBLE']])):
         return float
@@ -234,6 +236,13 @@ def create_json_structure(imas_version, data_structures=None):
                     if c.endswith('/time'):
                         coords[k]='time'
 
+        #convert separator
+        for key in structure.keys():
+            for k,c in enumerate(structure[key]['Coordinates']):
+                structure[key]['Coordinates'][k]=re.sub('/',separator,structure[key]['Coordinates'][k])
+            structure[re.sub('/',separator,key)]=structure[key]
+            del structure[key]
+
         #deploy imas structures as json
         json_string=json.dumps(structure, indent=1, separators=(',',': '))
         open(imas_json_dir+os.sep+imas_version+os.sep+section+'.json','w').write(json_string)
@@ -253,7 +262,7 @@ class omas(Dataset):
         if key=='time':
             return
 
-        data_structure=key.split('/')[0]
+        data_structure=key.split(separator)[0]
 
         #load the data_structure information if not available
         if data_structure not in self.attrs['structure']:
@@ -284,7 +293,7 @@ class omas(Dataset):
         self.consistency_check(key, value)
 
         if key!='time':
-            data_structure=key.split('/')[0]
+            data_structure=key.split(separator)[0]
 
             structure=self.attrs['structure'][data_structure]
 
