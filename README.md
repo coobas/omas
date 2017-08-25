@@ -12,7 +12,9 @@ OMAS casts IMAS data structure as N-D labeled arrays and datasets:
   - minimal dependencies (NetCDF library) allow use of OMAS anywhere
   - any code/language that can read/write NetCDF can read/write OMAS data
   - possible to use object-store systems
-* can easily write plugins for storage on different systems (MDS+, IMAS, ...)
+* can easily write plugins for storage on different systems (MDS+, IMAS, HADOOP...)
+  - distinction between data-organization and data-storage
+  - flat list of multidimensional arrays easily maps to many data-formats
 * uniform time allows ODS concatenation, slicing, interpolation
 * prepend data-structure name allows mix and match of ODS
 * allocate/store only what is used when it is used
