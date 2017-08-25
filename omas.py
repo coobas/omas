@@ -5,8 +5,9 @@ import os
 import sys
 import glob
 import json
+from pprint import pprint
 
-imas_json_dir=str(os.path.abspath(os.path.dirname(unicode(__file__, sys.getfilesystemencoding()))))+'/imas_json/'
+imas_json_dir=os.path.abspath(str(os.path.dirname(unicode(__file__, sys.getfilesystemencoding())))+'/imas_json/')
 
 fix={}
 fix['ic.surface_current.n_pol']='ic.surface_current.n_tor'
@@ -78,6 +79,7 @@ def create_json_structure(imas_version, data_structures=None):
     #read xls file
     clean=os.path.abspath(os.sep.join([imas_json_dir,imas_version,'clean']))
     data=pandas.read_excel(clean+'.xls','Sheet1')
+    data.rename(columns={'Full path name': 'full_path_name', 'Description':'description', 'Data Type': 'data_type', 'Coordinates':'coordinates'}, inplace=True)
 
     cols=[str(col) for col in data if not col.startswith('Unnamed')]
 
@@ -85,8 +87,8 @@ def create_json_structure(imas_version, data_structures=None):
     sections=OrderedDict()
     tbl=None
     for k in range(len(data[cols[0]])):
-        if isinstance(data['Full path name'][k],basestring) and '---BREAK---' in data['Full path name'][k]:
-            tbl=data['Description'][k]
+        if isinstance(data['full_path_name'][k],basestring) and '---BREAK---' in data['full_path_name'][k]:
+            tbl=data['description'][k]
             sections[tbl]=k
     sections[None]=len(data)
     datas={}
@@ -108,7 +110,7 @@ def create_json_structure(imas_version, data_structures=None):
         entries={}
         cols=[str(col) for col in data if not col.startswith('Unnamed') and col!='index']
         for k in range(len(data[cols[0]])):
-            if isinstance(data['Full path name'][k],basestring) and not data['Full path name'][k].startswith('Lifecycle'):
+            if isinstance(data['full_path_name'][k],basestring) and not data['full_path_name'][k].startswith('Lifecycle'):
                 entry=entries[k]={}
             for col in cols:
                 entry.setdefault(col,[])
@@ -120,25 +122,25 @@ def create_json_structure(imas_version, data_structures=None):
             if k not in entries.keys():
                 continue
 
-            if 'obsolescent' in '\n'.join(entries[k]['Full path name']):
-                basepath='\n'.join(entries[k]['Full path name']).strip().split('\n')[0]
+            if 'obsolescent' in '\n'.join(entries[k]['full_path_name']):
+                basepath='\n'.join(entries[k]['full_path_name']).strip().split('\n')[0]
                 for k1 in entries.keys():
-                    if basepath in '\n'.join(entries[k1]['Full path name']):
+                    if basepath in '\n'.join(entries[k1]['full_path_name']):
                         del entries[k1]
             else:
 
                 for col in cols:
-                    if col=='Full path name':
+                    if col=='full_path_name':
                         entries[k][col]='\n'.join(entries[k][col]).strip().split('\n')[0]
                         entries[k][col]=re.sub(r'\([^)]*\)','',entries[k][col])
                         entries[k][col]=fix.get(entries[k][col],entries[k][col])
-                    elif col=='Coordinates':
+                    elif col=='coordinates':
                         entries[k][col]=map(lambda x:re.sub('^[0-9]+- ','',x),entries[k][col])
                         entries[k][col]=map(lambda x:remove_parentheses(x),entries[k][col])
                         entries[k][col]=map(lambda x:fix.get(x,x),entries[k][col])
                         entries[k][col]=map(lambda x:x.split(' OR ')[0],entries[k][col])
                         entries[k][col]=map(lambda x:x.split('IDS:')[-1],entries[k][col])
-                    elif col=='Data Type':
+                    elif col=='data_type':
                         entries[k][col]='\n'.join(entries[k][col])
                         if entries[k][col]=='int_type':
                             entries[k][col]='INT_0D'
@@ -149,23 +151,23 @@ def create_json_structure(imas_version, data_structures=None):
 
         #convert to flat dictionary
         for k in entries:
-            structure[entries[k]['Full path name']]={}
+            structure[entries[k]['full_path_name']]={}
             for col in cols:
-                if col!='Full path name':
-                    structure[entries[k]['Full path name']][col]=entries[k][col]
+                if col!='full_path_name':
+                    structure[entries[k]['full_path_name']][col]=entries[k][col]
 
-        #concatenate descriptions
-        lmax=max(map(len,'/'.join(structure.keys()).split('/')))
-        for key in structure.keys():
-            path='* '+key.split('/')[-1].ljust(lmax)
-            structure[key]['Description']=path+': '+structure[key]['Description']
-        for key in structure.keys():
-            if '/' in key:
-                basepath='/'.join(key.split('/')[:-1])
-                basedesc=structure[basepath]['Description']
-                structure[key]['Description']=basedesc+'\n'+structure[key]['Description']
-        for key in structure.keys():
-            structure[key]['Description']=structure[key]['Description']
+        # #concatenate descriptions
+        # lmax=max(map(len,'/'.join(structure.keys()).split('/')))
+        # for key in structure.keys():
+        #     path='* '+key.split('/')[-1].ljust(lmax)
+        #     structure[key]['description']=path+': '+structure[key]['description']
+        # for key in structure.keys():
+        #     if '/' in key:
+        #         basepath='/'.join(key.split('/')[:-1])
+        #         basedesc=structure[basepath]['description']
+        #         structure[key]['description']=basedesc+'\n'+structure[key]['description']
+        # for key in structure.keys():
+        #     structure[key]['description']=structure[key]['description']
 
         #handle arrays of structures
         struct_array=[]
@@ -173,21 +175,21 @@ def create_json_structure(imas_version, data_structures=None):
             for k in struct_array[::-1]:
                 if k not in key:
                     struct_array.pop()
-            if 'struct_array' in structure[key]['Data Type']:
-                for k,c in enumerate(structure[key]['Coordinates']):
+            if 'struct_array' in structure[key]['data_type']:
+                for k,c in enumerate(structure[key]['coordinates']):
                     struct_array.append(key)
                     if not c.startswith('1...'): #add a dimension to this coordinate
-                        structure[c]['Coordinates'].append('1...N')
+                        structure[c]['coordinates'].append('1...N')
             else:
                 for k in struct_array[::-1]:
-                    if key not in structure[k]['Coordinates']:
-                        structure[key]['Coordinates']=structure[k]['Coordinates']+structure[key]['Coordinates']
+                    if key not in structure[k]['coordinates']:
+                        structure[key]['coordinates']=structure[k]['coordinates']+structure[key]['coordinates']
 
         #find fundamental coordinates
         base_coords=[]
         for key in structure.keys():
-            coords=structure[key]['Coordinates']
-            d=structure[key]['Data Type']
+            coords=structure[key]['coordinates']
+            d=structure[key]['data_type']
             for c in coords:
                 if c.startswith('1...') and 'struct' not in d:
                     base_coords.append( re.sub('(_error_upper|_error_lower|_error_index)$','',key) )
@@ -196,10 +198,10 @@ def create_json_structure(imas_version, data_structures=None):
 
         #make sure all coordinates exist
         for key in structure.keys():
-            if 'base_coordinate' in structure[key] and len(structure[key]['Coordinates'])==1:
+            if 'base_coordinate' in structure[key] and len(structure[key]['coordinates'])==1:
                 #structure[key]['independent_coordinate']=True
                 continue
-            coords=structure[key]['Coordinates']
+            coords=structure[key]['coordinates']
             if not len(coords):
                 continue
             else:
@@ -212,17 +214,17 @@ def create_json_structure(imas_version, data_structures=None):
                         print('  %s not defined -- adding'%c)
                         base_coords.append(c)
                         structure[c]={}
-                        structure[c]['Description']='imas missing dimension'
-                        structure[c]['Coordinates']=['1...N']
-                        structure[c]['Data Type']='INT_1D'
+                        structure[c]['description']='imas missing dimension'
+                        structure[c]['coordinates']=['1...N']
+                        structure[c]['data_type']='INT_1D'
                         structure[c]['base_coordinate']=True
 
         #prepend structure name to all entries
         for key in structure.keys():
-            for k,c in enumerate(structure[key]['Coordinates']):
+            for k,c in enumerate(structure[key]['coordinates']):
                 if c.startswith('1...'):
                     continue
-                structure[key]['Coordinates'][k]=section+'/'+c
+                structure[key]['coordinates'][k]=section+'/'+c
             structure[section+'/'+key]=structure[key]
             del structure[key]
 
@@ -231,15 +233,15 @@ def create_json_structure(imas_version, data_structures=None):
             if key.endswith('/time'):
                 del structure[key]
             else:
-                coords=structure[key]['Coordinates']
+                coords=structure[key]['coordinates']
                 for k,c in enumerate(coords):
                     if c.endswith('/time'):
                         coords[k]='time'
 
         #convert separator
         for key in structure.keys():
-            for k,c in enumerate(structure[key]['Coordinates']):
-                structure[key]['Coordinates'][k]=re.sub('/',separator,structure[key]['Coordinates'][k])
+            for k,c in enumerate(structure[key]['coordinates']):
+                structure[key]['coordinates'][k]=re.sub('/',separator,structure[key]['coordinates'][k])
             structure[re.sub('/',separator,key)]=structure[key]
             del structure[key]
 
@@ -283,7 +285,7 @@ class omas(xarray.Dataset):
         if 'base_coordinate' in structure[key]:
             return
 
-        coords=structure[key]['Coordinates']
+        coords=structure[key]['coordinates']
         for k,c in enumerate(coords):
             if c.startswith('1...'):
                 continue
@@ -304,10 +306,54 @@ class omas(xarray.Dataset):
                 if not (len(value.dims)==1 and value.dims[0]==key):
                     coords_dict={c:self[c] for c in value.dims}
                     value=xarray.DataArray(value.values,dims=value.dims,coords=coords_dict)
-                value.attrs['Description']='\n'+structure[key]['Description']
+                value.attrs['description']='\n'+structure[key]['description']
 
         tmp=xarray.Dataset.__setitem__(self, key, value)
         return tmp
+
+    def to_imas(self):
+
+        #generate emphy hierarchical data structure
+        struct_array={}
+        imas_ids={}
+        tr=[]
+        for key in sorted(self.keys())[::-1]:
+            if key=='time': continue
+            data_structure=key.split(separator)[0]
+            path=key.split(separator)
+            structure=self._structure['structure_'+data_structure]
+            h=imas_ids.setdefault(data_structure,{})
+            for k,step in list(enumerate(path))[1:]:
+                location=separator.join(path[:k+1])
+                if location not in structure:
+                    break
+                tr.append(location)
+                s=structure[location]
+                if 'struct_array' in s['data_type']:
+                    struct_array[location]=len(self[s['coordinates'][-1]])
+                h=h.setdefault(step,{})
+        tr=sorted(numpy.unique(tr))
+
+        #replicate data structures based on data dimensions
+        for key in tr[::-1]:
+            if key in struct_array:
+                h=h0=imas_ids
+                for step in key.split(separator):
+                    h0=h
+                    h=h[step]
+                h0[step]=[h]*struct_array[key]
+
+        pprint(imas_ids)
+
+        return imas_ids
+
+def _traverse(me, path=''):
+    paths=[]
+    for kid in me:
+        paths.append(separator.join([path,kid]).lstrip(separator))
+        if isinstance(me[kid],dict):
+            paths.extend( _traverse(me[kid],paths[-1]) )
+    return paths
 
 def save_omas_nc(ods, path, *args, **kw):
     ods.to_netcdf(path=path, *args, **kw)
@@ -321,6 +367,29 @@ def load_omas_nc(filename_or_obj, *args, **kw):
     for item in [item for item in data.attrs if item.startswith('structure_')]:
         data._structure[item]=eval(data.attrs[item])
     return data
+
+def write_mds_model(server, tree, shot=-1, start_over=False):
+    import MDSplus
+    server=MDSplus.Connection(server)
+
+    if start_over:
+        server.get("tcl('edit %s/shot=%s/new')")
+
+    for file in glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*.json')[:2]:
+        server.get("tcl('edit %s/shot=%s')"%(tree,shot))
+        tree_locations=set()
+        print file
+        structure=json.loads(open(file,'r').read())
+        for path in _traverse(structure):
+            items=path.split('.')
+            for k in range(1,len(items)):
+                tree_locations.add('.'.join(items[:k]))
+        for path in sorted(list(tree_locations)):
+            short_path='.'.join(map(lambda x:x[:12],path.split('.')))
+            print short_path
+            server.get("tcl('add node %s /usage=signal')"%short_path)
+        server.get("tcl('write')")
+        server.get("tcl('close')")
 
 #------------------------------
 if __name__ == '__main__':
@@ -338,9 +407,10 @@ if __name__ == '__main__':
         imas_html_dir=os.environ['IMAS_PREFIX']+'/share/doc/imas/'
     else:
         imas_html_dir='/Users/meneghini/tmp/imas'
+    imas_html_dir=os.path.abspath(imas_html_dir)
 
     #stage #1 must be run to generate necessary .json files
-    stage=1
+    stage=3
 
     if stage==0:
         aggregate_html_docs(imas_html_dir,imas_version)
@@ -350,16 +420,33 @@ if __name__ == '__main__':
 
     elif stage==2:
         ods=omas()
-        ods['time']=xarray.DataArray(numpy.atleast_1d(1000),
+        ods['time']=xarray.DataArray(numpy.atleast_1d([1000,2000]),
                               dims=['time'])
 
-        ods['equilibrium.time_slice.global_quantities.ip']=xarray.DataArray(numpy.atleast_1d(1E6),
+        ods['equilibrium.time_slice.global_quantities.ip']=xarray.DataArray(numpy.atleast_1d([1E6,1.1E6]),
+                                                             dims=['time'])
+        ods['equilibrium.time_slice.global_quantities.magnetic_axis.r']=xarray.DataArray(numpy.atleast_1d([1.71,1.72]),
                                                              dims=['time'])
 
-        print(ods['equilibrium.time_slice.global_quantities.ip'].attrs['Description'])
-        print(ods)
+        ods['equilibrium.time_slice.profiles_1d.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
+                                                        dims=['equilibrium.time_slice.profiles_1d.psin'])
+
+        ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
+                                                        dims=['time',
+                                                              'equilibrium.time_slice.profiles_1d.psin'])
 
         save_omas_nc(ods,'test.nc')
+        print('Saved OMAS data to netCDF')
 
         ods1=load_omas_nc('test.nc')
-        print(ods1)
+        print('Load OMAS data from netCDF')
+
+    elif stage==3:
+        write_mds_model()
+
+    elif stage==4:
+        ods1=load_omas_nc('test.nc')
+        print('Load OMAS data from netCDF')
+        #print ods1
+
+        ods1.to_imas()
