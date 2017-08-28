@@ -6,6 +6,9 @@ import sys
 import glob
 import json
 from pprint import pprint
+from hashlib import md5
+import uncertainties
+
 
 imas_json_dir=os.path.abspath(str(os.path.dirname(unicode(__file__, sys.getfilesystemencoding())))+'/imas_json/')
 
@@ -79,7 +82,7 @@ def create_json_structure(imas_version, data_structures=None):
     #read xls file
     clean=os.path.abspath(os.sep.join([imas_json_dir,imas_version,'clean']))
     data=pandas.read_excel(clean+'.xls','Sheet1')
-    data.rename(columns={'Full path name': 'full_path_name', 'Description':'description', 'Data Type': 'data_type', 'Coordinates':'coordinates'}, inplace=True)
+    data.rename(columns={'Full path name': 'full_path', 'Description':'description', 'Data Type': 'data_type', 'Coordinates':'coordinates'}, inplace=True)
 
     cols=[str(col) for col in data if not col.startswith('Unnamed')]
 
@@ -87,7 +90,7 @@ def create_json_structure(imas_version, data_structures=None):
     sections=OrderedDict()
     tbl=None
     for k in range(len(data[cols[0]])):
-        if isinstance(data['full_path_name'][k],basestring) and '---BREAK---' in data['full_path_name'][k]:
+        if isinstance(data['full_path'][k],basestring) and '---BREAK---' in data['full_path'][k]:
             tbl=data['description'][k]
             sections[tbl]=k
     sections[None]=len(data)
@@ -110,7 +113,7 @@ def create_json_structure(imas_version, data_structures=None):
         entries={}
         cols=[str(col) for col in data if not col.startswith('Unnamed') and col!='index']
         for k in range(len(data[cols[0]])):
-            if isinstance(data['full_path_name'][k],basestring) and not data['full_path_name'][k].startswith('Lifecycle'):
+            if isinstance(data['full_path'][k],basestring) and not data['full_path'][k].startswith('Lifecycle'):
                 entry=entries[k]={}
             for col in cols:
                 entry.setdefault(col,[])
@@ -122,15 +125,15 @@ def create_json_structure(imas_version, data_structures=None):
             if k not in entries.keys():
                 continue
 
-            if 'obsolescent' in '\n'.join(entries[k]['full_path_name']):
-                basepath='\n'.join(entries[k]['full_path_name']).strip().split('\n')[0]
+            if 'obsolescent' in '\n'.join(entries[k]['full_path']):
+                basepath='\n'.join(entries[k]['full_path']).strip().split('\n')[0]
                 for k1 in entries.keys():
-                    if basepath in '\n'.join(entries[k1]['full_path_name']):
+                    if basepath in '\n'.join(entries[k1]['full_path']):
                         del entries[k1]
             else:
 
                 for col in cols:
-                    if col=='full_path_name':
+                    if col=='full_path':
                         entries[k][col]='\n'.join(entries[k][col]).strip().split('\n')[0]
                         entries[k][col]=re.sub(r'\([^)]*\)','',entries[k][col])
                         entries[k][col]=fix.get(entries[k][col],entries[k][col])
@@ -151,10 +154,10 @@ def create_json_structure(imas_version, data_structures=None):
 
         #convert to flat dictionary
         for k in entries:
-            structure[entries[k]['full_path_name']]={}
+            structure[entries[k]['full_path']]={}
             for col in cols:
-                if col!='full_path_name':
-                    structure[entries[k]['full_path_name']][col]=entries[k][col]
+                if col!='full_path':
+                    structure[entries[k]['full_path']][col]=entries[k][col]
 
         # #concatenate descriptions
         # lmax=max(map(len,'/'.join(structure.keys()).split('/')))
@@ -193,12 +196,12 @@ def create_json_structure(imas_version, data_structures=None):
             for c in coords:
                 if c.startswith('1...') and 'struct' not in d:
                     base_coords.append( re.sub('(_error_upper|_error_lower|_error_index)$','',key) )
-                    structure[ re.sub('(_error_upper|_error_lower|_error_index)$','',key) ]['base_coordinate']=True
+                    structure[ re.sub('(_error_upper|_error_lower|_error_index)$','',key) ]['base_coord']=True
         base_coords=numpy.unique(base_coords).tolist()
 
         #make sure all coordinates exist
         for key in structure.keys():
-            if 'base_coordinate' in structure[key] and len(structure[key]['coordinates'])==1:
+            if 'base_coord' in structure[key] and len(structure[key]['coordinates'])==1:
                 #structure[key]['independent_coordinate']=True
                 continue
             coords=structure[key]['coordinates']
@@ -217,7 +220,7 @@ def create_json_structure(imas_version, data_structures=None):
                         structure[c]['description']='imas missing dimension'
                         structure[c]['coordinates']=['1...N']
                         structure[c]['data_type']='INT_1D'
-                        structure[c]['base_coordinate']=True
+                        structure[c]['base_coord']=True
 
         #prepend structure name to all entries
         for key in structure.keys():
@@ -244,6 +247,11 @@ def create_json_structure(imas_version, data_structures=None):
                 structure[key]['coordinates'][k]=re.sub('/',separator,structure[key]['coordinates'][k])
             structure[re.sub('/',separator,key)]=structure[key]
             del structure[key]
+
+        #save full_path_name and hash as part of json structure
+        for key in structure.keys():
+            structure[key]['hash']=md5(key).hexdigest()[:12]
+            structure[key]['full_path']=key
 
         #deploy imas structures as json
         json_string=json.dumps(structure, indent=1, separators=(',',': '))
@@ -282,7 +290,7 @@ class omas(xarray.Dataset):
                 return
             raise(Exception('Entry `%s` is not part of the `%s` data structure'%(key,data_structure)))
 
-        if 'base_coordinate' in structure[key]:
+        if 'base_coord' in structure[key]:
             return
 
         coords=structure[key]['coordinates']
@@ -312,7 +320,6 @@ class omas(xarray.Dataset):
         return tmp
 
     def to_imas(self):
-
         #generate emphy hierarchical data structure
         struct_array={}
         imas_ids={}
@@ -368,28 +375,89 @@ def load_omas_nc(filename_or_obj, *args, **kw):
         data._structure[item]=eval(data.attrs[item])
     return data
 
-def write_mds_model(server, tree, shot=-1, start_over=False):
-    import MDSplus
-    server=MDSplus.Connection(server)
+def write_mds_model(server, tree, shot=-1, write=False, start_over=False):
+    if write:
+        import MDSplus
+        server=MDSplus.Connection(server)
 
-    if start_over:
-        server.get("tcl('edit %s/shot=%s/new')")
+        if start_over:
+            server.get("tcl('edit %s/shot=%s/new')"%(tree,shot))
+            server.get("tcl('write')")
+            server.get("tcl('close')")
 
-    for file in glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*.json')[:2]:
-        server.get("tcl('edit %s/shot=%s')"%(tree,shot))
-        tree_locations=set()
+    #loop over structures
+    for file in glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*.json')[:1]:
         print file
+
+        ids=os.path.splitext(os.path.split(file)[1])[0][:12]
+        if write:
+            server.get("tcl('edit %s/shot=%s')"%(tree,shot))
+            server.get("tcl('add node %s /usage=subtree')"%ids)
+
         structure=json.loads(open(file,'r').read())
-        for path in _traverse(structure):
-            items=path.split('.')
-            for k in range(1,len(items)):
-                tree_locations.add('.'.join(items[:k]))
-        for path in sorted(list(tree_locations)):
-            short_path='.'.join(map(lambda x:x[:12],path.split('.')))
-            print short_path
-            server.get("tcl('add node %s /usage=signal')"%short_path)
-        server.get("tcl('write')")
-        server.get("tcl('close')")
+
+        #loop over nodes in structures
+        for path in structure.keys():
+            print('%s --> %s'%(structure[path]['hash'],path))
+            if write:
+                server.get("tcl('add node %s:%s /usage=signal')"%(ids,structure[path]['hash']))
+                for key in structure[path].keys():
+                    if key!='hash':
+                        print('%s     %s:%s'%(' '*len(structure[path]['hash']),path,key))
+                        server.get("tcl('add node %s.%s:%s/usage=text')"%(ids,structure[path]['hash'],key))
+                        #server.get("tcl('put %s.%s:%s "$"')"%(ids,structure[path]['hash'],key),'asd')
+        if write:
+            server.get("tcl('write')")
+            server.get("tcl('close')")
+
+        #add attributes to each tree entry
+        if False and write:
+            server.openTree('test',-1)
+
+            for path in structure.keys():
+                print('%s >>> %s'%(structure[path]['hash'],path))
+                for key in structure[path].keys():
+                    if key!='hash':
+                        print('%s     %s:%s [%s]'%(' '*len(structure[path]['hash']),path,key,str(structure[path][key])))
+                        server.put(str(":%s.%s:%s"%(ids,structure[path]['hash'],key)),"$",str(structure[path][key]))
+
+        #create shot
+        if write:
+            server.get("tcl('set tree %s/shot=%s')"%(tree,shot))
+            server.get("tcl('delete pulse 999 /all')")
+            server.get("tcl('create pulse 999')")
+            server.get("tcl('write')")
+            server.get("tcl('close')")
+
+def is_uncertain(var):
+    '''return True if variable is instance of uncertainties'''
+    def uncertain_check(x):
+        return isinstance(x,uncertainties.Variable) or isinstance(x,uncertainties.AffineScalarFunc)
+    if numpy.iterable(var):
+        return numpy.reshape(numpy.array(map(uncertain_check,numpy.array(var).flat)),numpy.array(var).shape)
+    else:
+        return uncertain_check(var)
+
+def xarray2mds(xarray_data):
+        #generate TDI expression for writing data to MDS+
+        text=[]
+        args=[]
+        for itemName in ['']+map(lambda k:"['%s']"%k,list(xarray_data.dims)):
+            itemBaseName=itemName.strip("'[]")
+            item=eval('xarray_data'+itemName)
+            arg=[]
+            txt='$'
+            if 'units' in item.attrs:
+                txt='build_with_units(%s,%s)'%(txt,item.attrs['units'])
+            if any(is_uncertain(item.values)):
+                txt='build_with_error(%s,%s)'%(txt,txt)
+                arg.extend([nominal_values(item.values),std_devs(item.values)])
+            else:
+                arg.append(item.values)
+            args.extend(arg)
+            text.append(txt)
+        text='make_signal(%s,*,%s)'%(text[0],','.join(text[1:]))
+        return text,args
 
 #------------------------------
 if __name__ == '__main__':
@@ -410,7 +478,7 @@ if __name__ == '__main__':
     imas_html_dir=os.path.abspath(imas_html_dir)
 
     #stage #1 must be run to generate necessary .json files
-    stage=3
+    stage=4
 
     if stage==0:
         aggregate_html_docs(imas_html_dir,imas_version)
@@ -442,9 +510,27 @@ if __name__ == '__main__':
         print('Load OMAS data from netCDF')
 
     elif stage==3:
-        write_mds_model()
+        write_mds_model('127.0.0.1:63555', 'test', shot=-1, start_over=True, write=True)
 
     elif stage==4:
+        ods1=load_omas_nc('test.nc')
+        print('Load OMAS data from netCDF')
+
+        time=xarray.DataArray(numpy.atleast_1d([1000,2000]),
+                              dims=['time'])
+
+        actuator_power=xarray.DataArray(numpy.atleast_1d([1E6,1.1E6]),
+                                        dims=['time'])
+
+        text,args=xarray2mds(actuator_power)
+        import MDSplus
+        server=MDSplus.Connection('127.0.0.1:63555')
+
+        server.openTree('test','999)
+
+        server.put(':actuator.653094c8e51d',text,*args)
+
+    elif stage==5:
         ods1=load_omas_nc('test.nc')
         print('Load OMAS data from netCDF')
         #print ods1
