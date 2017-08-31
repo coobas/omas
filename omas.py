@@ -9,7 +9,6 @@ from pprint import pprint
 from hashlib import md5
 import uncertainties
 
-
 imas_json_dir=os.path.abspath(str(os.path.dirname(unicode(__file__, sys.getfilesystemencoding())))+'/imas_json/')
 
 fix={}
@@ -18,6 +17,52 @@ fix['waveform.value.time']='waveform.time'
 fix['unit.beamlets_group.beamlets.positions.R']='unit.beamlets_group.beamlets.positions.r'
 
 separator='.'
+
+def u2s(x):
+    if isinstance(x,unicode):
+        #convert unicode to string if unicode encoding is unecessary
+        xs=x.encode('utf-8')
+        if xs==x: return xs
+    elif isinstance(x,dict):
+        return json_loader(x.items())
+    return x
+
+def json_dumper(obj):
+    if isinstance(obj, numpy.ndarray):
+        if 'complex' in str(obj.dtype).lower():
+            return dict(__ndarray_tolist_real__ = obj.real.tolist(),
+                        __ndarray_tolist_imag__ = obj.imag.tolist(),
+                        dtype=str(obj.dtype),
+                        shape=obj.shape)
+
+        else:
+            return dict(__ndarray_tolist__=obj.tolist(),
+                        dtype=str(obj.dtype),
+                        shape=obj.shape)
+    elif isinstance(obj, numpy.generic):
+        return numpy.asscalar(obj)
+    elif isinstance(obj, complex):
+        return dict(__complex__=True,real=obj.real,imag=obj.imag)
+    try:
+        return obj.toJSON()
+    except Exception:
+        return obj.__dict__
+
+def json_loader(object_pairs):
+    object_pairs=map(lambda o:(u2s(o[0]),u2s(o[1])),object_pairs)
+    dct=dict((x,y) for x,y in object_pairs)
+    if '__ndarray_tolist__' in dct:
+        return array(dct['__ndarray_tolist__'],dtype=dct['dtype']).reshape(dct['shape'])
+    elif ('__ndarray_tolist_real__' in dct and
+          '__ndarray_tolist_imag__' in dct):
+          return (array(dct['__ndarray_tolist_real__'],dtype=dct['dtype']).reshape(dct['shape'])+
+                  array(dct['__ndarray_tolist_imag__'],dtype=dct['dtype']).reshape(dct['shape'])*1j)
+    elif '__ndarray__' in dct:
+        data = base64.b64decode(dct['__ndarray__'])
+        return np.frombuffer(data, dct['dtype']).reshape(dct['shape'])
+    elif '__complex__' in dct:
+        return complex(dct['real'],dct['imag'])
+    return dct
 
 def set_type(dt):
     if any(array([k.lower() in dt.lower() for k in ['FLT','FLOAT','DBL','DOUBLE']])):
@@ -250,11 +295,11 @@ def create_json_structure(imas_version, data_structures=None):
 
         #save full_path_name and hash as part of json structure
         for key in structure.keys():
-            structure[key]['hash']=md5(key).hexdigest()[:12]
+            structure[key]['hash']='H'+md5(key).hexdigest()[:11]
             structure[key]['full_path']=key
 
         #deploy imas structures as json
-        json_string=json.dumps(structure, indent=1, separators=(',',': '))
+        json_string=json.dumps(structure, default=json_dumper, indent=1, separators=(',',': '))
         open(imas_json_dir+os.sep+imas_version+os.sep+section+'.json','w').write(json_string)
 
 class omas(xarray.Dataset):
@@ -278,7 +323,7 @@ class omas(xarray.Dataset):
 
         #load the data_structure information if not available
         if data_structure not in self._structure:
-            structure=json.loads(open(imas_json_dir+os.sep+self.attrs['imas_version']+os.sep+data_structure+'.json','r').read())
+            structure=json.loads(open(imas_json_dir+os.sep+self.attrs['imas_version']+os.sep+data_structure+'.json','r').read(),object_pairs_hook=json_loader)
             self._structure[data_structure]=structure
             self.attrs['structure_'+data_structure]=repr(self._structure[data_structure])
 
@@ -375,59 +420,77 @@ def load_omas_nc(filename_or_obj, *args, **kw):
         data._structure[item]=eval(data.attrs[item])
     return data
 
-def write_mds_model(server, tree, shot=-1, write=False, start_over=False):
+def write_mds_model(server, tree='test', structures=[], write=False, start_over=False):
     if write:
         import MDSplus
-        server=MDSplus.Connection(server)
+        if isinstance(server,basestring):
+            server=MDSplus.Connection(server)
 
+        #wipe everyting out if requested
         if start_over:
-            server.get("tcl('edit %s/shot=%s/new')"%(tree,shot))
+            server.get("tcl('edit %s/shot=-1/new')"%tree)
             server.get("tcl('write')")
             server.get("tcl('close')")
 
-    #loop over structures
-    for file in glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*.json')[:1]:
+    #loop over the requested structures or otherwise on all structures
+    if len(structures):
+        files=[]
+        for structure in structures:
+            files.append(imas_json_dir+os.sep+imas_version+os.sep+structure+'.json')
+    else:
+        files=glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*.json')
+    for file in files:
         print file
 
+        #load structure
+        structure=json.loads(open(file,'r').read(),object_pairs_hook=json_loader)
         ids=os.path.splitext(os.path.split(file)[1])[0][:12]
+
+        #open the tree in edit mode
         if write:
-            server.get("tcl('edit %s/shot=%s')"%(tree,shot))
+            server.get("tcl('edit %s/shot=-1')"%tree)
             server.get("tcl('add node %s /usage=subtree')"%ids)
 
-        structure=json.loads(open(file,'r').read())
-
-        #loop over nodes in structures
+        #create actual tree structure
         for path in structure.keys():
             print('%s --> %s'%(structure[path]['hash'],path))
             if write:
-                server.get("tcl('add node %s:%s /usage=signal')"%(ids,structure[path]['hash']))
+                server.get("tcl('add node %s.%s /usage=structure')"%(ids,structure[path]['hash']))
+                server.get("tcl('add node %s.%s:data /usage=signal')"%(ids,structure[path]['hash']))
                 for key in structure[path].keys():
                     if key!='hash':
                         print('%s     %s:%s'%(' '*len(structure[path]['hash']),path,key))
                         server.get("tcl('add node %s.%s:%s/usage=text')"%(ids,structure[path]['hash'],key))
-                        #server.get("tcl('put %s.%s:%s "$"')"%(ids,structure[path]['hash'],key),'asd')
+                        #server.get("tcl('put %s.%s:%s "$"')"%(ids,structure[path]['hash'],key),str(structure[path][key])) #filling in the attributes this way does not seem to work
+
+        #close the tree from edit mode
         if write:
             server.get("tcl('write')")
             server.get("tcl('close')")
-
-        #add attributes to each tree entry
-        if False and write:
             server.openTree('test',-1)
 
-            for path in structure.keys():
-                print('%s >>> %s'%(structure[path]['hash'],path))
+        #fill in the attributes
+        for path in structure.keys():
+            print('%s >>> %s'%(structure[path]['hash'],path))
+            if write:
                 for key in structure[path].keys():
                     if key!='hash':
                         print('%s     %s:%s [%s]'%(' '*len(structure[path]['hash']),path,key,str(structure[path][key])))
                         server.put(str(":%s.%s:%s"%(ids,structure[path]['hash'],key)),"$",str(structure[path][key]))
 
-        #create shot
-        if write:
-            server.get("tcl('set tree %s/shot=%s')"%(tree,shot))
-            server.get("tcl('delete pulse 999 /all')")
-            server.get("tcl('create pulse 999')")
-            server.get("tcl('write')")
-            server.get("tcl('close')")
+def create_mds_shot(server, tree, shot, clean=False):
+    import MDSplus
+    if isinstance(server,basestring):
+        server=MDSplus.Connection(server)
+    #create new shot
+    if shot!=-1:
+        server.get("tcl('set tree %s/shot=-1')"%tree)
+        server.get("tcl('delete pulse %d /all')"%shot)
+        server.get("tcl('create pulse %d')"%shot)
+        if clean:
+            server.get("tcl('edit %s/shot=%d/new')"%(tree,shot))
+        server.get("tcl('write')")
+        server.get("tcl('close')")
 
 def is_uncertain(var):
     '''return True if variable is instance of uncertainties'''
@@ -477,6 +540,8 @@ if __name__ == '__main__':
         imas_html_dir='/Users/meneghini/tmp/imas'
     imas_html_dir=os.path.abspath(imas_html_dir)
 
+    mds_server=['atlas.gat.com','127.0.0.1:63555'][0]
+
     #stage #1 must be run to generate necessary .json files
     stage=4
 
@@ -510,7 +575,8 @@ if __name__ == '__main__':
         print('Load OMAS data from netCDF')
 
     elif stage==3:
-        write_mds_model('127.0.0.1:63555', 'test', shot=-1, start_over=True, write=True)
+        write_mds_model(mds_server, 'test', ['actuator'], write=True, start_over=True)
+        create_mds_shot(mds_server,'test',999)#, True)
 
     elif stage==4:
         ods1=load_omas_nc('test.nc')
@@ -523,12 +589,13 @@ if __name__ == '__main__':
                                         dims=['time'])
 
         text,args=xarray2mds(actuator_power)
+
         import MDSplus
-        server=MDSplus.Connection('127.0.0.1:63555')
+        server=MDSplus.Connection(mds_server)
+        server.openTree('test',999)
+        server.put(':actuator.H653094c8e51:data',text,*args)
 
-        server.openTree('test','999)
-
-        server.put(':actuator.653094c8e51d',text,*args)
+        print server.get('\\TEST::TOP.ACTUATOR.H653094C8E51.DATA')
 
     elif stage==5:
         ods1=load_omas_nc('test.nc')
