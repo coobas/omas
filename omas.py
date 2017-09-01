@@ -1,319 +1,6 @@
 __all__=['omas', 'save_omas_nc', 'load_omas_nc']
 
 import xarray
-import os
-import sys
-import glob
-import json
-from pprint import pprint
-from hashlib import md5
-import uncertainties
-
-imas_json_dir=os.path.abspath(str(os.path.dirname(unicode(__file__, sys.getfilesystemencoding())))+'/imas_json/')
-
-fix={}
-fix['ic.surface_current.n_pol']='ic.surface_current.n_tor'
-fix['waveform.value.time']='waveform.time'
-fix['unit.beamlets_group.beamlets.positions.R']='unit.beamlets_group.beamlets.positions.r'
-
-separator='.'
-
-def u2s(x):
-    if isinstance(x,unicode):
-        #convert unicode to string if unicode encoding is unecessary
-        xs=x.encode('utf-8')
-        if xs==x: return xs
-    if isinstance(x,list):
-        return map(lambda x:u2s(x),x)
-    elif isinstance(x,dict):
-        return json_loader(x.items())
-    return x
-
-def json_dumper(obj):
-    if isinstance(obj, numpy.ndarray):
-        if 'complex' in str(obj.dtype).lower():
-            return dict(__ndarray_tolist_real__ = obj.real.tolist(),
-                        __ndarray_tolist_imag__ = obj.imag.tolist(),
-                        dtype=str(obj.dtype),
-                        shape=obj.shape)
-
-        else:
-            return dict(__ndarray_tolist__=obj.tolist(),
-                        dtype=str(obj.dtype),
-                        shape=obj.shape)
-    elif isinstance(obj, numpy.generic):
-        return numpy.asscalar(obj)
-    elif isinstance(obj, complex):
-        return dict(__complex__=True,real=obj.real,imag=obj.imag)
-    try:
-        return obj.toJSON()
-    except Exception:
-        return obj.__dict__
-
-def json_loader(object_pairs):
-    object_pairs=map(lambda o:(u2s(o[0]),u2s(o[1])),object_pairs)
-    dct=dict((x,y) for x,y in object_pairs)
-    if '__ndarray_tolist__' in dct:
-        return array(dct['__ndarray_tolist__'],dtype=dct['dtype']).reshape(dct['shape'])
-    elif ('__ndarray_tolist_real__' in dct and
-          '__ndarray_tolist_imag__' in dct):
-          return (array(dct['__ndarray_tolist_real__'],dtype=dct['dtype']).reshape(dct['shape'])+
-                  array(dct['__ndarray_tolist_imag__'],dtype=dct['dtype']).reshape(dct['shape'])*1j)
-    elif '__ndarray__' in dct:
-        data = base64.b64decode(dct['__ndarray__'])
-        return np.frombuffer(data, dct['dtype']).reshape(dct['shape'])
-    elif '__complex__' in dct:
-        return complex(dct['real'],dct['imag'])
-    return dct
-
-def set_type(dt):
-    if any(array([k.lower() in dt.lower() for k in ['FLT','FLOAT','DBL','DOUBLE']])):
-        return float
-    if any(array([k.lower() in dt.lower() for k in ['INT','INTEGER']])):
-        return int
-    if any(array([k.lower() in dt.lower() for k in ['CMPLX','COMPLEX']])):
-        return complex
-    if any(array([k.lower() in dt.lower() for k in ['STR','STRING']])):
-        return str
-    else:
-        return None
-
-def remove_parentheses(inv):
-    k=0
-    lp=''
-    out=''
-    for c in inv:
-        if c=='(':
-            k+=1
-            lp=c
-        elif c==')':
-            k-=1
-            lp+=c
-        elif k==0:
-            out+=c
-        elif k==1:
-            lp+=c
-    if inv.endswith(')'):
-        out+=('_'+lp[1:-1])
-    return out
-
-def aggregate_html_docs(imas_html_dir, imas_version):
-    from bs4 import BeautifulSoup
-
-    files=glob.glob(imas_html_dir+'/*.html')
-
-    line='<table><tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr></table>'
-
-    tables=[line%('Full path name','Description','Data Type','Coordinates')]
-    for file in files:
-        print file
-        if os.path.split(file)[1] in ['html_documentation.html','clean.html','dd_versions.html']:
-            continue
-        html_doc=open(file).read()
-        soup = BeautifulSoup(html_doc, ['lxml','html.parser'][0])
-        tables.append( line%('---BREAK---',os.path.splitext(os.path.split(file)[1])[0],'','') )
-        tables.append( soup.table.prettify() )
-
-    if not os.path.exists(imas_json_dir+os.sep+imas_version):
-        os.makedirs(imas_json_dir+os.sep+imas_version)
-    clean=os.path.abspath(os.sep.join([imas_json_dir,imas_version,'clean']))
-    open(clean+'.html','w').write( '\n\n\n'.join(tables).encode('utf-8').decode('ascii',errors='ignore') )
-
-    print('')
-    print('Manual steps:')
-    print('1. open %s in EXCEL'%(clean+'.html'))
-    print('2. un-merge all cells in EXCEL')
-    print('3. save excel document as %s'%(clean+'.xls'))
-
-_structure_time={}
-_structure_time['description']='common time basis'
-_structure_time['coordinates']=['1...N']
-_structure_time['data_type']='INT_1D'
-_structure_time['base_coord']=True
-_structure_time['hash']='H'+md5('time').hexdigest()[:11]
-_structure_time['full_path']='time'
-
-def create_json_structure(imas_version, data_structures=None):
-    #read xls file
-    clean=os.path.abspath(os.sep.join([imas_json_dir,imas_version,'clean']))
-    data=pandas.read_excel(clean+'.xls','Sheet1')
-    data.rename(columns={'Full path name': 'full_path', 'Description':'description', 'Data Type': 'data_type', 'Coordinates':'coordinates'}, inplace=True)
-
-    cols=[str(col) for col in data if not col.startswith('Unnamed')]
-
-    #split clean.xls into sections
-    sections=OrderedDict()
-    tbl=None
-    for k in range(len(data[cols[0]])):
-        if isinstance(data['full_path'][k],basestring) and '---BREAK---' in data['full_path'][k]:
-            tbl=data['description'][k]
-            sections[tbl]=k
-    sections[None]=len(data)
-    datas={}
-    for k,(start,stop) in enumerate(zip(sections.values()[:-1],sections.values()[1:])):
-        datas[sections.keys()[k]]=data[start+2:stop].reset_index()
-
-    #data structures
-    if data_structures is None:
-        data_structures=sorted(datas.keys())
-
-    #loop over the data structures
-    structures={}
-    for section in data_structures:
-        print('- %s'%section)
-        data=datas[section]
-        structure=structures[section]={}
-
-        #squash rows with nans
-        entries={}
-        cols=[str(col) for col in data if not col.startswith('Unnamed') and col!='index']
-        for k in range(len(data[cols[0]])):
-            if isinstance(data['full_path'][k],basestring) and not data['full_path'][k].startswith('Lifecycle'):
-                entry=entries[k]={}
-            for col in cols:
-                entry.setdefault(col,[])
-                if isinstance(data[col][k],basestring):
-                    entry[col].append( str( data[col][k].encode('utf-8').decode('ascii',errors='ignore') ) )
-
-        #remove obsolescent entries and content of each cell
-        for k in sorted(entries.keys()):
-            if k not in entries.keys():
-                continue
-
-            if 'obsolescent' in '\n'.join(entries[k]['full_path']):
-                basepath='\n'.join(entries[k]['full_path']).strip().split('\n')[0]
-                for k1 in entries.keys():
-                    if basepath in '\n'.join(entries[k1]['full_path']):
-                        del entries[k1]
-            else:
-
-                for col in cols:
-                    if col=='full_path':
-                        entries[k][col]='\n'.join(entries[k][col]).strip().split('\n')[0]
-                        entries[k][col]=re.sub(r'\([^)]*\)','',entries[k][col])
-                        entries[k][col]=fix.get(entries[k][col],entries[k][col])
-                    elif col=='coordinates':
-                        entries[k][col]=map(lambda x:re.sub('^[0-9]+- ','',x),entries[k][col])
-                        entries[k][col]=map(lambda x:remove_parentheses(x),entries[k][col])
-                        entries[k][col]=map(lambda x:fix.get(x,x),entries[k][col])
-                        entries[k][col]=map(lambda x:x.split(' OR ')[0],entries[k][col])
-                        entries[k][col]=map(lambda x:x.split('IDS:')[-1],entries[k][col])
-                    elif col=='data_type':
-                        entries[k][col]='\n'.join(entries[k][col])
-                        if entries[k][col]=='int_type':
-                            entries[k][col]='INT_0D'
-                        elif entries[k][col]=='flt_type':
-                            entries[k][col]='INT_0D'
-                    else:
-                        entries[k][col]='\n'.join(entries[k][col])
-
-        #convert to flat dictionary
-        for k in entries:
-            structure[entries[k]['full_path']]={}
-            for col in cols:
-                if col!='full_path':
-                    structure[entries[k]['full_path']][col]=entries[k][col]
-
-        # #concatenate descriptions
-        # lmax=max(map(len,'/'.join(structure.keys()).split('/')))
-        # for key in structure.keys():
-        #     path='* '+key.split('/')[-1].ljust(lmax)
-        #     structure[key]['description']=path+': '+structure[key]['description']
-        # for key in structure.keys():
-        #     if '/' in key:
-        #         basepath='/'.join(key.split('/')[:-1])
-        #         basedesc=structure[basepath]['description']
-        #         structure[key]['description']=basedesc+'\n'+structure[key]['description']
-        # for key in structure.keys():
-        #     structure[key]['description']=structure[key]['description']
-
-        #handle arrays of structures
-        struct_array=[]
-        for key in sorted(structure.keys()):
-            for k in struct_array[::-1]:
-                if k not in key:
-                    struct_array.pop()
-            if 'struct_array' in structure[key]['data_type']:
-                for k,c in enumerate(structure[key]['coordinates']):
-                    struct_array.append(key)
-                    if not c.startswith('1...'): #add a dimension to this coordinate
-                        structure[c]['coordinates'].append('1...N')
-            else:
-                for k in struct_array[::-1]:
-                    if key not in structure[k]['coordinates']:
-                        structure[key]['coordinates']=structure[k]['coordinates']+structure[key]['coordinates']
-
-        #find fundamental coordinates
-        base_coords=[]
-        for key in structure.keys():
-            coords=structure[key]['coordinates']
-            d=structure[key]['data_type']
-            for c in coords:
-                if c.startswith('1...') and 'struct' not in d:
-                    base_coords.append( re.sub('(_error_upper|_error_lower|_error_index)$','',key) )
-                    structure[ re.sub('(_error_upper|_error_lower|_error_index)$','',key) ]['base_coord']=True
-        base_coords=numpy.unique(base_coords).tolist()
-
-        #make sure all coordinates exist
-        for key in structure.keys():
-            if 'base_coord' in structure[key] and len(structure[key]['coordinates'])==1:
-                #structure[key]['independent_coordinate']=True
-                continue
-            coords=structure[key]['coordinates']
-            if not len(coords):
-                continue
-            else:
-                for k,c in enumerate(coords):
-                    if c.startswith('1...') and len(re.findall('(_error_upper|_error_lower|_error_index)$',key)):
-                        coords[k]=re.sub('(_error_upper|_error_lower|_error_index)$','',key)
-                    elif c.startswith('1...'):
-                        pass
-                    elif c not in structure:
-                        print('  %s not defined -- adding'%c)
-                        base_coords.append(c)
-                        structure[c]={}
-                        structure[c]['description']='imas missing dimension'
-                        structure[c]['coordinates']=['1...N']
-                        structure[c]['data_type']='INT_1D'
-                        structure[c]['base_coord']=True
-
-        #prepend structure name to all entries
-        for key in structure.keys():
-            for k,c in enumerate(structure[key]['coordinates']):
-                if c.startswith('1...'):
-                    continue
-                structure[key]['coordinates'][k]=section+'/'+c
-            structure[section+'/'+key]=structure[key]
-            del structure[key]
-
-        #unify time dimensions
-        for key in structure.keys():
-            if key.endswith('/time'):
-                del structure[key]
-            else:
-                coords=structure[key]['coordinates']
-                for k,c in enumerate(coords):
-                    if c.endswith('/time'):
-                        coords[k]='time'
-        structure['time']=_structure_time
-
-        #convert separator
-        for key in structure.keys():
-            for k,c in enumerate(structure[key]['coordinates']):
-                structure[key]['coordinates'][k]=re.sub('/',separator,structure[key]['coordinates'][k])
-            tmp=structure[key]
-            del structure[key]
-            structure[re.sub('/',separator,key)]=tmp
-
-        #save full_path_name and hash as part of json structure
-        for key in structure.keys():
-            structure[key]['hash']='H'+md5(key).hexdigest()[:11]
-            structure[key]['full_path']=key
-
-        #deploy imas structures as json
-        #pprint(structure)
-        json_string=json.dumps(structure, default=json_dumper, indent=1, separators=(',',': '))
-        open(imas_json_dir+os.sep+imas_version+os.sep+section+'.json','w').write(json_string)
 
 class omas(xarray.Dataset):
 
@@ -336,12 +23,14 @@ class omas(xarray.Dataset):
 
         #load the data_structure information if not available
         if data_structure not in self._structure:
-            structure,_=load_structure(imas_json_dir+os.sep+self.attrs['imas_version']+os.sep+data_structure+'.json')
+            structure=load_structure(imas_json_dir+os.sep+self.attrs['imas_version']+os.sep+data_structure+'.json')[0]
             self._structure[data_structure]=structure
             self.attrs['structure_'+data_structure]=repr(self._structure[data_structure])
 
         #consistency checks
         structure=self._structure[data_structure]
+
+        return
 
         if key not in structure:
             if len(value.dims)==1 and value.dims[0]==key:
@@ -364,8 +53,8 @@ class omas(xarray.Dataset):
         self.consistency_check(key, value)
 
         if key=='time':
-            for item in _structure_time:
-                value.attrs[item]=str(u2s(_structure_time[item]))
+            for item in structure_time:
+                value.attrs[item]=str(u2s(structure_time[item]))
         else:
             data_structure=key.split(separator)[0]
             structure=self._structure[data_structure]
@@ -378,7 +67,7 @@ class omas(xarray.Dataset):
                     value.attrs[item]=str(u2s(structure[key][item]))
             else:
                 value.attrs['full_path']=key
-                value.attrs['hash']='H'+md5(key).hexdigest()[:11]
+                value.attrs['hash']=md5_hasher(key)
 
         tmp=xarray.Dataset.__setitem__(self, key, value)
         return tmp
@@ -418,198 +107,18 @@ class omas(xarray.Dataset):
 
         return imas_ids
 
-def _traverse(me, path=''):
-    paths=[]
-    for kid in me:
-        paths.append(separator.join([path,kid]).lstrip(separator))
-        if isinstance(me[kid],dict):
-            paths.extend( _traverse(me[kid],paths[-1]) )
-    return paths
-
-def save_omas_nc(ods, path, *args, **kw):
-    ods.to_netcdf(path=path, *args, **kw)
-
-def load_omas_nc(filename_or_obj, *args, **kw):
-    data = xarray.open_dataset(filename_or_obj,*args,**kw)
-    data.__class__=omas
-    data._initialized=False
-    data._structure={}
-    data._initialized=True
-    for item in [item for item in data.attrs if item.startswith('structure_')]:
-        data._structure[item]=eval(data.attrs[item])
-    return data
-
-_structures={}
-def load_structure(file):
-    if file not in _structures:
-        _structures[file]=json.loads(open(file,'r').read(),object_pairs_hook=json_loader)
-    ids=_structures[file].keys()[0].split(separator)[0]
-    return _structures[file],ids
-
-def write_mds_model(server, tree='test', structures=[], write=False, start_over=False):
-    if write:
-        import MDSplus
-        if isinstance(server,basestring):
-            server=MDSplus.Connection(server)
-
-        #wipe everyting out if requested
-        if start_over:
-            server.get("tcl('edit %s/shot=-1/new')"%tree)
-            server.get("tcl('write')")
-            server.get("tcl('close')")
-
-    #loop over the requested structures or otherwise on all structures
-    if len(structures):
-        files=[]
-        for structure in structures:
-            files.append(imas_json_dir+os.sep+imas_version+os.sep+structure+'.json')
-    else:
-        files=glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*.json')
-    for file in files:
-        print file
-
-        #load structure
-        structure,ids=load_structure(file)
-
-        #create actual tree structure
-        for path in structure.keys():
-            write_mds_node(server, tree, -1, ids, structure[path]['hash'], structure[path])
-
-def write_mds_node(server, tree, shot, ids, hash, meta, write_start=True, write=True, write_stop=True):
-    if write_start or write or write_stop:
-        import MDSplus
-        if isinstance(server,basestring):
-            server=MDSplus.Connection(server)
-
-    #open the tree for edit mode
-    if write_start:
-        server.get("tcl('edit %s/shot=%shot')"%(tree,shot))
-        server.get("tcl('add node %s /usage=subtree')"%ids)
-
-    path=meta['full_path']
-    print('%s --> %s'%(hash,path))
-    if write:
-        server.get("tcl('add node %s.%s /usage=structure')"%(ids,hash))
-        server.get("tcl('add node %s.%s:data /usage=signal')"%(ids,hash))
-        for key in meta.keys():
-            if key!='hash':
-                print('%s     %s:%s'%(' '*len(hash),path,key))
-                server.get("tcl('add node %s.%s:%s/usage=text')"%(ids,hash,key))
-                #server.get("tcl('put %s.%s:%s "$"')"%(ids,hash,key),str(meta[key])) #filling in the attributes this way does not seem to work
-
-    #fill in the attributes
-    for key in meta.keys():
-        if key!='hash':
-            print('%s     %s:%s [%s]'%(' '*len(hash),path,key,str(meta[key])))
-            if write:
-                server.put(str(":%s.%s:%s"%(ids,hash,key)),"$",str(meta[key]))
-
-    #close the tree from edit mode
-    if write_stop:
-        server.get("tcl('write')")
-        server.get("tcl('close')")
-
-def create_mds_shot(server, tree, shot, clean=False):
-    import MDSplus
-    if isinstance(server,basestring):
-        server=MDSplus.Connection(server)
-    #create new shot
-    if shot!=-1:
-        server.get("tcl('set tree %s/shot=-1')"%tree)
-        server.get("tcl('delete pulse %d /all')"%shot)
-        server.get("tcl('create pulse %d')"%shot)
-        if clean:
-            server.get("tcl('edit %s/shot=%d/new')"%(tree,shot))
-        server.get("tcl('write')")
-        server.get("tcl('close')")
-
-def is_uncertain(var):
-    '''return True if variable is instance of uncertainties'''
-    def uncertain_check(x):
-        return isinstance(x,uncertainties.Variable) or isinstance(x,uncertainties.AffineScalarFunc)
-    if numpy.iterable(var):
-        return numpy.reshape(numpy.array(map(uncertain_check,numpy.array(var).flat)),numpy.array(var).shape)
-    else:
-        return uncertain_check(var)
-
-def xarray2mds(xarray_data):
-        #generate TDI expression for writing data to MDS+
-        text=[]
-        args=[]
-        for itemName in ['']+map(lambda k:"['%s']"%k,list(xarray_data.dims)):
-            itemBaseName=itemName.strip("'[]")
-            item=eval('xarray_data'+itemName)
-            arg=[]
-            txt='$'
-            if 'units' in item.attrs:
-                txt='build_with_units(%s,%s)'%(txt,item.attrs['units'])
-            if any(is_uncertain(numpy.atleast_1d(item.values).flatten())):
-                txt='build_with_error(%s,%s)'%(txt,txt)
-                arg.extend([nominal_values(item.values),std_devs(item.values)])
-            else:
-                arg.append(item.values)
-            args.extend(arg)
-            text.append(txt)
-        text='make_signal(%s,*,%s)'%(text[0],','.join(text[1:]))
-        return text,args
+from omas_json import *
+from omas_mds import *
+from omas_nc import *
 
 #------------------------------
 if __name__ == '__main__':
 
-    import pandas
-    from collections import OrderedDict
-    import re
-    import numpy
-
-    if 'IMAS_VERSION' in os.environ:
-        imas_version=os.environ['IMAS_VERSION']
-    else:
-        imas_version='3.10.1'
-    if 'IMAS_PREFIX' in os.environ:
-        imas_html_dir=os.environ['IMAS_PREFIX']+'/share/doc/imas/'
-    else:
-        imas_html_dir='/Users/meneghini/tmp/imas'
-    imas_html_dir=os.path.abspath(imas_html_dir)
-
-    mds_server=['atlas.gat.com','127.0.0.1:63555'][0]
-
-    #stage #1 must be run to generate necessary .json files
-    stage=5
-
-    if stage==0:
-        aggregate_html_docs(imas_html_dir,imas_version)
-
-    elif stage==1:
-        create_json_structure(imas_version)
-
-    elif stage==2:
-        ods=omas()
-        ods['time']=xarray.DataArray(numpy.atleast_1d([1000,2000]),
-                              dims=['time'])
-
-        ods['equilibrium.time_slice.global_quantities.ip']=xarray.DataArray(numpy.atleast_1d([1E6,1.1E6]),
-                                                             dims=['time'])
-        ods['equilibrium.time_slice.global_quantities.magnetic_axis.r']=xarray.DataArray(numpy.atleast_1d([1.71,1.72]),
-                                                             dims=['time'])
-
-        ods['equilibrium.time_slice.profiles_1d.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
-                                                        dims=['equilibrium.time_slice.profiles_1d.psin'])
-
-        ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
-                                                        dims=['time',
-                                                              'equilibrium.time_slice.profiles_1d.psin'])
-
-        save_omas_nc(ods,'test.nc')
-        print('Saved OMAS data to netCDF')
-
-        ods1=load_omas_nc('test.nc')
-        print('Load OMAS data from netCDF')
-
-    elif stage==3:
+    if False:
         write_mds_model(mds_server, 'test', ['equilibrium'], write=True, start_over=True)
         create_mds_shot(mds_server,'test',999)#, True)
 
-    elif stage==4:
+    elif False:
         ods1=load_omas_nc('test.nc')
         print('Load OMAS data from netCDF')
 
@@ -625,25 +134,6 @@ if __name__ == '__main__':
     elif stage==5:
         ods1=load_omas_nc('test.nc')
         print('Load OMAS data from netCDF')
-
-        def save_omas_mds(ods, server, tree, shot, *args, **kw):
-            import MDSplus
-            if isinstance(server,basestring):
-                server=MDSplus.Connection(server)
-
-            create_mds_shot(server, tree, shot, clean=True)
-
-            for item in ods.keys():
-                ids=str(item.split(separator)[0])
-                meta=ods[item].attrs
-                if 'hash' in meta:
-                    hash=meta['hash']
-                else:
-                    hash='H'+md5('time').hexdigest()[:11]
-                write_mds_node(server, tree, shot, ids, hash, meta, write_start=True, write=True, write_stop=True)
-                server.openTree(tree,shot)
-                text,args=xarray2mds(ods[item])
-                server.put(str(':%s.%s:data'%(ids,hash)),text,*args)
 
         save_omas_mds(ods1, mds_server, 'test', 999)
 
