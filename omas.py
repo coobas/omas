@@ -23,6 +23,8 @@ def u2s(x):
         #convert unicode to string if unicode encoding is unecessary
         xs=x.encode('utf-8')
         if xs==x: return xs
+    if isinstance(x,list):
+        return map(lambda x:u2s(x),x)
     elif isinstance(x,dict):
         return json_loader(x.items())
     return x
@@ -122,6 +124,14 @@ def aggregate_html_docs(imas_html_dir, imas_version):
     print('1. open %s in EXCEL'%(clean+'.html'))
     print('2. un-merge all cells in EXCEL')
     print('3. save excel document as %s'%(clean+'.xls'))
+
+_structure_time={}
+_structure_time['description']='common time basis'
+_structure_time['coordinates']=['1...N']
+_structure_time['data_type']='INT_1D'
+_structure_time['base_coord']=True
+_structure_time['hash']='H'+md5('time').hexdigest()[:11]
+_structure_time['full_path']='time'
 
 def create_json_structure(imas_version, data_structures=None):
     #read xls file
@@ -285,13 +295,15 @@ def create_json_structure(imas_version, data_structures=None):
                 for k,c in enumerate(coords):
                     if c.endswith('/time'):
                         coords[k]='time'
+        structure['time']=_structure_time
 
         #convert separator
         for key in structure.keys():
             for k,c in enumerate(structure[key]['coordinates']):
                 structure[key]['coordinates'][k]=re.sub('/',separator,structure[key]['coordinates'][k])
-            structure[re.sub('/',separator,key)]=structure[key]
+            tmp=structure[key]
             del structure[key]
+            structure[re.sub('/',separator,key)]=tmp
 
         #save full_path_name and hash as part of json structure
         for key in structure.keys():
@@ -299,6 +311,7 @@ def create_json_structure(imas_version, data_structures=None):
             structure[key]['full_path']=key
 
         #deploy imas structures as json
+        #pprint(structure)
         json_string=json.dumps(structure, default=json_dumper, indent=1, separators=(',',': '))
         open(imas_json_dir+os.sep+imas_version+os.sep+section+'.json','w').write(json_string)
 
@@ -323,7 +336,7 @@ class omas(xarray.Dataset):
 
         #load the data_structure information if not available
         if data_structure not in self._structure:
-            structure=json.loads(open(imas_json_dir+os.sep+self.attrs['imas_version']+os.sep+data_structure+'.json','r').read(),object_pairs_hook=json_loader)
+            structure,_=load_structure(imas_json_dir+os.sep+self.attrs['imas_version']+os.sep+data_structure+'.json')
             self._structure[data_structure]=structure
             self.attrs['structure_'+data_structure]=repr(self._structure[data_structure])
 
@@ -350,16 +363,22 @@ class omas(xarray.Dataset):
     def __setitem__(self, key, value):
         self.consistency_check(key, value)
 
-        if key!='time':
+        if key=='time':
+            for item in _structure_time:
+                value.attrs[item]=str(u2s(_structure_time[item]))
+        else:
             data_structure=key.split(separator)[0]
-
             structure=self._structure[data_structure]
 
             if key in structure:
                 if not (len(value.dims)==1 and value.dims[0]==key):
                     coords_dict={c:self[c] for c in value.dims}
                     value=xarray.DataArray(value.values,dims=value.dims,coords=coords_dict)
-                value.attrs['description']='\n'+structure[key]['description']
+                for item in structure[key]:
+                    value.attrs[item]=str(u2s(structure[key][item]))
+            else:
+                value.attrs['full_path']=key
+                value.attrs['hash']='H'+md5(key).hexdigest()[:11]
 
         tmp=xarray.Dataset.__setitem__(self, key, value)
         return tmp
@@ -420,6 +439,13 @@ def load_omas_nc(filename_or_obj, *args, **kw):
         data._structure[item]=eval(data.attrs[item])
     return data
 
+_structures={}
+def load_structure(file):
+    if file not in _structures:
+        _structures[file]=json.loads(open(file,'r').read(),object_pairs_hook=json_loader)
+    ids=_structures[file].keys()[0].split(separator)[0]
+    return _structures[file],ids
+
 def write_mds_model(server, tree='test', structures=[], write=False, start_over=False):
     if write:
         import MDSplus
@@ -443,40 +469,45 @@ def write_mds_model(server, tree='test', structures=[], write=False, start_over=
         print file
 
         #load structure
-        structure=json.loads(open(file,'r').read(),object_pairs_hook=json_loader)
-        ids=os.path.splitext(os.path.split(file)[1])[0][:12]
-
-        #open the tree in edit mode
-        if write:
-            server.get("tcl('edit %s/shot=-1')"%tree)
-            server.get("tcl('add node %s /usage=subtree')"%ids)
+        structure,ids=load_structure(file)
 
         #create actual tree structure
         for path in structure.keys():
-            print('%s --> %s'%(structure[path]['hash'],path))
-            if write:
-                server.get("tcl('add node %s.%s /usage=structure')"%(ids,structure[path]['hash']))
-                server.get("tcl('add node %s.%s:data /usage=signal')"%(ids,structure[path]['hash']))
-                for key in structure[path].keys():
-                    if key!='hash':
-                        print('%s     %s:%s'%(' '*len(structure[path]['hash']),path,key))
-                        server.get("tcl('add node %s.%s:%s/usage=text')"%(ids,structure[path]['hash'],key))
-                        #server.get("tcl('put %s.%s:%s "$"')"%(ids,structure[path]['hash'],key),str(structure[path][key])) #filling in the attributes this way does not seem to work
+            write_mds_node(server, tree, -1, ids, structure[path]['hash'], structure[path])
 
-        #close the tree from edit mode
-        if write:
-            server.get("tcl('write')")
-            server.get("tcl('close')")
-            server.openTree('test',-1)
+def write_mds_node(server, tree, shot, ids, hash, meta, write_start=True, write=True, write_stop=True):
+    if write_start or write or write_stop:
+        import MDSplus
+        if isinstance(server,basestring):
+            server=MDSplus.Connection(server)
 
-        #fill in the attributes
-        for path in structure.keys():
-            print('%s >>> %s'%(structure[path]['hash'],path))
+    #open the tree for edit mode
+    if write_start:
+        server.get("tcl('edit %s/shot=%shot')"%(tree,shot))
+        server.get("tcl('add node %s /usage=subtree')"%ids)
+
+    path=meta['full_path']
+    print('%s --> %s'%(hash,path))
+    if write:
+        server.get("tcl('add node %s.%s /usage=structure')"%(ids,hash))
+        server.get("tcl('add node %s.%s:data /usage=signal')"%(ids,hash))
+        for key in meta.keys():
+            if key!='hash':
+                print('%s     %s:%s'%(' '*len(hash),path,key))
+                server.get("tcl('add node %s.%s:%s/usage=text')"%(ids,hash,key))
+                #server.get("tcl('put %s.%s:%s "$"')"%(ids,hash,key),str(meta[key])) #filling in the attributes this way does not seem to work
+
+    #fill in the attributes
+    for key in meta.keys():
+        if key!='hash':
+            print('%s     %s:%s [%s]'%(' '*len(hash),path,key,str(meta[key])))
             if write:
-                for key in structure[path].keys():
-                    if key!='hash':
-                        print('%s     %s:%s [%s]'%(' '*len(structure[path]['hash']),path,key,str(structure[path][key])))
-                        server.put(str(":%s.%s:%s"%(ids,structure[path]['hash'],key)),"$",str(structure[path][key]))
+                server.put(str(":%s.%s:%s"%(ids,hash,key)),"$",str(meta[key]))
+
+    #close the tree from edit mode
+    if write_stop:
+        server.get("tcl('write')")
+        server.get("tcl('close')")
 
 def create_mds_shot(server, tree, shot, clean=False):
     import MDSplus
@@ -512,7 +543,7 @@ def xarray2mds(xarray_data):
             txt='$'
             if 'units' in item.attrs:
                 txt='build_with_units(%s,%s)'%(txt,item.attrs['units'])
-            if any(is_uncertain(item.values)):
+            if any(is_uncertain(numpy.atleast_1d(item.values).flatten())):
                 txt='build_with_error(%s,%s)'%(txt,txt)
                 arg.extend([nominal_values(item.values),std_devs(item.values)])
             else:
@@ -543,7 +574,7 @@ if __name__ == '__main__':
     mds_server=['atlas.gat.com','127.0.0.1:63555'][0]
 
     #stage #1 must be run to generate necessary .json files
-    stage=4
+    stage=5
 
     if stage==0:
         aggregate_html_docs(imas_html_dir,imas_version)
@@ -575,29 +606,42 @@ if __name__ == '__main__':
         print('Load OMAS data from netCDF')
 
     elif stage==3:
-        write_mds_model(mds_server, 'test', ['actuator'], write=True, start_over=True)
+        write_mds_model(mds_server, 'test', ['equilibrium'], write=True, start_over=True)
         create_mds_shot(mds_server,'test',999)#, True)
 
     elif stage==4:
         ods1=load_omas_nc('test.nc')
         print('Load OMAS data from netCDF')
 
-        time=xarray.DataArray(numpy.atleast_1d([1000,2000]),
-                              dims=['time'])
-
-        actuator_power=xarray.DataArray(numpy.atleast_1d([1E6,1.1E6]),
-                                        dims=['time'])
-
-        text,args=xarray2mds(actuator_power)
+        text,args=xarray2mds(ods1['equilibrium.time_slice.profiles_1d.psi'])
 
         import MDSplus
         server=MDSplus.Connection(mds_server)
         server.openTree('test',999)
-        server.put(':actuator.H653094c8e51:data',text,*args)
+        server.put(':equilibrium.He5bdc700a22:data',text,*args)
 
-        print server.get('\\TEST::TOP.ACTUATOR.H653094C8E51.DATA')
+        print server.get('\\TEST::TOP.equilibrium.He5bdc700a22.DATA')
 
     elif stage==5:
+        ods1=load_omas_nc('test.nc')
+        print('Load OMAS data from netCDF')
+
+        def save_omas_mds(ods, server, tree, shot, *args, **kw):
+            create_mds_shot(server, tree, shot, clean=True)
+            for item in ods.keys():
+                print item
+                ids=item.split(separator)[0]
+                meta=ods[item].attrs
+                if 'hash' not in meta:
+                    continue
+                hash=meta['hash']
+                tree='test'
+                shot=999
+                write_mds_node(server, tree, shot, ids, hash, meta, write_start=True, write=True, write_stop=True)
+
+        save_omas_mds(ods1, mds_server, 'test', 999)
+
+    elif stage==6:
         ods1=load_omas_nc('test.nc')
         print('Load OMAS data from netCDF')
         #print ods1
