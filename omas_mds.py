@@ -1,6 +1,6 @@
 import MDSplus
 
-from omas_json import *
+from omas_structure import *
 from omas import omas
 
 def write_mds_model(server, tree='test', structures=[], write=False, start_over=False, paths=None):
@@ -203,19 +203,20 @@ def load_omas_mds(server, tree, shot):
 if __name__ == '__main__':
 
     from omas_nc import *
-    ods1=load_omas_nc('test.nc')
+    ods=load_omas_nc('test.nc')
 
     if False:
         #the model-data-structure approach...
-        write_mds_model(mds_server, 'test', ['equilibrium'], write=True, start_over=False, paths=ods1.keys())
+        write_mds_model(mds_server, 'test', ['equilibrium'], write=True, start_over=False, paths=ods.keys())
 
         #add the data (this fails for entries that are user-defined)
-        save_omas_mds(ods1, mds_server, 'test', 999, dynamic=False)
+        save_omas_mds(ods, mds_server, 'test', 999, dynamic=False)
 
-    elif False:
-        #the dynamic-data-structure approach...
-        save_omas_mds(ods1, mds_server, 'test', 999)
+    elif True:
+        print('save to MDS+ with dynamic-data-structure approach...')
+        save_omas_mds(ods, mds_server, 'test', 999)
 
     if True:
+        print('load from MDS+')
         ods2=load_omas_mds(mds_server, 'test', 999)
         save_omas_nc(ods2,'test_mds.nc')

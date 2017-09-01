@@ -1,4 +1,4 @@
-from omas_json import *
+from omas_structure import *
 from omas import omas
 
 def save_omas_nc(ods, path, *args, **kw):

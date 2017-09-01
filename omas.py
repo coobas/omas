@@ -1,4 +1,8 @@
-__all__=['omas', 'save_omas_nc', 'load_omas_nc']
+__all__=['omas',
+         'save_omas_nc',   'load_omas_nc',
+         'save_omas_mds',  'load_omas_mds',
+         'save_omas_json', 'load_omas_json',
+         ]
 
 import xarray
 
@@ -29,8 +33,6 @@ class omas(xarray.Dataset):
 
         #consistency checks
         structure=self._structure[data_structure]
-
-        return
 
         if key not in structure:
             if len(value.dims)==1 and value.dims[0]==key:
@@ -72,74 +74,6 @@ class omas(xarray.Dataset):
         tmp=xarray.Dataset.__setitem__(self, key, value)
         return tmp
 
-    def to_imas(self):
-        #generate emphy hierarchical data structure
-        struct_array={}
-        imas_ids={}
-        tr=[]
-        for key in sorted(self.keys())[::-1]:
-            if key=='time': continue
-            data_structure=key.split(separator)[0]
-            path=key.split(separator)
-            structure=self._structure['structure_'+data_structure]
-            h=imas_ids.setdefault(data_structure,{})
-            for k,step in list(enumerate(path))[1:]:
-                location=separator.join(path[:k+1])
-                if location not in structure:
-                    break
-                tr.append(location)
-                s=structure[location]
-                if 'struct_array' in s['data_type']:
-                    struct_array[location]=len(self[s['coordinates'][-1]])
-                h=h.setdefault(step,{})
-        tr=sorted(numpy.unique(tr))
-
-        #replicate data structures based on data dimensions
-        for key in tr[::-1]:
-            if key in struct_array:
-                h=h0=imas_ids
-                for step in key.split(separator):
-                    h0=h
-                    h=h[step]
-                h0[step]=[h]*struct_array[key]
-
-        pprint(imas_ids)
-
-        return imas_ids
-
-from omas_json import *
+from omas_structure import *
 from omas_mds import *
 from omas_nc import *
-
-#------------------------------
-if __name__ == '__main__':
-
-    if False:
-        write_mds_model(mds_server, 'test', ['equilibrium'], write=True, start_over=True)
-        create_mds_shot(mds_server,'test',999)#, True)
-
-    elif False:
-        ods1=load_omas_nc('test.nc')
-        print('Load OMAS data from netCDF')
-
-        text,args=xarray2mds(ods1['equilibrium.time_slice.profiles_1d.psi'])
-
-        import MDSplus
-        server=MDSplus.Connection(mds_server)
-        server.openTree('test',999)
-        server.put(':equilibrium.He5bdc700a22:data',text,*args)
-
-        print server.get('\\TEST::TOP.equilibrium.He5bdc700a22.DATA')
-
-    elif stage==5:
-        ods1=load_omas_nc('test.nc')
-        print('Load OMAS data from netCDF')
-
-        save_omas_mds(ods1, mds_server, 'test', 999)
-
-    elif stage==6:
-        ods1=load_omas_nc('test.nc')
-        print('Load OMAS data from netCDF')
-        #print ods1
-
-        ods1.to_imas()
