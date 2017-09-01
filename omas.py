@@ -627,17 +627,23 @@ if __name__ == '__main__':
         print('Load OMAS data from netCDF')
 
         def save_omas_mds(ods, server, tree, shot, *args, **kw):
+            import MDSplus
+            if isinstance(server,basestring):
+                server=MDSplus.Connection(server)
+
             create_mds_shot(server, tree, shot, clean=True)
+
             for item in ods.keys():
-                print item
-                ids=item.split(separator)[0]
+                ids=str(item.split(separator)[0])
                 meta=ods[item].attrs
-                if 'hash' not in meta:
-                    continue
-                hash=meta['hash']
-                tree='test'
-                shot=999
+                if 'hash' in meta:
+                    hash=meta['hash']
+                else:
+                    hash='H'+md5('time').hexdigest()[:11]
                 write_mds_node(server, tree, shot, ids, hash, meta, write_start=True, write=True, write_stop=True)
+                server.openTree(tree,shot)
+                text,args=xarray2mds(ods[item])
+                server.put(str(':%s.%s:data'%(ids,hash)),text,*args)
 
         save_omas_mds(ods1, mds_server, 'test', 999)
 
