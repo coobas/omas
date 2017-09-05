@@ -5,6 +5,8 @@ def u2s(x):
         #convert unicode to string if unicode encoding is unecessary
         xs=x.encode('utf-8')
         if xs==x: return xs
+    if isinstance(x,tuple):
+        x=list(x)
     if isinstance(x,list):
         return map(lambda x:u2s(x),x)
     elif isinstance(x,dict):

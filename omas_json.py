@@ -3,29 +3,27 @@ from omas import omas
 
 def save_omas_json(ods, path, *args, **kw):
     hierarchy=d2h(ods)
+    json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '))
+    open(path,'w').write(json_string)
 
 def load_omas_json(filename_or_obj, *args, **kw):
-    pass
+    if isinstance(filename_or_obj,basestring):
+        filename_or_obj=open(filename_or_obj,'r')
+    hierarchy=json.loads(filename_or_obj.read(),object_pairs_hook=json_loader)
+    return hierarchy
 
 def x2j(xarray_data):
     '''
-    Convert xarray to a dictionary following xarray naming conventions
-    based on xarray.DataArray.to_dict() function, but implemented here
-    to allow for older versions of the xarray library to work.
+    Convert xarray to a dictionary for use in omas (based on xarray.DataArray.to_dict() function)
 
     :param xarray_data: input xarray.DataArray to operate on
 
     :return: json dictionary
     '''
-    d = {'coords': {}, 'attrs': dict(xarray_data.attrs), 'dims': list(xarray_data.dims)}
-
-    for k in xarray_data.coords:
-        d['coords'].update({k: {'data': xarray_data[k].values.tolist(),
-                                'dims': list(xarray_data[k].dims),
-                                'attrs': dict(xarray_data[k].attrs)}})
-
-    d.update({'data': xarray_data.values.tolist(),
-              'name': xarray_data.name})
+    fmt='__%s__'
+    d={ fmt%'data':xarray_data.values.tolist(),
+        fmt%'dims':xarray_data.dims,
+        fmt%'coordinates':eval(xarray_data.attrs.get('coordinates',"'[1...N]'"))}
 
     return u2s(d)
 
@@ -111,4 +109,7 @@ if __name__ == '__main__':
     from omas_nc import *
     ods=load_omas_nc('test.nc')
 
-    save_omas_json(ods,'test.nc')
+    save_omas_json(ods,'test.json')
+
+    hierarchy=load_omas_json('test.json')
+    pprint(hierarchy)
