@@ -26,12 +26,12 @@ if __name__ == '__main__':
     ods['equilibrium.time_slice.global_quantities.magnetic_axis.r']=xarray.DataArray(numpy.atleast_1d([1.71,1.72]),
                                                          dims=['time'])
 
-    ods['equilibrium.time_slice.profiles_1d.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
-                                                    dims=['equilibrium.time_slice.profiles_1d.psin'])
+    ods['equilibrium.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
+                            dims=['equilibrium.psin'])
 
     ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
                                                     dims=['time',
-                                                          'equilibrium.time_slice.profiles_1d.psin'])
+                                                          'equilibrium.psin'])
 
     save_omas_nc(ods,'test.nc')
     print('Saved OMAS data to netCDF')
