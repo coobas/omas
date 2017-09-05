@@ -2,10 +2,32 @@ from omas_structure import *
 from omas import omas
 
 def save_omas_json(ods, path, *args, **kw):
-    x2h(ods)
+    hierarchy=d2h(ods)
 
 def load_omas_json(filename_or_obj, *args, **kw):
     pass
+
+def x2j(xarray_data):
+    '''
+    Convert xarray to a dictionary following xarray naming conventions
+    based on xarray.DataArray.to_dict() function, but implemented here
+    to allow for older versions of the xarray library to work.
+
+    :param xarray_data: input xarray.DataArray to operate on
+
+    :return: json dictionary
+    '''
+    d = {'coords': {}, 'attrs': dict(xarray_data.attrs), 'dims': list(xarray_data.dims)}
+
+    for k in xarray_data.coords:
+        d['coords'].update({k: {'data': xarray_data[k].values.tolist(),
+                                'dims': list(xarray_data[k].dims),
+                                'attrs': dict(xarray_data[k].attrs)}})
+
+    d.update({'data': xarray_data.values.tolist(),
+              'name': xarray_data.name})
+
+    return u2s(d)
 
 def data_filler(hierarchy, path, data):
     if isinstance(path,basestring):
@@ -14,7 +36,7 @@ def data_filler(hierarchy, path, data):
     print len(path),step
     #if reached the end of the path then assign data
     if len(path)==1:
-        hierarchy[step]=data.values
+        hierarchy[step]=x2j(data)
         return
     #traverse structures
     if isinstance(hierarchy[step],dict):
@@ -29,7 +51,15 @@ def data_filler(hierarchy, path, data):
                 data_filler(hierarchy[step][k], ['time'], slice)
             data_filler(hierarchy[step][k], path[1:], slice)
 
-def x2h(ods):
+def d2h(ods):
+    '''
+    transforms an omas xarray.Dataset into a hierarchical data structure
+
+    :param ods: omas data set
+
+    :return: hierarchical data structure
+    '''
+
     #generate empty hierarchical data structure
     struct_array={}
     hierarchy={}

@@ -25,6 +25,8 @@ if __name__ == '__main__':
                                                          dims=['time'])
     ods['equilibrium.time_slice.global_quantities.magnetic_axis.r']=xarray.DataArray(numpy.atleast_1d([1.71,1.72]),
                                                          dims=['time'])
+    ods['equilibrium.time_slice.global_quantities.magnetic_axis.z']=xarray.DataArray(numpy.atleast_1d([0.001,0.002]),
+                                                         dims=['time'])
 
     ods['equilibrium.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
                             dims=['equilibrium.psin'])
