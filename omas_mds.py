@@ -25,7 +25,7 @@ def write_mds_model(server, tree='test', structures=[], write=False, start_over=
         print file
 
         #load structure
-        structure,ids=load_structure(file)
+        structure,ods=load_structure(file)
 
         #create actual tree structure
         for path in structure.keys():
@@ -37,31 +37,31 @@ def write_mds_node(server, tree, shot, meta, write_start=True, write=True, write
         if isinstance(server,basestring):
             server=MDSplus.Connection(server)
 
-    ids=meta['full_path'].split(separator)[0]
+    ods=meta['full_path'].split(separator)[0]
     hash=meta['hash']
 
     #open the tree for edit mode
     if write_start:
         server.get("tcl('edit %s/shot=%shot')"%(tree,shot))
-        server.get("tcl('add node %s /usage=subtree')"%ids)
+        server.get("tcl('add node %s /usage=subtree')"%ods)
 
     path=meta['full_path']
     print('%s --> %s'%(hash,path))
     if write:
-        server.get("tcl('add node %s.%s /usage=structure')"%(ids,hash))
-        server.get("tcl('add node %s.%s:data /usage=signal')"%(ids,hash))
+        server.get("tcl('add node %s.%s /usage=structure')"%(ods,hash))
+        server.get("tcl('add node %s.%s:data /usage=signal')"%(ods,hash))
         for key in meta.keys():
             if key!='hash':
                 print('%s     %s:%s'%(' '*len(hash),path,key))
-                server.get("tcl('add node %s.%s:%s/usage=text')"%(ids,hash,key))
-                #server.get("tcl('put %s.%s:%s "$"')"%(ids,hash,key),str(meta[key])) #filling in the attributes this way does not seem to work
+                server.get("tcl('add node %s.%s:%s/usage=text')"%(ods,hash,key))
+                #server.get("tcl('put %s.%s:%s "$"')"%(ods,hash,key),str(meta[key])) #filling in the attributes this way does not seem to work
 
     #fill in the attributes
     for key in meta.keys():
         if key!='hash':
             print('%s     %s:%s [%s]'%(' '*len(hash),path,key,str(meta[key])))
             if write:
-                server.put(str(":%s.%s:%s"%(ids,hash,key)),"$",str(meta[key]))
+                server.put(str(":%s.%s:%s"%(ods,hash,key)),"$",str(meta[key]))
 
     #close the tree from edit mode
     if write_stop:
@@ -110,7 +110,7 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True, *args, **kw):
     create_mds_shot(server, tree, shot, clean=dynamic)
 
     for item in ods.keys():
-        ids=str(item.split(separator)[0])
+        ods=str(item.split(separator)[0])
         meta=copy.deepcopy(ods[item].attrs)
         if 'hash' in meta:
             hash=meta['hash']
@@ -122,7 +122,7 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True, *args, **kw):
             write_mds_node(server, tree, shot, meta, write_start=True, write=True, write_stop=True)
         server.openTree(tree,shot)
         text,args,dims=xarray2mds(ods[item])
-        server.put(str(':%s.%s:data'%(ids,hash)),text,*args)
+        server.put(str(':%s.%s:data'%(ods,hash)),text,*args)
 
 def mds2xarray(server, tree, shot, node):
     '''
@@ -152,15 +152,15 @@ def mds2xarray(server, tree, shot, node):
     return xdata
 
 def mds2xpath(mds_path):
-    ids=mds_path.split('TOP'+separator)[1].split(separator)[0].lower()
+    ods=mds_path.split('TOP'+separator)[1].split(separator)[0].lower()
     hash=mds_path.split('TOP'+separator)[1].split(separator)[1].split(':')[0]
-    meta=load_structure(ids)[1][hash]
+    meta=load_structure(ods)[1][hash]
     return meta['full_path']
 
 def xpath2mds(tree,xpath):
-    ids=xpath.split(separator)[0]
+    ods=xpath.split(separator)[0]
     hash=md5_hasher(xpath)
-    return ('\\%s::TOP.%s.%s'%(tree,ids,hash)).upper()
+    return ('\\%s::TOP.%s.%s'%(tree,ods,hash)).upper()
 
 def load_omas_mds(server, tree, shot):
     if isinstance(server,basestring):

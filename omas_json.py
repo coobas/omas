@@ -6,38 +6,55 @@ def save_omas_json(ods, path, *args, **kw):
     json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '))
     open(path,'w').write(json_string)
 
-def traverse(self, paths=[]):
+def gethdata(hierarchy,path):
+    h=hierarchy
+    for step in path:
+        h=h[step]
+    return h
+
+def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
     paths_in=paths
     paths_out=[]
 
+    dests_in=dests
+    dests_out=[]
+
     #handle dict
-    if isinstance(self,dict):
-        for kid in self.keys():
+    if isinstance(hierarchy,dict):
+        for kid in hierarchy.keys():
             if not kid.startswith('__'):
                 paths=paths_in+[kid]
+                dests=dests_in+[kid]
+                tmp=htraverse(hierarchy[kid],paths,dests,mapper,dims)
+                paths_out.extend( tmp[0] )
+                dests_out.extend( tmp[1] )
+                mapper.update(    tmp[2] )
+            elif kid.startswith('__data__'):
                 paths_out.append(paths)
-                paths_out.extend( traverse(self[kid],paths) )
+                dests_out.append(dests)
+                mapper.setdefault(separator.join(dests),{'data':[],'dims':dims+hierarchy['__dims__']})
+                mapper[separator.join(dests)]['data'].append(paths)
 
     #handle list
-    elif isinstance(self,list) and len(self):
-        paths_out.extend( traverse(self[0],paths) )
+    elif isinstance(hierarchy,list) and len(hierarchy):
+        for k in range(len(hierarchy)):
+            paths=paths_in+[k]
+            dests=dests_in
+            tmp=htraverse(hierarchy[k],paths,dests,mapper,dims+[info_node(separator.join(dests_in))['coordinates']])
+            paths_out.extend( tmp[0] )
+            dests_out.extend( tmp[1] )
+            mapper.update(    tmp[2] )
 
-    #build full paths
-    for k,item in enumerate(paths_out):
-        if not isinstance(item,basestring):
-            paths_out[k]=separator.join(item)
-            print paths_out[k]
-
-    return paths_out
+    return paths_out,dests_out,mapper
 
 def load_omas_json(filename_or_obj, *args, **kw):
     if isinstance(filename_or_obj,basestring):
         filename_or_obj=open(filename_or_obj,'r')
     hierarchy=json.loads(filename_or_obj.read(),object_pairs_hook=json_loader)
 
-    paths=traverse(hierarchy)
+    paths,dests,mapper=htraverse(hierarchy)
 
-#    ods=omas()
+    pprint(mapper)
 
     return hierarchy
 

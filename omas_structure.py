@@ -307,6 +307,13 @@ def create_json_structure(imas_version, data_structures=None):
 _structures={}
 _structures_by_hash={}
 def load_structure(file):
+    '''
+    load omas json structure file
+
+    :param file:
+
+    :return: tuple with structure, hashing mapper, and ods
+    '''
     if os.sep not in file:
         file=glob.glob(imas_json_dir+os.sep+imas_version+os.sep+file+'*'+'.json')[0]
     if file not in _structures:
@@ -314,8 +321,20 @@ def load_structure(file):
         _structures_by_hash[file]={}
         for item in _structures[file]:
             _structures_by_hash[_structures[file][item]['hash']]=_structures[file][item]
-    ids=_structures[file].keys()[0].split(separator)[0]
-    return _structures[file],_structures_by_hash,ids
+    ods=_structures[file].keys()[0].split(separator)[0]
+    return _structures[file],_structures_by_hash,ods
+
+def info_node(node):
+    '''
+    return omas structure attributes for a node
+
+    :param node: node in the omas data structure
+
+    :return: attributes of the node
+    '''
+    data_structure=node.split(separator)[0]
+    structure=load_structure(data_structure)[0]
+    return structure[node]
 
 #----------------------------------------------
 # must be run to generate necessary .json files
