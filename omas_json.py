@@ -6,25 +6,29 @@ def save_omas_json(ods, path, *args, **kw):
     json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '))
     open(path,'w').write(json_string)
 
-def traverse(self, string=[], join_paths=True):
-    string_in=string
-    string_out=[]
+def traverse(self, paths=[]):
+    paths_in=paths
+    paths_out=[]
+
     #handle dict
     if isinstance(self,dict):
         for kid in self.keys():
             if not kid.startswith('__'):
-                string=string_in+[kid]
-                string_out.append(string)
-                string_out.extend( traverse(self[kid],string,False) )
+                paths=paths_in+[kid]
+                paths_out.append(paths)
+                paths_out.extend( traverse(self[kid],paths) )
+
     #handle list
     elif isinstance(self,list) and len(self):
-        string_out.extend( traverse(self[0],string,False) )
+        paths_out.extend( traverse(self[0],paths) )
+
     #build full paths
-    for k,item in enumerate(string_out):
+    for k,item in enumerate(paths_out):
         if not isinstance(item,basestring):
-            string_out[k]=separator.join(item)
-            print string_out[k]
-    return string_out
+            paths_out[k]=separator.join(item)
+            print paths_out[k]
+
+    return paths_out
 
 def load_omas_json(filename_or_obj, *args, **kw):
     if isinstance(filename_or_obj,basestring):
