@@ -146,9 +146,12 @@ def mds2xarray(server, tree, shot, node):
         if len(e) and e[0]!='':
             coords[c]=uarray(coords[c],e)
         units=MDSplus.data(server.get('units(_s)'))
-        coords[c]=xarray.DataArray(coords[c],dims=[c],coords={c:coords[c]},attrs={'units':units})
+        attrs={}
+        if len(units.strip()):
+            attrs={'units':units}
+        coords[c]=xarray.DataArray(coords[c],dims=[c],coords={c:coords[c]},attrs=attrs)
     units=MDSplus.data(server.get('units(_s)'))
-    xdata=xarray.DataArray(data,dims=dims,coords=coords,attrs={'units':units})
+    xdata=xarray.DataArray(data,dims=dims,coords=coords,attrs=attrs)
     return xdata
 
 def mds2xpath(mds_path):
@@ -205,18 +208,14 @@ if __name__ == '__main__':
     from omas_nc import *
     ods=load_omas_nc('test.nc')
 
-    if False:
-        #the model-data-structure approach...
-        write_mds_model(mds_server, 'test', ['equilibrium'], write=True, start_over=False, paths=ods.keys())
+    print('save to MDS+ with dynamic-data-structure approach...')
+    save_omas_mds(ods, mds_server, 'test', 999)
+    print('load from MDS+')
+    ods1=load_omas_mds(mds_server, 'test', 999)
+    save_omas_nc(ods1,'test_mds.nc')
 
-        #add the data (this fails for entries that are user-defined)
-        save_omas_mds(ods, mds_server, 'test', 999, dynamic=False)
-
-    elif True:
-        print('save to MDS+ with dynamic-data-structure approach...')
-        save_omas_mds(ods, mds_server, 'test', 999)
-
-    if True:
-        print('load from MDS+')
-        ods2=load_omas_mds(mds_server, 'test', 999)
-        save_omas_nc(ods2,'test_mds.nc')
+    print('save to MDS+ with dynamic-data-structure approach...')
+    save_omas_mds(ods1, mds_server, 'test', 999)
+    print('load from MDS+')
+    ods2=load_omas_mds(mds_server, 'test', 999)
+    save_omas_nc(ods2,'test1_mds.nc')

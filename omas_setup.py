@@ -26,4 +26,4 @@ else:
     imas_html_dir='/Users/meneghini/tmp/imas'
 imas_html_dir=os.path.abspath(imas_html_dir)
 
-mds_server=['atlas.gat.com','127.0.0.1:63555'][1]
+mds_server=['atlas.gat.com','127.0.0.1:63555'][0]
