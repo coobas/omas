@@ -6,10 +6,35 @@ def save_omas_json(ods, path, *args, **kw):
     json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '))
     open(path,'w').write(json_string)
 
+def traverse(self, string=[], join_paths=True):
+    string_in=string
+    string_out=[]
+    #handle dict
+    if isinstance(self,dict):
+        for kid in self.keys():
+            if not kid.startswith('__'):
+                string=string_in+[kid]
+                string_out.append(string)
+                string_out.extend( traverse(self[kid],string,False) )
+    #handle list
+    elif isinstance(self,list) and len(self):
+        string_out.extend( traverse(self[0],string,False) )
+    #build full paths
+    for k,item in enumerate(string_out):
+        if not isinstance(item,basestring):
+            string_out[k]=separator.join(item)
+            print string_out[k]
+    return string_out
+
 def load_omas_json(filename_or_obj, *args, **kw):
     if isinstance(filename_or_obj,basestring):
         filename_or_obj=open(filename_or_obj,'r')
     hierarchy=json.loads(filename_or_obj.read(),object_pairs_hook=json_loader)
+
+    paths=traverse(hierarchy)
+
+#    ods=omas()
+
     return hierarchy
 
 def x2j(xarray_data):
@@ -27,7 +52,7 @@ def x2j(xarray_data):
 
     return u2s(d)
 
-def data_filler(hierarchy, path, data):
+def j_data_filler(hierarchy, path, data):
     if isinstance(path,basestring):
         path=path.split(separator)
     step=path[0]
@@ -38,7 +63,7 @@ def data_filler(hierarchy, path, data):
         return
     #traverse structures
     if isinstance(hierarchy[step],dict):
-        data_filler(hierarchy[step], path[1:], data)
+        j_data_filler(hierarchy[step], path[1:], data)
     #traverse list of structures (slicing according to data dimensions)
     elif isinstance(hierarchy[step],list):
         dim=data.dims[0]
@@ -46,8 +71,8 @@ def data_filler(hierarchy, path, data):
             slice=data.isel(**{dim:k})
             if dim=='time' and 'time' not in hierarchy[step][k]:
                 hierarchy[step][k]['time']={}
-                data_filler(hierarchy[step][k], ['time'], slice)
-            data_filler(hierarchy[step][k], path[1:], slice)
+                j_data_filler(hierarchy[step][k], ['time'], slice)
+            j_data_filler(hierarchy[step][k], path[1:], slice)
 
 def d2h(ods):
     '''
@@ -96,7 +121,7 @@ def d2h(ods):
     for key in map(str,sorted(ods.keys())):
         print '*'*20
         print key,ods[key].dims
-        data_filler(hierarchy,key,ods[key])
+        j_data_filler(hierarchy,key,ods[key])
 
     print '*'*20
     pprint(hierarchy)
@@ -106,10 +131,10 @@ def d2h(ods):
 #------------------------------
 if __name__ == '__main__':
 
-    from omas_nc import *
-    ods=load_omas_nc('test.nc')
+    #from omas_nc import *
+    #ods=load_omas_nc('test.nc')
 
-    save_omas_json(ods,'test.json')
+    #save_omas_json(ods,'test.json')
 
     hierarchy=load_omas_json('test.json')
-    pprint(hierarchy)
+    #pprint(hierarchy)
