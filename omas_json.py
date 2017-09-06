@@ -19,12 +19,15 @@ def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
     dests_in=dests
     dests_out=[]
 
+    dims_in=dims
+
     #handle dict
     if isinstance(hierarchy,dict):
         for kid in hierarchy.keys():
             if not kid.startswith('__'):
                 paths=paths_in+[kid]
                 dests=dests_in+[kid]
+                dims=dims_in
                 tmp=htraverse(hierarchy[kid],paths,dests,mapper,dims)
                 paths_out.extend( tmp[0] )
                 dests_out.extend( tmp[1] )
@@ -32,15 +35,19 @@ def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
             elif kid.startswith('__data__'):
                 paths_out.append(paths)
                 dests_out.append(dests)
-                mapper.setdefault(separator.join(dests),{'data':[],'dims':dims+hierarchy['__dims__']})
-                mapper[separator.join(dests)]['data'].append(paths)
+                dims=copy.deepcopy(dims_in)
+                dims.extend( hierarchy['__dims__'] )
+                mapper.setdefault(separator.join(dests),{'path':[],'dims':dims})
+                mapper[separator.join(dests)]['path'].append(paths)
 
     #handle list
     elif isinstance(hierarchy,list) and len(hierarchy):
         for k in range(len(hierarchy)):
             paths=paths_in+[k]
             dests=dests_in
-            tmp=htraverse(hierarchy[k],paths,dests,mapper,dims+[info_node(separator.join(dests_in))['coordinates']])
+            dims=copy.deepcopy(dims_in)
+            dims.extend(info_node(separator.join(dests_in))['coordinates'])
+            tmp=htraverse(hierarchy[k],paths,dests,mapper,dims)
             paths_out.extend( tmp[0] )
             dests_out.extend( tmp[1] )
             mapper.update(    tmp[2] )
@@ -52,11 +59,51 @@ def load_omas_json(filename_or_obj, *args, **kw):
         filename_or_obj=open(filename_or_obj,'r')
     hierarchy=json.loads(filename_or_obj.read(),object_pairs_hook=json_loader)
 
+    #create mapper dictionary to rebuild xarray structure
     paths,dests,mapper=htraverse(hierarchy)
+    #pprint(mapper)
 
-    pprint(mapper)
+    #identify dependencies
+    dependencies=[]
+    for item in mapper:
+        dependencies.extend(mapper[item]['dims'])
+    dependencies=numpy.unique(dependencies).tolist()
+    # pprint(dependencies)
 
-    return hierarchy
+    #load dependencies first
+    ods=omas()
+    for item in mapper:
+        if item in dependencies:
+            path=mapper[item]['path'][0]
+            node=gethdata(hierarchy,path)
+            ods[item]=xarray.DataArray(node['__data__'],dims=mapper[item]['dims'])
+
+    #load others then
+    for item in mapper:
+        if item not in dependencies:
+            #create empty data of the right size
+            ods[item]=data=xarray.DataArray(numpy.nan+numpy.zeros(map(lambda node:ods[node].size,mapper[item]['dims'])),dims=mapper[item]['dims'])
+            #fill in the actual data
+            coords={}
+            for path in mapper[item]['path']:
+                node=gethdata(hierarchy,path)
+                #figure out dimensions of the slice
+                islice=filter(lambda x:not isinstance(x,basestring), path )
+                slice=numpy.array(node['__data__'])
+                dslice={}
+                for d in range(len(mapper[item]['dims'])-len(slice.shape)):
+                    dim=mapper[item]['dims'][d]
+                    dslice[ dim ]=islice[d]
+                    coords[dim]=ods[dim].values
+                #enter the data
+                if len(data.shape)==1:
+                    data.values[islice[0]]=slice
+                else:
+                    data.isel(**dslice).values[:]=slice
+            #update coordinates
+            data.coords.update(coords)
+
+    return ods
 
 def x2j(xarray_data):
     '''
@@ -77,7 +124,7 @@ def j_data_filler(hierarchy, path, data):
     if isinstance(path,basestring):
         path=path.split(separator)
     step=path[0]
-    print len(path),step
+    #print len(path),step
     #if reached the end of the path then assign data
     if len(path)==1:
         hierarchy[step]=x2j(data)
@@ -140,22 +187,25 @@ def d2h(ods):
 
     #fill data
     for key in map(str,sorted(ods.keys())):
-        print '*'*20
-        print key,ods[key].dims
+        # print '*'*20
+        # print key,ods[key].dims
         j_data_filler(hierarchy,key,ods[key])
 
-    print '*'*20
-    pprint(hierarchy)
+    # print '*'*20
+    # pprint(hierarchy)
 
     return hierarchy
 
 #------------------------------
 if __name__ == '__main__':
 
-    #from omas_nc import *
-    #ods=load_omas_nc('test.nc')
+    from omas_nc import *
+    ods=load_omas_nc('test.nc')
 
-    #save_omas_json(ods,'test.json')
+    save_omas_json(ods,'test.json')
+    ods1=load_omas_json('test.json')
+    save_omas_nc(ods1,'test_json.nc')
 
-    hierarchy=load_omas_json('test.json')
-    #pprint(hierarchy)
+    save_omas_json(ods,'test1.json')
+    ods2=load_omas_json('test1.json')
+    save_omas_nc(ods2,'test1_json.nc')

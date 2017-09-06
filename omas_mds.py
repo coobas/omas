@@ -110,7 +110,7 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True, *args, **kw):
     create_mds_shot(server, tree, shot, clean=dynamic)
 
     for item in ods.keys():
-        ods=str(item.split(separator)[0])
+        ds=str(item.split(separator)[0])
         meta=copy.deepcopy(ods[item].attrs)
         if 'hash' in meta:
             hash=meta['hash']
@@ -122,7 +122,7 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True, *args, **kw):
             write_mds_node(server, tree, shot, meta, write_start=True, write=True, write_stop=True)
         server.openTree(tree,shot)
         text,args,dims=xarray2mds(ods[item])
-        server.put(str(':%s.%s:data'%(ods,hash)),text,*args)
+        server.put(str(':%s.%s:data'%(ds,hash)),text,*args)
 
 def mds2xarray(server, tree, shot, node):
     '''
@@ -167,7 +167,6 @@ def load_omas_mds(server, tree, shot):
         server=MDSplus.Connection(server)
     server.openTree(tree,shot)
     mds_data=sorted(map(lambda x:x.strip(),server.get('getnci("\***","FULLPATH")')))
-    ds=omas()
 
     #identify dependencies
     dependencies=[]
@@ -186,18 +185,19 @@ def load_omas_mds(server, tree, shot):
     mds_dependencies=map(lambda x:xpath2mds(tree,x),dependencies)
 
     #load dependencies first
+    ods=omas()
     for item in mds_data:
         if item.endswith(':DATA') and re.sub(':DATA$','',item) in mds_dependencies:
             print full_path_cache[item]
-            ds[full_path_cache[item]]=mds2xarray(server, tree, shot, item)
+            ods[full_path_cache[item]]=mds2xarray(server, tree, shot, item)
 
     #load others then
     for item in mds_data:
         if item.endswith(':DATA') and not re.sub(':DATA$','',item) in mds_dependencies:
             print full_path_cache[item]
-            ds[full_path_cache[item]]=mds2xarray(server, tree, shot, item)
+            ods[full_path_cache[item]]=mds2xarray(server, tree, shot, item)
 
-    return ds
+    return ods
 
 #------------------------------
 if __name__ == '__main__':

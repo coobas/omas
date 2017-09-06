@@ -35,7 +35,7 @@ class omas(xarray.Dataset):
         structure=self._structure[data_structure]
 
         if key not in structure:
-            if len(value.dims)==1 and value.dims[0]==key:
+            if len(value.dims)==1 and value.dims[0]==key or key.endswith('.time'):
                 return
             raise(Exception('Entry `%s` is not part of the `%s` data structure'%(key,data_structure)))
 
