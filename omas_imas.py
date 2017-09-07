@@ -1,6 +1,7 @@
 import imas
 
 from omas_structure import *
+from omas_json import *
 from omas import omas
 
 def imas_open(user,tokamak,version,shot,run,new=False):
@@ -16,6 +17,7 @@ def imas_open(user,tokamak,version,shot,run,new=False):
     return ids
 
 def imas_set(ids,path,value):
+    print('setting: %s'%repr(path))
     ds=path[0]
     path=path[1:]
 
@@ -27,16 +29,18 @@ def imas_set(ids,path,value):
         if isinstance(p,basestring):
             out=getattr(out,p)
         else:
-            if p in out:
+            try:
                 out=out[p]
-            else:
-                out.resize(p+1)
+            except IndexError:
+                print('resizing: %d'%(p+1))
+                out.resize(2) #issue:resizing must be done once before data write
                 out=out[p]
     setattr(out,path[-1],value)
-    m.put()
+    m.put(0)
     return out
 
 def imas_get(ids,path):
+    print('fetching: %s'%repr(path))
     ds=path[0]
     path=path[1:]
 
@@ -52,11 +56,36 @@ def imas_get(ids,path):
 
     return out
 
+def hmas_set(ids,path,hierarcy):
+    print()
+    data=gethdata(hierarcy,path)['__data__']
+    print('.'.join(map(str,path)),data)
+    return imas_set(ids,path,data)
+
 #------------------------------
 if __name__ == '__main__':
-    ids=imas_open('meneghini','D3D','3.10.1',1,0)
-    imas_set(ids,['magnetics','flux_loop',0,'name'],'bla2')
+    print('='*20)
+    if True:
+        from omas_nc import *
+        ods=load_omas_nc('test.nc')
 
-    ids=imas_open('meneghini','D3D','3.10.1',1,0)
-    print imas_get(ids,['magnetics','flux_loop',0,'name'])
+        hierarchy=d2h(ods)
+        paths=htraverse(hierarchy)[0]
+        ids=imas_open('meneghini','D3D','3.10.1',1,0,True)
+        hmas_set(ids,['equilibrium','time_slice',0,'time'],hierarchy)
+        hmas_set(ids,['equilibrium','time_slice',1,'time'],hierarchy)
+        hmas_set(ids,['equilibrium','time_slice',0,'global_quantities','ip'],hierarchy)
+        hmas_set(ids,['equilibrium','time_slice',1,'global_quantities','ip'],hierarchy)
+        print imas_get(ids,['equilibrium','time_slice',0,'time'])
+        print imas_get(ids,['equilibrium','time_slice',1,'time'])
+        print imas_get(ids,['equilibrium','time_slice',0,'global_quantities','ip'])
+        print imas_get(ids,['equilibrium','time_slice',1,'global_quantities','ip'])
+
+    else:
+        ids=imas_open('meneghini','D3D','3.10.1',1,0)
+        imas_set(ids,['magnetics','time'],numpy.linspace(0,1))
+        imas_set(ids,['magnetics','flux_loop',0,'name'],'bla2')
+        imas_set(ids,['magnetics','flux_loop',0,'flux','data'],numpy.linspace(0,1))
+        print imas_get(ids,['magnetics','flux_loop',0,'name'])
+        print imas_get(ids,['magnetics','flux_loop',0,'flux','data'])
 
