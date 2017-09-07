@@ -139,7 +139,7 @@ def j_data_filler(hierarchy, path, data):
             slice=data.isel(**{dim:k})
             if dim=='time' and 'time' not in hierarchy[step][k]:
                 hierarchy[step][k]['time']={}
-                j_data_filler(hierarchy[step][k], ['time'], slice)
+                j_data_filler(hierarchy[step][k], ['time'], slice['time'])
             j_data_filler(hierarchy[step][k], path[1:], slice)
 
 def d2h(ods):
