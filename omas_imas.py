@@ -16,8 +16,8 @@ def imas_open(user,tokamak,version,shot,run,new=False):
         raise(Exception('Failed to establish connection to IMAS database (user:%s tokamak:%s version:%s shot:%s run:%s)'%(user,tokamak,version,shot,run)))
     return ids
 
-def imas_set(ids,path,value):
-    print('setting: %s'%repr(path))
+def imas_set(ids,path,value,skipMissingNodes=False):
+    printd('setting: %s'%repr(path),topic='imas')
     ds=path[0]
     path=path[1:]
 
@@ -32,35 +32,75 @@ def imas_set(ids,path,value):
             try:
                 out=out[p]
             except IndexError:
-                print('resizing: %d'%(p+1))
+                printd('resizing: %d'%(p+1),topic='imas')
                 out.resize(2) #issue:resizing must be done once before data write
                 out=out[p]
-    setattr(out,path[-1],value)
-    m.put(0)
-    return out
+    if hasattr(out,path[-1]):
+        setattr(out,path[-1],value)
+        m.put(0)
+        return [ds]+path
+    elif skipMissingNodes is not False:
+        if skipMissingNodes is None:
+            printe('WARNING: %s is not part of IMAS structure'%human_redeable_path([ds]+path))
+        return None
+    else:
+        raise(AttributeError('%s is not part of IMAS structure'%human_redeable_path([ds]+path)))
 
-def imas_get(ids,path):
-    print('fetching: %s'%repr(path))
+def imas_get(ids,path,skipMissingNodes=False):
+    printd('fetching: %s'%repr(path),topic='imas')
     ds=path[0]
     path=path[1:]
 
-    m=getattr(ids,ds)
+    if hasattr(ids,ds):
+        m=getattr(ids,ds)
+    elif skipMissingNodes is not False:
+        if skipMissingNodes is None:
+            printe('WARNING: %s is not part of IMAS structure'%human_redeable_path([ds]+path))
+        return None
+    else:
+        raise(AttributeError('%s is not part of IMAS structure'%human_redeable_path([ds]+path)))
+
     m.get()
 
     out=m
     for p in path:
         if isinstance(p,basestring):
-            out=getattr(out,p)
+            if hasattr(out,p):
+                out=getattr(out,p)
+            elif skipMissingNodes is not False:
+                if skipMissingNodes is None:
+                    printe('WARNING: %s is not part of IMAS structure'%human_redeable_path([ds]+path))
+                return None
+            else:
+                raise(AttributeError('%s is not part of IMAS structure'%human_redeable_path([ds]+path)))
         else:
             out=out[p]
 
     return out
 
-def hmas_set(ids,path,hierarcy):
-    print()
+def hmas_set(ids,path,hierarcy,*args,**kw):
+    printd('',topic='imas')
     data=gethdata(hierarcy,path)['__data__']
-    print('.'.join(map(str,path)),data)
-    return imas_set(ids,path,data)
+    printd('.'.join(map(str,path)),data,topic='imas')
+    return imas_set(ids,path,data,*args,**kw)
+
+def save_omas_imas(ods, user, tokamak, version, shot, run, new=False):
+    hierarchy=d2h(ods)
+    paths=htraverse(hierarchy)[0]
+
+    ids=imas_open(user, tokamak, version, shot, run, new)
+    set_paths=[]
+    for path in paths:
+        if 'time' in path[:1] or path[-1]!='time':
+            continue
+        printd('writing %s'%human_redeable_path(path))
+        set_paths.append( hmas_set(ids,path,hierarchy,True) )
+    for path in paths:
+        if 'time' in path[:1] or path[-1]=='time':
+            continue
+        printd('writing %s'%human_redeable_path(path))
+        set_paths.append( hmas_set(ids,path,hierarchy,None) )
+    return filter(None,set_paths)
 
 #------------------------------
 if __name__ == '__main__':
@@ -69,23 +109,8 @@ if __name__ == '__main__':
         from omas_nc import *
         ods=load_omas_nc('test.nc')
 
-        hierarchy=d2h(ods)
-        paths=htraverse(hierarchy)[0]
-        ids=imas_open('meneghini','D3D','3.10.1',1,0,True)
-        hmas_set(ids,['equilibrium','time_slice',0,'time'],hierarchy)
-        hmas_set(ids,['equilibrium','time_slice',1,'time'],hierarchy)
-        hmas_set(ids,['equilibrium','time_slice',0,'global_quantities','ip'],hierarchy)
-        hmas_set(ids,['equilibrium','time_slice',1,'global_quantities','ip'],hierarchy)
-        print imas_get(ids,['equilibrium','time_slice',0,'time'])
-        print imas_get(ids,['equilibrium','time_slice',1,'time'])
-        print imas_get(ids,['equilibrium','time_slice',0,'global_quantities','ip'])
-        print imas_get(ids,['equilibrium','time_slice',1,'global_quantities','ip'])
+        paths=save_omas_imas(ods,'meneghini','D3D','3.10.1',1,0)#,True)
 
-    else:
         ids=imas_open('meneghini','D3D','3.10.1',1,0)
-        imas_set(ids,['magnetics','time'],numpy.linspace(0,1))
-        imas_set(ids,['magnetics','flux_loop',0,'name'],'bla2')
-        imas_set(ids,['magnetics','flux_loop',0,'flux','data'],numpy.linspace(0,1))
-        print imas_get(ids,['magnetics','flux_loop',0,'name'])
-        print imas_get(ids,['magnetics','flux_loop',0,'flux','data'])
-
+        for path in paths:
+            print('%s = %s'%(human_redeable_path(path),repr(imas_get(ids,path,None))))

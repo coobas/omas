@@ -1,4 +1,14 @@
+from __future__ import print_function
 from omas_setup import *
+
+def printd(*objects, **kw):
+    topic=kw.pop('topic','')
+    if os.environ.get('OMAS_DEBUG','')==topic:
+        print(*objects, **kw)
+
+def printe(*objects, **kw):
+    kw['file']=sys.__stderr__
+    print(*objects, **kw)
 
 def u2s(x):
     if isinstance(x,unicode):
@@ -90,7 +100,7 @@ def aggregate_html_docs(imas_html_dir, imas_version):
 
     tables=[line%('Full path name','Description','Data Type','Coordinates')]
     for file in files:
-        print file
+        print(file)
         if os.path.split(file)[1] in ['html_documentation.html','clean.html','dd_versions.html']:
             continue
         html_doc=open(file).read()

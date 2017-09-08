@@ -12,6 +12,15 @@ def gethdata(hierarchy,path):
         h=h[step]
     return h
 
+def human_redeable_path(path):
+    string=path[0]
+    for step in path[1:]:
+        if isinstance(step,int):
+            string+="[%d]"%step
+        else:
+            string+='.%s'%step
+    return string
+
 def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
     paths_in=paths
     paths_out=[]
