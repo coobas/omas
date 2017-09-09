@@ -2,13 +2,21 @@ __all__=['omas',
          'save_omas_nc',   'load_omas_nc',
          'save_omas_mds',  'load_omas_mds',
          'save_omas_json', 'load_omas_json',
+         'save_omas_imas'
          ]
 
 import xarray
 
 class omas(xarray.Dataset):
 
-    def __init__(self, imas_version=None, *args,**kw):
+    '''
+    OMAS data set class
+    '''
+
+    def __init__(self, imas_version=None):
+        '''
+        :param imas_version: IMAS version to use as a constrain for the nodes names
+        '''
         xarray.Dataset.__init__(self)
 
         if imas_version is None:
@@ -19,11 +27,20 @@ class omas(xarray.Dataset):
         self._structure={}
         self._initialized=True
 
-    def consistency_check(self, key, value):
-        if key=='time':
+    def consistency_check(self, opath, data_array):
+        '''
+        check that the opath and the data array dimensions are consistent with IMAS data structure
+
+        :param opath: OMAS path
+
+        :param data_array: xarray.DataArray
+
+        :return: True/False depending on result of consistency check
+        '''
+        if opath=='time':
             return
 
-        data_structure=key.split(separator)[0]
+        data_structure=opath.split(separator)[0]
 
         #load the data_structure information if not available
         if data_structure not in self._structure:
@@ -34,46 +51,58 @@ class omas(xarray.Dataset):
         #consistency checks
         structure=self._structure[data_structure]
 
-        if key not in structure:
-            if len(value.dims)==1 and value.dims[0]==key or key.endswith('.time'):
+        if opath not in structure:
+            if len(data_array.dims)==1 and data_array.dims[0]==opath or opath.endswith('.time'):
                 return
-            raise(Exception('Entry `%s` is not part of the `%s` data structure'%(key,data_structure)))
+            raise(Exception('Entry `%s` is not part of the `%s` data structure'%(opath,data_structure)))
 
-        if 'base_coord' in structure[key]:
+        if 'base_coord' in structure[opath]:
             return
 
-        coords=structure[key]['coordinates']
+        coords=structure[opath]['coordinates']
         for k,c in enumerate(coords):
             if c.startswith('1...'):
                 continue
-            elif value.dims[k]==c:
+            elif data_array.dims[k]==c:
                 continue
-            elif c not in value and c not in self:
+            elif c not in data_array and c not in self:
                 raise(Exception('Must define `%s` as part of the `%s` data structure'%(c,data_structure)))
 
-    def __setitem__(self, key, value):
-        self.consistency_check(key, value)
+    def __setitem__(self, opath, data_array):
+        '''
+        assign a xarray.DataArray to the opath in the OMAS data set
+        Note that the opath and the data array dimensions will be checked for consistent with IMAS data structure
 
-        if key=='time':
+        :param opath: OMAS path
+
+        :param data_array: xarray.DataArray
+
+        :return: assigned xarray.DataArray
+        '''
+        self.consistency_check(opath, data_array)
+
+        if opath=='time':
             for item in structure_time:
-                value.attrs[item]=str(u2s(structure_time[item]))
+                data_array.attrs[item]=str(u2s(structure_time[item]))
         else:
-            data_structure=key.split(separator)[0]
+            data_structure=opath.split(separator)[0]
             structure=self._structure[data_structure]
 
-            if key in structure:
-                if not (len(value.dims)==1 and value.dims[0]==key):
-                    coords_dict={c:self[c] for c in value.dims}
-                    value=xarray.DataArray(value.values,dims=value.dims,coords=coords_dict)
-                for item in structure[key]:
-                    value.attrs[item]=str(u2s(structure[key][item]))
+            if opath in structure:
+                if not (len(data_array.dims)==1 and data_array.dims[0]==opath):
+                    coords_dict={c:self[c] for c in data_array.dims}
+                    data_array=xarray.DataArray(data_array.values,dims=data_array.dims,coords=coords_dict)
+                for item in structure[opath]:
+                    data_array.attrs[item]=str(u2s(structure[opath][item]))
             else:
-                value.attrs['full_path']=key
-                value.attrs['hash']=md5_hasher(key)
+                data_array.attrs['full_path']=opath
+                data_array.attrs['hash']=md5_hasher(opath)
 
-        tmp=xarray.Dataset.__setitem__(self, key, value)
+        tmp=xarray.Dataset.__setitem__(self, opath, data_array)
         return tmp
 
 from omas_structure import *
 from omas_mds import *
 from omas_nc import *
+from omas_json import *
+from omas_imas import *

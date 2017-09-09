@@ -4,6 +4,8 @@ __pycache__/
 *~
 *.idea
 
-imas_json/*/clean.html
-imas_json/*/*.json
+imas_json
+imas_structures/*/clean.html
+imas_structures/*/*.json
+
 /test*

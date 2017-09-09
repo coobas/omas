@@ -1,97 +1,25 @@
-from __future__ import print_function
-from omas_setup import *
+from __future__ import absolute_import, print_function, division, unicode_literals
+from omas_utils import *
 
-def printd(*objects, **kw):
-    topic=kw.pop('topic','')
-    if os.environ.get('OMAS_DEBUG','')==topic:
-        print(*objects, **kw)
+#--------------------------------------------
+# generation of the imas structure json files
+#--------------------------------------------
+def aggregate_imas_html_docs(imas_html_dir, imas_version):
+    '''
+    this function aggregates all of the IMAS html documentation pages
+    into a single clean.html page that is stored under the imas_structures folder.
+        omas/imas_structures/<imas_version>/clean.html
 
-def printe(*objects, **kw):
-    kw['file']=sys.__stderr__
-    print(*objects, **kw)
+    This clean.html page is then --MANUALLY--:
+    1. opened in EXCEL
+    2. in EXCEL all cells are un-merged
+    3. the EXCEL document is finally saved as clean.xls
+        omas/imas_structures/<imas_version>/clean.xls
 
-def u2s(x):
-    if isinstance(x,unicode):
-        #convert unicode to string if unicode encoding is unecessary
-        xs=x.encode('utf-8')
-        if xs==x: return xs
-    if isinstance(x,tuple):
-        x=list(x)
-    if isinstance(x,list):
-        return map(lambda x:u2s(x),x)
-    elif isinstance(x,dict):
-        return json_loader(x.items())
-    return x
+    :param imas_html_dir: directory where the IMAS html documentation is stored
 
-def json_dumper(obj):
-    if isinstance(obj, numpy.ndarray):
-        if 'complex' in str(obj.dtype).lower():
-            return dict(__ndarray_tolist_real__ = obj.real.tolist(),
-                        __ndarray_tolist_imag__ = obj.imag.tolist(),
-                        dtype=str(obj.dtype),
-                        shape=obj.shape)
-
-        else:
-            return dict(__ndarray_tolist__=obj.tolist(),
-                        dtype=str(obj.dtype),
-                        shape=obj.shape)
-    elif isinstance(obj, numpy.generic):
-        return numpy.asscalar(obj)
-    elif isinstance(obj, complex):
-        return dict(__complex__=True,real=obj.real,imag=obj.imag)
-    try:
-        return obj.toJSON()
-    except Exception:
-        return obj.__dict__
-
-def json_loader(object_pairs):
-    object_pairs=map(lambda o:(u2s(o[0]),u2s(o[1])),object_pairs)
-    dct=dict((x,y) for x,y in object_pairs)
-    if '__ndarray_tolist__' in dct:
-        return array(dct['__ndarray_tolist__'],dtype=dct['dtype']).reshape(dct['shape'])
-    elif ('__ndarray_tolist_real__' in dct and
-          '__ndarray_tolist_imag__' in dct):
-          return (array(dct['__ndarray_tolist_real__'],dtype=dct['dtype']).reshape(dct['shape'])+
-                  array(dct['__ndarray_tolist_imag__'],dtype=dct['dtype']).reshape(dct['shape'])*1j)
-    elif '__ndarray__' in dct:
-        data = base64.b64decode(dct['__ndarray__'])
-        return np.frombuffer(data, dct['dtype']).reshape(dct['shape'])
-    elif '__complex__' in dct:
-        return complex(dct['real'],dct['imag'])
-    return dct
-
-def is_uncertain(var):
-    '''return True if variable is instance of uncertainties'''
-    def uncertain_check(x):
-        return isinstance(x,uncertainties.Variable) or isinstance(x,uncertainties.AffineScalarFunc)
-    if numpy.iterable(var):
-        return numpy.reshape(numpy.array(map(uncertain_check,numpy.array(var).flat)),numpy.array(var).shape)
-    else:
-        return uncertain_check(var)
-
-def remove_parentheses(inv):
-    k=0
-    lp=''
-    out=''
-    for c in inv:
-        if c=='(':
-            k+=1
-            lp=c
-        elif c==')':
-            k-=1
-            lp+=c
-        elif k==0:
-            out+=c
-        elif k==1:
-            lp+=c
-    if inv.endswith(')'):
-        out+=('_'+lp[1:-1])
-    return out
-
-def md5_hasher(inv):
-    return str('H'+md5(inv).hexdigest()[:11]).upper()
-
-def aggregate_html_docs(imas_html_dir, imas_version):
+    :param imas_version: IMAS version
+    '''
     from bs4 import BeautifulSoup
 
     files=glob.glob(imas_html_dir+'/*.html')
@@ -132,7 +60,17 @@ fix['ic.surface_current.n_pol']='ic.surface_current.n_tor'
 fix['waveform.value.time']='waveform.time'
 fix['unit.beamlets_group.beamlets.positions.R']='unit.beamlets_group.beamlets.positions.r'
 
-def create_json_structure(imas_version, data_structures=None):
+def create_json_structure(imas_version, data_structures=[]):
+    '''
+    This function generates the OMAS structures .json files
+    after the clean.xml file is been manually generated.
+        omas/imas_structures/<imas_version>/clean.html
+
+    :param imas_version: IMAS version
+
+    :param data_structures: list of data_structures to generate.
+                             All data structures are generated if `data_structures==[]`
+    '''
     #read xls file
     clean=os.path.abspath(os.sep.join([imas_json_dir,imas_version,'clean']))
     data=pandas.read_excel(clean+'.xls','Sheet1')
@@ -153,7 +91,7 @@ def create_json_structure(imas_version, data_structures=None):
         datas[sections.keys()[k]]=data[start+2:stop].reset_index()
 
     #data structures
-    if data_structures is None:
+    if not len(data_structures):
         data_structures=sorted(datas.keys())
 
     #loop over the data structures
@@ -314,44 +252,12 @@ def create_json_structure(imas_version, data_structures=None):
         json_string=json.dumps(structure, default=json_dumper, indent=1, separators=(',',': '))
         open(imas_json_dir+os.sep+imas_version+os.sep+section+'.json','w').write(json_string)
 
-_structures={}
-_structures_by_hash={}
-def load_structure(file):
-    '''
-    load omas json structure file
-
-    :param file:
-
-    :return: tuple with structure, hashing mapper, and ods
-    '''
-    if os.sep not in file:
-        file=glob.glob(imas_json_dir+os.sep+imas_version+os.sep+file+'*'+'.json')[0]
-    if file not in _structures:
-        _structures[file]=json.loads(open(file,'r').read(),object_pairs_hook=json_loader)
-        _structures_by_hash[file]={}
-        for item in _structures[file]:
-            _structures_by_hash[_structures[file][item]['hash']]=_structures[file][item]
-    ods=_structures[file].keys()[0].split(separator)[0]
-    return _structures[file],_structures_by_hash,ods
-
-def info_node(node):
-    '''
-    return omas structure attributes for a node
-
-    :param node: node in the omas data structure
-
-    :return: attributes of the node
-    '''
-    data_structure=node.split(separator)[0]
-    structure=load_structure(data_structure)[0]
-    return structure[node]
-
 #----------------------------------------------
 # must be run to generate necessary .json files
 #----------------------------------------------
 if __name__ == '__main__' and os.path.exists(imas_html_dir):
 
     if not os.path.exists(os.sep.join([imas_json_dir,imas_version,'clean.xls'])):
-        aggregate_html_docs(imas_html_dir,imas_version)
+        aggregate_imas_html_docs(imas_html_dir, imas_version)
 
     create_json_structure(imas_version)

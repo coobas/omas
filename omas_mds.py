@@ -1,9 +1,29 @@
-import MDSplus
+from __future__ import absolute_import, print_function, division, unicode_literals
 
 from omas_structure import *
 from omas import omas
 
-def write_mds_model(server, tree='test', structures=[], write=False, start_over=False, paths=None):
+def write_mds_model(server, tree='test', data_structures=[], write=False, start_over=False, write_paths=[]):
+    '''
+    write an entire MDS+ model tree based on the OMAS data structures .json files
+    NOTE: this function overwrites the --model-- tree (ie. shot=-1)
+
+    :param server: MDS+ server
+
+    :param tree: MDS+ tree to write to
+
+    :param data_structures: list of data_structures to generate.
+                             All data structures are generated if `data_structures==[]`
+
+    :param write: write to MDS+ (otherwise it is just for testing)
+
+    :param start_over: wipe out existing MDS+ tree structure and data
+
+    :param write_paths:
+    :return:
+    '''
+    import MDSplus
+
     if write:
         if isinstance(server,basestring):
             server=MDSplus.Connection(server)
@@ -14,25 +34,45 @@ def write_mds_model(server, tree='test', structures=[], write=False, start_over=
             server.get("tcl('write')")
             server.get("tcl('close')")
 
-    #loop over the requested structures or otherwise on all structures
-    if len(structures):
+    #loop over the requested data_structures or otherwise on all data_structures
+    if len(data_structures):
         files=[]
-        for structure in structures:
+        for structure in data_structures:
             files.append(imas_json_dir+os.sep+imas_version+os.sep+structure+'.json')
     else:
         files=glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*.json')
     for file in files:
-        print file
+        print(file)
 
         #load structure
         structure,ods=load_structure(file)
 
         #create actual tree structure
         for path in structure.keys():
-            if path is None or path in paths:
+            if path is None or path in write_paths:
                 write_mds_node(server, tree, -1, structure[path])
 
 def write_mds_node(server, tree, shot, meta, write_start=True, write=True, write_stop=True):
+    '''
+    create a node in the MDS+ tree
+
+    :param server: MDS+ server
+
+    :param tree: MDS+ tree to write to
+
+    :param shot: MDS+ shot to write to
+
+    :param meta:
+
+    :param write_start: open the MDS+ tree for editing
+
+    :param write: put to MDS+ the data for this node
+
+    :param write_stop: actually write and close the tree
+
+    :return:
+    '''
+    import MDSplus
     if write_start or write or write_stop:
         if isinstance(server,basestring):
             server=MDSplus.Connection(server)
@@ -69,6 +109,18 @@ def write_mds_node(server, tree, shot, meta, write_start=True, write=True, write
         server.get("tcl('close')")
 
 def create_mds_shot(server, tree, shot, clean=False):
+    '''
+    create a new MDS+ shot based on the model tree
+
+    :param server: MDS+ server
+
+    :param tree: MDS+ tree to write to
+
+    :param shot: new shot to be created
+
+    :param clean: for this shot the new MDS+ tree will be blank
+    '''
+    import MDSplus
     if isinstance(server,basestring):
         server=MDSplus.Connection(server)
     #create new shot
@@ -82,52 +134,52 @@ def create_mds_shot(server, tree, shot, clean=False):
         server.get("tcl('close')")
 
 def xarray2mds(xarray_data):
-        #generate TDI expression for writing data to MDS+
-        text=[]
-        args=[]
-        for itemName in ['']+map(lambda k:"['%s']"%k,list(xarray_data.dims)):
-            itemBaseName=itemName.strip("'[]")
-            item=eval('xarray_data'+itemName)
-            arg=[]
-            txt='$'
-            if 'units' in item.attrs:
-                txt='build_with_units(%s,%s)'%(txt,item.attrs['units'])
-            if any(is_uncertain(numpy.atleast_1d(item.values).flatten())):
-                txt='build_with_error(%s,%s)'%(txt,txt)
-                arg.extend([nominal_values(item.values),std_devs(item.values)])
-            else:
-                arg.append(item.values)
-            args.extend(arg)
-            text.append(txt)
-        text='make_signal(%s,*,%s)'%(text[0],','.join(text[1:]))
-        return text,args,xarray_data.dims
+    '''
+    this function translates a DataArray into an MDS+ signal
 
-def save_omas_mds(ods, server, tree, shot, dynamic=True, *args, **kw):
-    import MDSplus
-    if isinstance(server,basestring):
-        server=MDSplus.Connection(server)
+    :param xarray_data: xarray DataArray
 
-    create_mds_shot(server, tree, shot, clean=dynamic)
+    :return: (text, args, xarray_data.dims)
+             text is the MDS+ signal string to be used
+             args is the arguments to be passed to the MDS+ signal string
+             xarray_data.dims is a list of strings indicating the dimensions of the object
 
-    for item in ods.keys():
-        ds=str(item.split(separator)[0])
-        meta=copy.deepcopy(ods[item].attrs)
-        if 'hash' in meta:
-            hash=meta['hash']
+    '''
+    #generate TDI expression for writing data to MDS+
+    text=[]
+    args=[]
+    for itemName in ['']+map(lambda k:"['%s']"%k,list(xarray_data.dims)):
+        itemBaseName=itemName.strip("'[]")
+        item=eval('xarray_data'+itemName)
+        arg=[]
+        txt='$'
+        if 'units' in item.attrs:
+            txt='build_with_units(%s,%s)'%(txt,item.attrs['units'])
+        if any(is_uncertain(numpy.atleast_1d(item.values).flatten())):
+            txt='build_with_error(%s,%s)'%(txt,txt)
+            arg.extend([nominal_values(item.values),std_devs(item.values)])
         else:
-            hash=md5_hasher('time')
-        meta['xcoords']=str(map(u2s,ods[item].dims))
-        print meta['xcoords']
-        if dynamic:
-            write_mds_node(server, tree, shot, meta, write_start=True, write=True, write_stop=True)
-        server.openTree(tree,shot)
-        text,args,dims=xarray2mds(ods[item])
-        server.put(str(':%s.%s:data'%(ds,hash)),text,*args)
+            arg.append(item.values)
+        args.extend(arg)
+        text.append(txt)
+    text='make_signal(%s,*,%s)'%(text[0],','.join(text[1:]))
+    return text,args,xarray_data.dims
 
 def mds2xarray(server, tree, shot, node):
     '''
+    this function reads an MDS+ node and returns the information in the format of a xarray DataArray
+
+    :param server: MDS+ server
+
+    :param tree: MDS+ tree name
+
+    :param shot: MDS+ shot
+
+    :param node: MDS+ location
+
     :return: DataArray with information from this node
     '''
+    import MDSplus
     if isinstance(server,basestring):
         server=MDSplus.Connection(server)
     server.openTree(tree,shot)
@@ -155,17 +207,81 @@ def mds2xarray(server, tree, shot, node):
     return xdata
 
 def mds2xpath(mds_path):
+    '''
+    translates an OMAS MDS+ path to a OMAS path
+
+    :param mds_path: string with the OMAS path
+
+    :return: string with OMAS path
+    '''
     ods=mds_path.split('TOP'+separator)[1].split(separator)[0].lower()
     hash=mds_path.split('TOP'+separator)[1].split(separator)[1].split(':')[0]
     meta=load_structure(ods)[1][hash]
     return meta['full_path']
 
-def xpath2mds(tree,xpath):
+def xpath2mds(tree, xpath):
+    '''
+    translates an OMAS path to an OMAS MDS+ path
+
+    :param xpath: string with OMAS path
+
+    :return: string with the OMAS path
+    '''
     ods=xpath.split(separator)[0]
     hash=md5_hasher(xpath)
     return ('\\%s::TOP.%s.%s'%(tree,ods,hash)).upper()
 
+#---------------------------
+# save and load OMAS to MDS+
+#---------------------------
+def save_omas_mds(ods, server, tree, shot, dynamic=True):
+    '''
+    Save a OMAS data set to MDS+
+
+    :param ods: OMAS data set
+
+    :param server: MDS+ server
+
+    :param tree: MDS+ tree name
+
+    :param shot: MDS+ shot
+
+    :param dynamic: dynamic tree nodes generation (False: use model tree)
+    '''
+    import MDSplus
+    if isinstance(server,basestring):
+        server=MDSplus.Connection(server)
+
+    create_mds_shot(server, tree, shot, clean=dynamic)
+
+    for item in ods.keys():
+        ds=str(item.split(separator)[0])
+        meta=copy.deepcopy(ods[item].attrs)
+        if 'hash' in meta:
+            hash=meta['hash']
+        else:
+            hash=md5_hasher('time')
+        meta['xcoords']=str(map(u2s,ods[item].dims))
+        print(meta['xcoords'])
+        if dynamic:
+            write_mds_node(server, tree, shot, meta, write_start=True, write=True, write_stop=True)
+        server.openTree(tree,shot)
+        text,args,dims=xarray2mds(ods[item])
+        server.put(str(':%s.%s:data'%(ds,hash)),text,*args)
+
 def load_omas_mds(server, tree, shot):
+    '''
+    load OMAS data set from MDS+
+
+    :param server: MDS+ server
+
+    :param tree: MDS+ tree name
+
+    :param shot: MDS+ shot
+
+    :return: OMAS data set
+    '''
+    import MDSplus
     if isinstance(server,basestring):
         server=MDSplus.Connection(server)
     server.openTree(tree,shot)
@@ -191,13 +307,13 @@ def load_omas_mds(server, tree, shot):
     ods=omas()
     for item in mds_data:
         if item.endswith(':DATA') and re.sub(':DATA$','',item) in mds_dependencies:
-            print full_path_cache[item]
+            print(full_path_cache[item])
             ods[full_path_cache[item]]=mds2xarray(server, tree, shot, item)
 
     #load others then
     for item in mds_data:
         if item.endswith(':DATA') and not re.sub(':DATA$','',item) in mds_dependencies:
-            print full_path_cache[item]
+            print(full_path_cache[item])
             ods[full_path_cache[item]]=mds2xarray(server, tree, shot, item)
 
     return ods

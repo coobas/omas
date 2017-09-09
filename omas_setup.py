@@ -1,3 +1,8 @@
+from __future__ import absolute_import, print_function, division, unicode_literals
+
+#-----------------
+# external imports
+#-----------------
 import xarray
 import os
 import sys
@@ -12,7 +17,10 @@ from pprint import pprint
 from hashlib import md5
 import uncertainties
 
-imas_json_dir=os.path.abspath(str(os.path.dirname(unicode(__file__, sys.getfilesystemencoding())))+'/imas_json/')
+#--------------------------------------------
+# configuration of directories and IMAS infos
+#--------------------------------------------
+imas_json_dir=os.path.abspath(str(os.path.dirname(unicode(__file__, sys.getfilesystemencoding())))+'/imas_structures/')
 
 separator='.'
 
