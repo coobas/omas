@@ -1,6 +1,6 @@
 __all__=['omas',
          'save_omas_nc',   'load_omas_nc',
-         'save_omas_mds',  'load_omas_mds',
+         'save_omas_mds',  'load_omas_mds', 'o2m', 'm2o',
          'save_omas_json', 'load_omas_json',
          'save_omas_imas'
          ]
@@ -83,7 +83,7 @@ class omas(xarray.Dataset):
 
         if opath=='time':
             for item in structure_time:
-                data_array.attrs[item]=str(u2s(structure_time[item]))
+                data_array.attrs[item]=str(structure_time[item])
         else:
             data_structure=opath.split(separator)[0]
             structure=self._structure[data_structure]
@@ -93,7 +93,7 @@ class omas(xarray.Dataset):
                     coords_dict={c:self[c] for c in data_array.dims}
                     data_array=xarray.DataArray(data_array.values,dims=data_array.dims,coords=coords_dict)
                 for item in structure[opath]:
-                    data_array.attrs[item]=str(u2s(structure[opath][item]))
+                    data_array.attrs[item]=str(structure[opath][item])
             else:
                 data_array.attrs['full_path']=opath
                 data_array.attrs['hash']=md5_hasher(opath)

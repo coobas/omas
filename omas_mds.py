@@ -206,31 +206,6 @@ def mds2xarray(server, tree, shot, node):
     xdata=xarray.DataArray(data,dims=dims,coords=coords,attrs=attrs)
     return xdata
 
-def mds2xpath(mds_path):
-    '''
-    translates an OMAS MDS+ path to a OMAS path
-
-    :param mds_path: string with the OMAS path
-
-    :return: string with OMAS path
-    '''
-    ods=mds_path.split('TOP'+separator)[1].split(separator)[0].lower()
-    hash=mds_path.split('TOP'+separator)[1].split(separator)[1].split(':')[0]
-    meta=load_structure(ods)[1][hash]
-    return meta['full_path']
-
-def xpath2mds(tree, xpath):
-    '''
-    translates an OMAS path to an OMAS MDS+ path
-
-    :param xpath: string with OMAS path
-
-    :return: string with the OMAS path
-    '''
-    ods=xpath.split(separator)[0]
-    hash=md5_hasher(xpath)
-    return ('\\%s::TOP.%s.%s'%(tree,ods,hash)).upper()
-
 #---------------------------
 # save and load OMAS to MDS+
 #---------------------------
@@ -261,7 +236,7 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True):
             hash=meta['hash']
         else:
             hash=md5_hasher('time')
-        meta['xcoords']=str(map(u2s,ods[item].dims))
+        meta['xcoords']=str(ods[item].dims)
         print(meta['xcoords'])
         if dynamic:
             write_mds_node(server, tree, shot, meta, write_start=True, write=True, write_stop=True)
@@ -301,7 +276,7 @@ def load_omas_mds(server, tree, shot):
             coordinates=eval(coordinates)
             dependencies.extend(coordinates)
     dependencies=numpy.unique(dependencies)
-    mds_dependencies=map(lambda x:xpath2mds(tree,x),dependencies)
+    mds_dependencies=map(lambda x:o2m(tree,x),dependencies)
 
     #load dependencies first
     ods=omas()

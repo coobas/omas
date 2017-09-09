@@ -190,7 +190,7 @@ def save_omas_imas(ods, user, tokamak, version, shot, run, new=False):
 
     :return: patsh that have been written to IMAS
     '''
-    hierarchy=d2h(ods)
+    hierarchy=ods_to_json(ods)
     paths=htraverse(hierarchy)[0]
 
     ids=imas_open(user, tokamak, version, shot, run, new)

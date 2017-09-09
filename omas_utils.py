@@ -21,27 +21,6 @@ def printe(*objects, **kw):
     kw['file']=sys.__stderr__
     print(*objects, **kw)
 
-def u2s(x):
-    return x
-    '''
-    recursively traverse objects converting unicode to string
-
-    :param x: object
-
-    :return: object with conversion
-    '''
-    if isinstance(x,unicode):
-        #convert unicode to string if unicode encoding is unecessary
-        xs=x.encode('utf-8')
-        if xs==x: return xs
-    if isinstance(x,tuple):
-        x=list(x)
-    if isinstance(x,list):
-        return map(lambda x:u2s(x),x)
-    elif isinstance(x,dict):
-        return json_loader(x.items())
-    return x
-
 def json_dumper(obj):
     '''
     function used to dump objects to json format
@@ -78,7 +57,7 @@ def json_loader(object_pairs):
 
     :return: ojbect
     '''
-    object_pairs=map(lambda o:(u2s(o[0]),u2s(o[1])),object_pairs)
+    object_pairs=map(lambda o:(o[0],o[1]),object_pairs)
     dct=dict((x,y) for x,y in object_pairs)
     if '__ndarray_tolist__' in dct:
         return array(dct['__ndarray_tolist__'],dtype=dct['dtype']).reshape(dct['shape'])
@@ -139,6 +118,50 @@ def md5_hasher(inv):
     :return: shortened md5sum hash
     '''
     return str('H'+md5(inv).hexdigest()[:11]).upper()
+
+#-----------------
+# path conversions
+#-----------------
+def m2o(mpath):
+    '''
+    translates an OMAS MDS+ path to a OMAS path
+
+    :param mpath: string with the OMAS path
+
+    :return: string with OMAS path
+    '''
+    ods=mpath.split('TOP'+separator)[1].split(separator)[0].lower()
+    hash=mpath.split('TOP'+separator)[1].split(separator)[1].split(':')[0]
+    meta=load_structure(ods)[1][hash]
+    return meta['full_path']
+
+def o2m(tree, opath):
+    '''
+    translates an OMAS path to an OMAS MDS+ path
+
+    :param opath: string with OMAS path
+
+    :return: string with the OMAS path
+    '''
+    ods=opath.split(separator)[0]
+    hash=md5_hasher(opath)
+    return ('\\%s::TOP.%s.%s'%(tree,ods,hash)).upper()
+
+def j2i(jpath):
+    '''
+    Formats a json path as a IMAS path
+
+    :param jpath: json path, that is a list with strings and indices
+
+    :return: IMAS path
+    '''
+    ipath=path[0]
+    for step in path[1:]:
+        if isinstance(step,int):
+            ipath+="[%d]"%step
+        else:
+            ipath+='.%s'%step
+    return ipath
 
 #----------------------------------------------
 # handling of OMAS json structures

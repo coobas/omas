@@ -18,22 +18,6 @@ def gethdata(hierarchy, path):
         h=h[step]
     return h
 
-def j2i(path):
-    '''
-    Formats a json path as a IMAS path
-
-    :param path: json path, that is a list with strings and indices
-
-    :return: IMAS path
-    '''
-    string=path[0]
-    for step in path[1:]:
-        if isinstance(step,int):
-            string+="[%d]"%step
-        else:
-            string+='.%s'%step
-    return string
-
 def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
     '''
     traverse the json hierarchy and returns its info
@@ -92,7 +76,7 @@ def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
 
     return paths_out, dests_out, mapper
 
-def x2j(xarray_data):
+def xarray_to_dict(xarray_data):
     '''
     Convert xarray DataArray to a dictionary for use in OMAS
 
@@ -105,7 +89,7 @@ def x2j(xarray_data):
         fmt%'dims':xarray_data.dims,
         fmt%'coordinates':eval(xarray_data.attrs.get('coordinates',"'[1...N]'"))}
 
-    return u2s(d)
+    return d
 
 def j_data_filler(hierarchy, path, data):
     '''
@@ -123,7 +107,7 @@ def j_data_filler(hierarchy, path, data):
     #print len(path),step
     #if reached the end of the path then assign data
     if len(path)==1:
-        hierarchy[step]=x2j(data)
+        hierarchy[step]=xarray_to_dict(data)
         return
     #traverse structures
     if isinstance(hierarchy[step],dict):
@@ -138,7 +122,7 @@ def j_data_filler(hierarchy, path, data):
                 j_data_filler(hierarchy[step][k], ['time'], slice['time'])
             j_data_filler(hierarchy[step][k], path[1:], slice)
 
-def d2h(ods):
+def ods_to_json(ods):
     '''
     transforms an OMAS data set into a hierarchical data structure
 
@@ -196,7 +180,7 @@ def d2h(ods):
 # save and load OMAS to Json
 #---------------------------
 def save_omas_json(ods, path, *args, **kw):
-    hierarchy=d2h(ods)
+    hierarchy=ods_to_json(ods)
     json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '))
     open(path,'w').write(json_string)
 
