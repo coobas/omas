@@ -37,7 +37,7 @@ def load_omas_nc(filename, **kw):
     data._structure={}
     data._initialized=True
     for item in [item for item in data.attrs if item.startswith('structure_')]:
-        data._structure[item]=eval(data.attrs[item])
+        data._structure[re.sub('^structure_','',item)]=eval(data.attrs[item])
     return data
 
 #------------------------------

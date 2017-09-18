@@ -104,7 +104,7 @@ def j_data_filler(hierarchy, path, data):
     if isinstance(path,basestring):
         path=path.split(separator)
     step=path[0]
-    #print len(path),step
+    #print(len(path),step)
     #if reached the end of the path then assign data
     if len(path)==1:
         hierarchy[step]=xarray_to_dict(data)
@@ -141,7 +141,7 @@ def ods_to_json(ods):
             continue
         data_structure=key.split(separator)[0]
         path=key.split(separator)
-        structure=ods._structure['structure_'+data_structure]
+        structure=ods._structure[data_structure]
         h=hierarchy.setdefault(data_structure,{})
         for k,step in list(enumerate(path))[1:]:
             location=separator.join(path[:k+1])
