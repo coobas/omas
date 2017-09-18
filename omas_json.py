@@ -88,7 +88,6 @@ def xarray_to_dict(xarray_data):
     d={ fmt%'data':xarray_data.values.tolist(),
         fmt%'dims':xarray_data.dims,
         fmt%'coordinates':eval(xarray_data.attrs.get('coordinates',"'[1...N]'"))}
-
     return d
 
 def j_data_filler(hierarchy, path, data):
@@ -189,7 +188,9 @@ def save_omas_json(ods, filename, **kw):
 
     :param kw: arguments passed to the json.dumps method
     '''
+
     printd('Saving OMAS data to Json-H: %s'%filename, topic=['json-h','json'])
+
     hierarchy=ods_to_json(ods)
     json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '), **kw)
     open(filename,'w').write(json_string)
@@ -204,7 +205,9 @@ def load_omas_json(filename, **kw):
 
     :return: OMAS data set
     '''
+
     printd('Loading OMAS data to Json-H: %s'%filename, topic=['json-h','json'])
+
     if isinstance(filename,basestring):
         filename=open(filename,'r')
     hierarchy=json.loads(filename.read(),object_pairs_hook=json_loader, **kw)
@@ -255,14 +258,76 @@ def load_omas_json(filename, **kw):
 
     return ods
 
+def save_omas_jsonnd(ods, filename, **kw):
+    '''
+    Save an OMAS data set to Json-ND
+
+    :param ods: OMAS data set
+
+    :param filename: filename to save to
+
+    :param kw: arguments passed to the json.dumps method
+    '''
+
+    printd('Saving OMAS data to Json-ND: %s'%filename, topic=['json-nd','json'])
+
+    ds={}
+    for d in ods:
+        ds[d]=xarray_to_dict(ods[d])
+    json_string=json.dumps(ds, default=json_dumper, indent=1, separators=(',',': '), **kw)
+    open(filename,'w').write(json_string)
+
+def load_omas_jsonnd(filename, **kw):
+    '''
+    Load an OMAS data set from Json-ND
+
+    :param filename: filename to load from
+
+    :param kw: arguments passed to the json.loads mehtod
+
+    :return: OMAS data set
+    '''
+
+    printd('Loading OMAS data to Json-ND: %s'%filename, topic=['json-nd','json'])
+
+    if isinstance(filename,basestring):
+        filename=open(filename,'r')
+    ds=json.loads(filename.read(),object_pairs_hook=json_loader, **kw)
+
+    #identify dependencies
+    dependencies=[]
+    for item in ds:
+        dependencies.extend(ds[item]['__dims__'])
+    dependencies=numpy.unique(dependencies).tolist()
+    #pprint(dependencies)
+
+    #load dependencies first
+    ods=omas()
+    for item in ds:
+        if item in dependencies:
+            node=ds[item]
+            ods[item]=xarray.DataArray(node['__data__'],dims=node['__dims__'])
+
+    #load others then
+    for item in ds:
+        if item not in dependencies:
+            node=ds[item]
+            coords={c:ods[c] for c in node['__dims__']}
+            ods[item]=xarray.DataArray(node['__data__'],dims=node['__dims__'],coords=coords)
+
+    return ods
+
 #------------------------------
 if __name__ == '__main__':
 
     from omas import omas_data_sample
-    os.environ['OMAS_DEBUG_TOPIC']='json-h'
+    os.environ['OMAS_DEBUG_TOPIC']='json'
     ods=omas_data_sample()
 
     filename='test.json'
-
     save_omas_json(ods,filename)
     ods=load_omas_json(filename)
+
+    filename='test.json_nd'
+    save_omas_jsonnd(ods,filename)
+    ods=load_omas_jsonnd(filename)
