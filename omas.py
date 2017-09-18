@@ -1,4 +1,6 @@
-__all__=['omas',
+from __future__ import absolute_import, print_function, division, unicode_literals
+
+__all__=['omas',           'omas_data_sample',
          'save_omas_nc',   'load_omas_nc',
          'save_omas_mds',  'load_omas_mds', 'o2m', 'm2o',
          'save_omas_json', 'load_omas_json',
@@ -100,6 +102,29 @@ class omas(xarray.Dataset):
 
         tmp=xarray.Dataset.__setitem__(self, opath, data_array)
         return tmp
+
+def omas_data_sample():
+
+    printd('Creating sample OMAS data structure',topic='*')
+
+    ods=omas()
+    ods['time']=xarray.DataArray(numpy.atleast_1d([1000,2000]),
+                          dims=['time'])
+
+    ods['equilibrium.time_slice.global_quantities.ip']=xarray.DataArray(numpy.atleast_1d([1E6,1.1E6]),
+                                                         dims=['time'])
+    ods['equilibrium.time_slice.global_quantities.magnetic_axis.r']=xarray.DataArray(numpy.atleast_1d([1.71,1.72]),
+                                                         dims=['time'])
+    ods['equilibrium.time_slice.global_quantities.magnetic_axis.z']=xarray.DataArray(numpy.atleast_1d([0.001,0.002]),
+                                                         dims=['time'])
+
+    ods['equilibrium.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
+                            dims=['equilibrium.psin'])
+
+    ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
+                                                    dims=['time',
+                                                          'equilibrium.psin'])
+    return ods
 
 from omas_structure import *
 from omas_mds import *

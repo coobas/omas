@@ -223,6 +223,9 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True):
 
     :param dynamic: dynamic tree nodes generation (False: use model tree)
     '''
+
+    printd('Saving to MDS+: %s `%s` %d'%(server, tree, shot),topic='mds')
+
     import MDSplus
     if isinstance(server,basestring):
         server=MDSplus.Connection(server)
@@ -256,6 +259,8 @@ def load_omas_mds(server, tree, shot):
 
     :return: OMAS data set
     '''
+    printd('Loading from MDS+: %s `%s` %d'%(server, tree, shot),topic='mds')
+
     import MDSplus
     if isinstance(server,basestring):
         server=MDSplus.Connection(server)
@@ -296,17 +301,12 @@ def load_omas_mds(server, tree, shot):
 #------------------------------
 if __name__ == '__main__':
 
-    from omas_nc import *
-    ods=load_omas_nc('test.nc')
+    from omas import omas_data_sample
+    os.environ['OMAS_DEBUG_TOPIC']='mds'
+    ods=omas_data_sample()
 
-    print('save to MDS+ with dynamic-data-structure approach...')
-    save_omas_mds(ods, mds_server, 'test', 999)
-    print('load from MDS+')
-    ods1=load_omas_mds(mds_server, 'test', 999)
-    save_omas_nc(ods1,'test_mds.nc')
+    treename='test'
+    shot=999
 
-    print('save to MDS+ with dynamic-data-structure approach...')
-    save_omas_mds(ods1, mds_server, 'test', 999)
-    print('load from MDS+')
-    ods2=load_omas_mds(mds_server, 'test', 999)
-    save_omas_nc(ods2,'test1_mds.nc')
+    save_omas_mds(ods, mds_server, treename, shot)
+    ods=load_omas_mds(mds_server, treename, shot)

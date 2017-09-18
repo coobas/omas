@@ -8,10 +8,14 @@ from omas_setup import *
 def printd(*objects, **kw):
     '''
     debug print
-    environmental variable OMAS_DEBUG sets the topic to be printed
+    environmental variable OMAS_DEBUG_TOPIC sets the topic to be printed
     '''
     topic=kw.pop('topic','')
-    if os.environ.get('OMAS_DEBUG','')==topic:
+    if isinstance(topic,basestring):
+        topic=[topic]
+    topic=map(lambda x:x.lower(),topic)
+    objects=['DEBUG:']+list(objects)
+    if os.environ.get('OMAS_DEBUG_TOPIC','') in topic or '*' in topic and len(os.environ.get('OMAS_DEBUG_TOPIC','')):
         print(*objects, **kw)
 
 def printe(*objects, **kw):
@@ -184,7 +188,7 @@ def load_structure(file):
         for item in _structures[file]:
             _structures_by_hash[_structures[file][item]['hash']]=_structures[file][item]
     ods=_structures[file].keys()[0].split(separator)[0]
-    return _structures[file],_structures_by_hash,ods
+    return _structures[file], _structures_by_hash, ods
 
 def info_node(node):
     '''

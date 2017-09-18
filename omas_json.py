@@ -179,15 +179,35 @@ def ods_to_json(ods):
 #---------------------------
 # save and load OMAS to Json
 #---------------------------
-def save_omas_json(ods, path, *args, **kw):
-    hierarchy=ods_to_json(ods)
-    json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '))
-    open(path,'w').write(json_string)
+def save_omas_json(ods, filename, **kw):
+    '''
+    Save an OMAS data set to Json-H
 
-def load_omas_json(filename_or_obj, *args, **kw):
-    if isinstance(filename_or_obj,basestring):
-        filename_or_obj=open(filename_or_obj,'r')
-    hierarchy=json.loads(filename_or_obj.read(),object_pairs_hook=json_loader)
+    :param ods: OMAS data set
+
+    :param filename: filename to save to
+
+    :param kw: arguments passed to the json.dumps method
+    '''
+    printd('Saving OMAS data to Json-H: %s'%filename, topic=['json-h','json'])
+    hierarchy=ods_to_json(ods)
+    json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '), **kw)
+    open(filename,'w').write(json_string)
+
+def load_omas_json(filename, **kw):
+    '''
+    Load an OMAS data set from Json-H
+
+    :param filename: filename to load from
+
+    :param kw: arguments passed to the json.loads mehtod
+
+    :return: OMAS data set
+    '''
+    printd('Loading OMAS data to Json-H: %s'%filename, topic=['json-h','json'])
+    if isinstance(filename,basestring):
+        filename=open(filename,'r')
+    hierarchy=json.loads(filename.read(),object_pairs_hook=json_loader, **kw)
 
     #create mapper dictionary to rebuild xarray structure
     paths,dests,mapper=htraverse(hierarchy)
@@ -238,13 +258,11 @@ def load_omas_json(filename_or_obj, *args, **kw):
 #------------------------------
 if __name__ == '__main__':
 
-    from omas_nc import *
-    ods=load_omas_nc('test.nc')
+    from omas import omas_data_sample
+    os.environ['OMAS_DEBUG_TOPIC']='json-h'
+    ods=omas_data_sample()
 
-    save_omas_json(ods,'test.json')
-    ods1=load_omas_json('test.json')
-    save_omas_nc(ods1,'test_json.nc')
+    filename='test.json'
 
-    save_omas_json(ods,'test1.json')
-    ods2=load_omas_json('test1.json')
-    save_omas_nc(ods2,'test1_json.nc')
+    save_omas_json(ods,filename)
+    ods=load_omas_json(filename)

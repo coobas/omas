@@ -190,6 +190,9 @@ def save_omas_imas(ods, user, tokamak, version, shot, run, new=False):
 
     :return: patsh that have been written to IMAS
     '''
+
+    printd('Saving to IMAS: %s %s %s %d %d'%(user, tokamak, version, shot, run),topic='imas')
+
     hierarchy=ods_to_json(ods)
     paths=htraverse(hierarchy)[0]
 
@@ -215,12 +218,19 @@ def save_omas_imas(ods, user, tokamak, version, shot, run, new=False):
 #------------------------------
 if __name__ == '__main__':
     print('='*20)
-    if True:
-        from omas_nc import *
-        ods=load_omas_nc('test.nc')
 
-        paths=save_omas_imas(ods,'meneghini','D3D','3.10.1',1,0)#,True)
+    from omas import omas_data_sample
+    os.environ['OMAS_DEBUG_TOPIC']='imas'
+    ods=omas_data_sample()
 
-        ids=imas_open('meneghini','D3D','3.10.1',1,0)
-        for path in paths:
-            print('%s = %s'%(j2i(path),repr(imas_get(ids,path,None))))
+    user=os.environ['USER']
+    tokamak='D3D'
+    version=os.environ.get('IMAS_VERSION','3.10.1')
+    shot=1
+    run=0
+
+    paths=save_omas_imas(ods,user,tokamak,version,shot,run)#,True)
+
+    ids=imas_open(user,tokamak,version,shot,run)
+    for path in paths:
+        print('%s = %s'%(j2i(path),repr(imas_get(ids,path,None))))
