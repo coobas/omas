@@ -258,6 +258,19 @@ def load_omas_json(filename, **kw):
 
     return ods
 
+def test_omas_json(ods):
+    '''
+    test save and load OMAS Json-H
+
+    :param ods: ods
+
+    :return: ods
+    '''
+    filename='test.json'
+    save_omas_json(ods,filename)
+    ods=load_omas_json(filename)
+    return ods
+
 def save_omas_jsonnd(ods, filename, **kw):
     '''
     Save an OMAS data set to Json-ND
@@ -317,6 +330,19 @@ def load_omas_jsonnd(filename, **kw):
 
     return ods
 
+def test_omas_jsonnd(ods):
+    '''
+    test save and load OMAS Json-ND
+
+    :param ods: ods
+
+    :return: ods
+    '''
+    filename='test.json_nd'
+    save_omas_jsonnd(ods,filename)
+    ods=load_omas_jsonnd(filename)
+    return ods
+
 #------------------------------
 if __name__ == '__main__':
 
@@ -324,10 +350,6 @@ if __name__ == '__main__':
     os.environ['OMAS_DEBUG_TOPIC']='json'
     ods=omas_data_sample()
 
-    filename='test.json'
-    save_omas_json(ods,filename)
-    ods=load_omas_json(filename)
+    ods=test_omas_json(ods)
 
-    filename='test.json_nd'
-    save_omas_jsonnd(ods,filename)
-    ods=load_omas_jsonnd(filename)
+    ods=test_omas_json(ods)

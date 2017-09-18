@@ -17,7 +17,9 @@ def save_omas_nc(ods, filename, **kw):
 
     :param kw: arguments passed to the xarray dataset.to_netcdf method
     '''
+
     printd('Saving OMAS data to netCDF: %s'%filename, topic='nc')
+
     kw['path']=filename
     return ods.to_netcdf(**kw)
 
@@ -31,7 +33,9 @@ def load_omas_nc(filename, **kw):
 
     :return: OMAS data set
     '''
+
     printd('Loading OMAS data to netCDF: %s'%filename, topic='nc')
+
     kw['filename_or_obj']=filename
     data = xarray.open_dataset(**kw)
     data.__class__=omas
@@ -42,6 +46,19 @@ def load_omas_nc(filename, **kw):
         data._structure[re.sub('^structure_','',item)]=eval(data.attrs[item])
     return data
 
+def test_omas_nc(ods):
+    '''
+    test save and load NetCDF
+
+    :param ods: ods
+
+    :return: ods
+    '''
+    filename='test.nc'
+    save_omas_nc(ods,filename)
+    ods=load_omas_nc(filename)
+    return ods
+
 #------------------------------
 if __name__ == '__main__':
 
@@ -49,7 +66,4 @@ if __name__ == '__main__':
     os.environ['OMAS_DEBUG_TOPIC']='nc'
     ods=omas_data_sample()
 
-    filename='test.nc'
-
-    save_omas_nc(ods,filename)
-    ods=load_omas_nc(filename)
+    ods=test_omas_nc(ods)

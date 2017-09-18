@@ -215,14 +215,14 @@ def save_omas_imas(ods, user, tokamak, version, shot, run, new=False):
         hmas_set(ids,path,hierarchy,True)
     return set_paths
 
-#------------------------------
-if __name__ == '__main__':
-    print('='*20)
+def test_omas_imas(ods):
+    '''
+    test save and load OMAS IMAS
 
-    from omas import omas_data_sample
-    os.environ['OMAS_DEBUG_TOPIC']='imas'
-    ods=omas_data_sample()
+    :param ods: ods
 
+    :return: ods
+    '''
     user=os.environ['USER']
     tokamak='D3D'
     version=os.environ.get('IMAS_VERSION','3.10.1')
@@ -234,3 +234,15 @@ if __name__ == '__main__':
     ids=imas_open(user,tokamak,version,shot,run)
     for path in paths:
         print('%s = %s'%(j2i(path),repr(imas_get(ids,path,None))))
+
+    return paths
+
+#------------------------------
+if __name__ == '__main__':
+    print('='*20)
+
+    from omas import omas_data_sample
+    os.environ['OMAS_DEBUG_TOPIC']='imas'
+    ods=omas_data_sample()
+
+    ods=test_omas_imas(ods)
