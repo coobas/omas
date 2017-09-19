@@ -1,10 +1,10 @@
 from __future__ import absolute_import, print_function, division, unicode_literals
 
-__all__=['omas',           'omas_data_sample',
-         'save_omas_nc',   'load_omas_nc',     'test_omas_nc',
-         'save_omas_mds',  'load_omas_mds',    'test_omas_mds', 'o2m', 'm2o',
-         'save_omas_json', 'load_omas_json',   'test_omas_json',
-         'save_omas_jsonnd', 'load_omas_jsonnd',   'test_omas_jsonnd',
+__all__=['omas',             'omas_data_sample',
+         'save_omas_nc',     'load_omas_nc',     'test_omas_nc',
+         'save_omas_mds',    'load_omas_mds',    'test_omas_mds',   'o2m', 'm2o',
+         'save_omas_json',   'load_omas_json',   'test_omas_json',
+         'save_omas_jsonnd', 'load_omas_jsonnd', 'test_omas_jsonnd',
          'save_omas_imas'
          ]
 
@@ -135,11 +135,10 @@ from omas_imas import *
 #------------------------------
 if __name__ == '__main__':
 
-    from omas import omas_data_sample
     os.environ['OMAS_DEBUG_TOPIC']='*'
     ods=omas_data_sample()
 
-    tests=['nc','json','jsonnd']
+    tests=['mds','json','jsonnd']
 
     for t1 in tests:
         ods=locals()['test_omas_'+t1](ods)

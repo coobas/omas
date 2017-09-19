@@ -56,24 +56,24 @@ Translation from one OMAS storage system to another occurs by first reading the 
 
 * Sample usage:
 
-	```python
-    ods=omas()
-    ods['time']=xarray.DataArray(numpy.atleast_1d([1000,2000]),
-                                 dims=['time'])
+  ```python
+  ods=omas()
+  ods['time']=xarray.DataArray(numpy.atleast_1d([1000,2000]),
+                               dims=['time'])
 
-	ods['equilibrium.time_slice.global_quantities.ip']=xarray.DataArray(numpy.atleast_1d([1E6,1.1E6]),
-                                                                        dims=['time'])
-    ods['equilibrium.time_slice.global_quantities.magnetic_axis.r']=xarray.DataArray(numpy.atleast_1d([1.71,1.72]),
-                                                                                     dims=['time'])
-    ods['equilibrium.time_slice.global_quantities.magnetic_axis.z']=xarray.DataArray(numpy.atleast_1d([0.001,0.002]),
-                                                                                     dims=['time'])
+  ods['equilibrium.time_slice.global_quantities.ip']=xarray.DataArray(numpy.atleast_1d([1E6,1.1E6]),
+                                                                      dims=['time'])
+  ods['equilibrium.time_slice.global_quantities.magnetic_axis.r']=xarray.DataArray(numpy.atleast_1d([1.71,1.72]),
+                                                                                   dims=['time'])
+  ods['equilibrium.time_slice.global_quantities.magnetic_axis.z']=xarray.DataArray(numpy.atleast_1d([0.001,0.002]),
+                                                                                   dims=['time'])
 
-    ods['equilibrium.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
-                                                              dims=['equilibrium.psin'])
+  ods['equilibrium.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
+                                                            dims=['equilibrium.psin'])
 
-    ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
-                                                                dims=['time','equilibrium.psin'])
-	```
+  ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
+                                                              dims=['time','equilibrium.psin'])
+```
 
 ### OMAS storage to NetCDF
 NetCDF is a computational standard compatible with HPC I/O, and support for dynamic loading and out-of-core parallel calculations. The OMAS Python class is natively represented as a NetCDF file via the native `xarray.Dataset` functionality.
@@ -85,10 +85,11 @@ NetCDF is a computational standard compatible with HPC I/O, and support for dyna
 * Sample usage:
 
   ```python
-  from omas_nc import *
-
+  from omas import *
+  ods=omas_data_sample()
+  
   filename='ods.Json'
-
+  
   save_omas_nc(ods,filename)
   ods=load_omas_nc(filename)
   ```
@@ -104,12 +105,13 @@ Json is a ASCII file format widely used as a way to transfer data across diverse
 * Sample usage:
 
   ```python
-  from omas_Json import *
-
-  filename='ods.Json'
-
-  save_omas_Json(ods,filename)
-  ods=load_omas_Json(filename)
+  from omas import *
+  ods=omas_data_sample()
+  
+  filename='ods.json'
+  
+  save_omas_jsonnd(ods,filename)
+  ods=load_omas_jsonnd(filename)
   ```
 
 ### OMAS storage to MDS+
@@ -122,11 +124,12 @@ MDS+ is the most-widely adopted standard for storing data in the tokamak communi
 * Sample usage:
 
   ```python
-  from omas_mds import *
-
+  from omas import *
+  ods=omas_data_sample()
+  
   shot=999
   treename='test'
-
+  
   save_omas_mds(ods, mds_server, treename, shot)
   ods=load_omas_mds(mds_server, treename, shot)
   ```
@@ -144,12 +147,13 @@ This format closely mirrors the IMAS hierarchical organization. Internally the O
 * Sample usage:
 
   ```python
-  from omas_Json import *
-
-  filename='ods.Json'
-
-  save_omas_Json(ods,filename)
-  ods=load_omas_Json(filename)
+  from omas import *
+  ods=omas_data_sample()
+  
+  filename='ods.json'
+  
+  save_omas_json(ods,filename)
+  ods=load_omas_json(filename)
   ```
 
 ### OMAS storage to IMAS
@@ -163,15 +167,16 @@ IMAS is a set of codes, an execution framework, a data model, a data get/put API
 * Sample usage:
 
   ```python
-     from omas_imas import *
+  from omas import *
+  ods=omas_data_sample()
+  
+  user='meneghini'
+  tokamak='D3D'
+  imas_version=os.environ['IMAS_VERSION']
+  shot=1
+  run=0
 
-     user='meneghini'
-     tokamak='D3D'
-     imas_version=os.environ['IMAS_VERSION']
-     shot=1
-     run=0
-
-     paths=save_omas_imas(ods,user,tokamak,imas_version,shot,run)
-     ods=load_omas_imas(ods,user,tokamak,imas_version,shot,run,paths)
+  paths=save_omas_imas(ods,user,tokamak,imas_version,shot,run)
+  ods=load_omas_imas(ods,user,tokamak,imas_version,shot,run,paths)
   ```
 
