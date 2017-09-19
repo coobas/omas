@@ -110,21 +110,20 @@ def omas_data_sample():
 
     ods=omas()
     ods['time']=xarray.DataArray(numpy.atleast_1d([1000,2000]),
-                          dims=['time'])
+                                 dims=['time'])
 
     ods['equilibrium.time_slice.global_quantities.ip']=xarray.DataArray(numpy.atleast_1d([1E6,1.1E6]),
-                                                         dims=['time'])
+                                                                        dims=['time'])
     ods['equilibrium.time_slice.global_quantities.magnetic_axis.r']=xarray.DataArray(numpy.atleast_1d([1.71,1.72]),
-                                                         dims=['time'])
+                                                                                     dims=['time'])
     ods['equilibrium.time_slice.global_quantities.magnetic_axis.z']=xarray.DataArray(numpy.atleast_1d([0.001,0.002]),
-                                                         dims=['time'])
+                                                                                     dims=['time'])
 
     ods['equilibrium.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
-                            dims=['equilibrium.psin'])
+                                                              dims=['equilibrium.psin'])
 
     ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
-                                                    dims=['time',
-                                                          'equilibrium.psin'])
+                                                                dims=['time','equilibrium.psin'])
     return ods
 
 from omas_structure import *
