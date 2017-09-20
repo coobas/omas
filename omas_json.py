@@ -18,23 +18,24 @@ def gethdata(hierarchy, path):
         h=h[step]
     return h
 
-def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
+def htraverse(hierarchy, **kw):
     '''
     traverse the json hierarchy and returns its info
 
     :param hierarchy: json hierarchy
 
-    :param paths: json paths in the hierarchy
-
-    :param dests: json paths skipping the arrays
-
-    :param mapper: mapper dictionary that tells for each of the entries in `dests` what are the corresponding entries in `paths`
-
-    :param dims: all of the fundamental dimensions in the json hierarchy
-                 this is used internally and should always be an empty list when called by the user
-
     :return: paths_out, dests_out, mapper
     '''
+
+    # json paths in the hierarchy
+    paths=kw.setdefault('paths',[])
+    #json paths skipping the arrays
+    dests=kw.setdefault('dests',[])
+    #mapper dictionary that tells for each of the entries in `dests` what are the corresponding entries in `paths`
+    mapper=kw.setdefault('mapper',{})
+    #all of the fundamental dimensions in the json hierarchy
+    dims=kw.setdefault('dims',[])
+
     paths_in=paths
     paths_out=[]
 
@@ -50,7 +51,7 @@ def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
                 paths=paths_in+[kid]
                 dests=dests_in+[kid]
                 dims=dims_in
-                tmp=htraverse(hierarchy[kid],paths,dests,mapper,dims)
+                tmp=htraverse(hierarchy[kid],paths=paths,dests=dests,mapper=mapper,dims=dims)
                 paths_out.extend( tmp[0] )
                 dests_out.extend( tmp[1] )
                 mapper.update(    tmp[2] )
@@ -69,7 +70,7 @@ def htraverse(hierarchy, paths=[], dests=[], mapper={}, dims=[]):
             dests=dests_in
             dims=copy.deepcopy(dims_in)
             dims.extend(info_node(separator.join(dests_in))['coordinates'])
-            tmp=htraverse(hierarchy[k],paths,dests,mapper,dims)
+            tmp=htraverse(hierarchy[k],paths=paths,dests=dests,mapper=mapper,dims=dims)
             paths_out.extend( tmp[0] )
             dests_out.extend( tmp[1] )
             mapper.update(    tmp[2] )
