@@ -50,6 +50,7 @@ def aggregate_imas_html_docs(imas_html_dir, imas_version):
 structure_time={}
 structure_time['description']='common time basis'
 structure_time['coordinates']=['1...N']
+structure_time['imas_coordinates']=['1...N']
 structure_time['data_type']='INT_1D'
 structure_time['base_coord']=True
 structure_time['hash']=md5_hasher('time')
@@ -212,6 +213,7 @@ def create_json_structure(imas_version, data_structures=[]):
                         structure[c]={}
                         structure[c]['description']='imas missing dimension'
                         structure[c]['coordinates']=['1...N']
+                        structure[c]['imas_coordinates']=['1...N']
                         structure[c]['data_type']='INT_1D'
                         structure[c]['base_coord']=True
 
@@ -237,8 +239,9 @@ def create_json_structure(imas_version, data_structures=[]):
 
         #convert separator
         for key in structure.keys():
-            for k,c in enumerate(structure[key]['coordinates']):
-                structure[key]['coordinates'][k]=re.sub('/',separator,structure[key]['coordinates'][k])
+            for item in ['coordinates','imas_coordinates']:
+                for k,c in enumerate(structure[key][item]):
+                    structure[key][item][k]=re.sub('/',separator,structure[key][item][k])
             tmp=structure[key]
             del structure[key]
             structure[re.sub('/',separator,key)]=tmp
