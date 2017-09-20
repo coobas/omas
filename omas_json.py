@@ -3,21 +3,6 @@ from __future__ import absolute_import, print_function, division, unicode_litera
 from omas_structure import *
 from omas import omas, load_omas_hierarchy
 
-def gethdata(hierarchy, path):
-    '''
-    get data from path in json hierarchy
-
-    :param hierarchy: json hierarchy
-
-    :param path: path in the json hierarchy
-
-    :return: data at path in json hierarchy
-    '''
-    h=hierarchy
-    for step in path:
-        h=h[step]
-    return h
-
 def xarray_to_dict(xarray_data):
     '''
     Convert xarray DataArray to a dictionary for use in OMAS
