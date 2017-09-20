@@ -150,6 +150,7 @@ def create_json_structure(imas_version, data_structures=[]):
             for col in cols:
                 if col!='full_path':
                     structure[entries[k]['full_path']][col]=entries[k][col]
+            structure[entries[k]['full_path']]['imas_coordinates']=copy.deepcopy(entries[k]['coordinates'])
 
         # #concatenate descriptions
         # lmax=max(map(len,'/'.join(structure.keys()).split('/')))
