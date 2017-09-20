@@ -159,8 +159,8 @@ def j2i(jpath):
 
     :return: IMAS path
     '''
-    ipath=path[0]
-    for step in path[1:]:
+    ipath=jpath[0]
+    for step in jpath[1:]:
         if isinstance(step,int):
             ipath+="[%d]"%step
         else:
