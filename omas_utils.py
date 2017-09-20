@@ -236,6 +236,21 @@ def htraverse(hierarchy, **kw):
 
     return paths_out, dests_out, mapper
 
+def gethdata(hierarchy, path):
+    '''
+    get data from path in json hierarchy
+
+    :param hierarchy: json hierarchy
+
+    :param path: path in the json hierarchy
+
+    :return: data at path in json hierarchy
+    '''
+    h=hierarchy
+    for step in path:
+        h=h[step]
+    return h
+
 #----------------------------------------------
 # handling of OMAS json structures
 #----------------------------------------------
