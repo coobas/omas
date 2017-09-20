@@ -104,6 +104,63 @@ class omas(xarray.Dataset):
         tmp=xarray.Dataset.__setitem__(self, opath, data_array)
         return tmp
 
+def load_omas_hierarchy(hierarchy, **kw):
+    '''
+    Load an OMAS data set from Json-H
+
+    :param filename: filename to load from
+
+    :param kw: arguments passed to the json.loads mehtod
+
+    :return: OMAS data set
+    '''
+
+    #create mapper dictionary to rebuild xarray structure
+    paths,dests,mapper=htraverse(hierarchy)
+    #pprint(mapper)
+
+    #identify dependencies
+    dependencies=[]
+    for item in mapper:
+        dependencies.extend(mapper[item]['dims'])
+    dependencies=numpy.unique(dependencies).tolist()
+    # pprint(dependencies)
+
+    #load dependencies first
+    ods=omas()
+    for item in mapper:
+        if item in dependencies:
+            path=mapper[item]['path'][0]
+            node=gethdata(hierarchy,path)
+            ods[item]=xarray.DataArray(node['__data__'],dims=mapper[item]['dims'])
+
+    #load others then
+    for item in mapper:
+        if item not in dependencies:
+            #create empty data of the right size
+            ods[item]=data=xarray.DataArray(numpy.nan+numpy.zeros(map(lambda node:ods[node].size,mapper[item]['dims'])),dims=mapper[item]['dims'])
+            #fill in the actual data
+            coords={}
+            for path in mapper[item]['path']:
+                node=gethdata(hierarchy,path)
+                #figure out dimensions of the slice
+                islice=filter(lambda x:not isinstance(x,basestring), path )
+                slice=numpy.array(node['__data__'])
+                dslice={}
+                for d in range(len(mapper[item]['dims'])-len(slice.shape)):
+                    dim=mapper[item]['dims'][d]
+                    dslice[ dim ]=islice[d]
+                    coords[dim]=ods[dim].values
+                #enter the data
+                if len(data.shape)==1:
+                    data.values[islice[0]]=slice
+                else:
+                    data.isel(**dslice).values[:]=slice
+            #update coordinates
+            data.coords.update(coords)
+
+    return ods
+
 def omas_data_sample():
 
     printd('Creating sample OMAS data structure',topic='*')
