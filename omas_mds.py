@@ -42,7 +42,7 @@ def write_mds_model(server, tree='test', data_structures=[], write=False, start_
     else:
         files=glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*.json')
     for file in files:
-        print(file)
+        printd(file,topic='mds')
 
         #load structure
         structure,ods=load_structure(file)
@@ -86,20 +86,20 @@ def write_mds_node(server, tree, shot, meta, write_start=True, write=True, write
         server.get("tcl('add node %s /usage=subtree')"%ods)
 
     path=meta['full_path']
-    print('%s --> %s'%(hash,path))
+    printd('%s --> %s'%(hash,path),topic='mds')
     if write:
         server.get("tcl('add node %s.%s /usage=structure')"%(ods,hash))
         server.get("tcl('add node %s.%s:data /usage=signal')"%(ods,hash))
         for key in meta.keys():
             if key!='hash':
-                print('%s     %s:%s'%(' '*len(hash),path,key))
+                printd('%s     %s:%s'%(' '*len(hash),path,key),topic='mds')
                 server.get("tcl('add node %s.%s:%s/usage=text')"%(ods,hash,key))
                 #server.get("tcl('put %s.%s:%s "$"')"%(ods,hash,key),str(meta[key])) #filling in the attributes this way does not seem to work
 
     #fill in the attributes
     for key in meta.keys():
         if key!='hash':
-            print('%s     %s:%s [%s]'%(' '*len(hash),path,key,str(meta[key])))
+            printd('%s     %s:%s [%s]'%(' '*len(hash),path,key,meta[key]),topic='mds')
             if write:
                 server.put(str(":%s.%s:%s"%(ods,hash,key)),"$",str(meta[key]))
 
@@ -240,7 +240,7 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True):
         else:
             hash=md5_hasher('time')
         meta['xcoords']=str(ods[item].dims)
-        print(meta['xcoords'])
+
         if dynamic:
             write_mds_node(server, tree, shot, meta, write_start=True, write=True, write_stop=True)
         server.openTree(tree,shot)
@@ -287,13 +287,13 @@ def load_omas_mds(server, tree, shot):
     ods=omas()
     for item in mds_data:
         if item.endswith(':DATA') and re.sub(':DATA$','',item) in mds_dependencies:
-            print(full_path_cache[item])
+            printd('Reading: '+full_path_cache[item],topic='mds')
             ods[full_path_cache[item]]=mds2xarray(server, tree, shot, item)
 
     #load others then
     for item in mds_data:
         if item.endswith(':DATA') and not re.sub(':DATA$','',item) in mds_dependencies:
-            print(full_path_cache[item])
+            printd('Reading: '+full_path_cache[item],topic='mds')
             ods[full_path_cache[item]]=mds2xarray(server, tree, shot, item)
 
     return ods
