@@ -177,6 +177,65 @@ def j2o(jpath):
     '''
     return separator.join(filter(lambda x:isinstance(x,basestring), jpath ))
 
+def htraverse(hierarchy, **kw):
+    '''
+    traverse the json hierarchy and returns its info
+
+    :param hierarchy: json hierarchy
+
+    :return: paths_out, dests_out, mapper
+    '''
+
+    # json paths in the hierarchy
+    paths=kw.setdefault('paths',[])
+    #json paths skipping the arrays
+    dests=kw.setdefault('dests',[])
+    #mapper dictionary that tells for each of the entries in `dests` what are the corresponding entries in `paths`
+    mapper=kw.setdefault('mapper',{})
+    #all of the fundamental dimensions in the json hierarchy
+    dims=kw.setdefault('dims',[])
+
+    paths_in=paths
+    paths_out=[]
+
+    dests_in=dests
+    dests_out=[]
+
+    dims_in=dims
+
+    #handle dict
+    if isinstance(hierarchy,dict):
+        for kid in hierarchy.keys():
+            if not kid.startswith('__'):
+                paths=paths_in+[kid]
+                dests=dests_in+[kid]
+                dims=dims_in
+                tmp=htraverse(hierarchy[kid],paths=paths,dests=dests,mapper=mapper,dims=dims)
+                paths_out.extend( tmp[0] )
+                dests_out.extend( tmp[1] )
+                mapper.update(    tmp[2] )
+            elif kid.startswith('__data__'):
+                paths_out.append(paths)
+                dests_out.append(dests)
+                dims=copy.deepcopy(dims_in)
+                dims.extend( hierarchy['__dims__'] )
+                mapper.setdefault(separator.join(dests),{'path':[],'dims':dims})
+                mapper[separator.join(dests)]['path'].append(paths)
+
+    #handle list
+    elif isinstance(hierarchy,list) and len(hierarchy):
+        for k in range(len(hierarchy)):
+            paths=paths_in+[k]
+            dests=dests_in
+            dims=copy.deepcopy(dims_in)
+            dims.extend(info_node(separator.join(dests_in))['coordinates'])
+            tmp=htraverse(hierarchy[k],paths=paths,dests=dests,mapper=mapper,dims=dims)
+            paths_out.extend( tmp[0] )
+            dests_out.extend( tmp[1] )
+            mapper.update(    tmp[2] )
+
+    return paths_out, dests_out, mapper
+
 #----------------------------------------------
 # handling of OMAS json structures
 #----------------------------------------------
