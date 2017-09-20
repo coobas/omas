@@ -136,7 +136,7 @@ def load_omas_hierarchy(hierarchy, **kw):
 
     #load others then
     for item in mapper:
-        if item not in dependencies:
+        if item not in dependencies and not item.endswith('.time'):
             #create empty data of the right size
             ods[item]=data=xarray.DataArray(numpy.nan+numpy.zeros(map(lambda node:ods[node].size,mapper[item]['dims'])),dims=mapper[item]['dims'])
             #fill in the actual data
