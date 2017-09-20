@@ -2,6 +2,8 @@
 
 OMAS is a set of tools that aim at simplifying the interface between third-party codes and the ITER IMAS data storage infrastructure. IMAS is a set of codes, an execution framework, a data model, a data get/put API, and a data storage infrastructure used for manipulating ITER data. The idea behind OMAS is that as long as the IMAS data model is respected, one should be able to write/read to/from the IMAS data storage infrastructure, without relying on the IMAS framework or API. 
 
+The ability of OMAS to handle data without relying on the IMAS library itself, exempts codes from such cumbersome dependency, while always remaining IMAS compatible. Any physics code or programming language that is capable of reading/writing data using one of the many OMAS supported data formats can take advantage of the functionalities provided by OMAS.
+
 OMAS is geared towads handling of simulation data (as opposed to experimental data), and operates under the assumption that the data it manipulates can be represented as a set of N-D labeled arrays. This is a very powerful simplification since most physics codes natively represent data in such a way.
 
 The scheme below summarizes typical data flows that could leverage the OMAS functionality (note that arrows are bi-directional)
@@ -42,8 +44,6 @@ Currently OMAS supports the following storage systems:
 | Json-ND       |  N-D arrays     | ASCII files   | -
 | IMAS          |  IMAS hierarchy | Database      | IMAS library
 | Json-H        |  IMAS hierarchy | ASCII file    | -
-
-The ability of OMAS to handle data without relying on the IMAS library itself, exempts codes from such cumbersome dependency, while always remaining IMAS compatible. Any physics code or programming language that reads/writes these formats, using the naming convention described below, can take advantage of the functionalities provided by OMAS.
 
 ### Python OMAS library
 The Python `omas` class is a subclass of the `xarray.Dataset` class <http://xarray.pydata.org>, and thus it inherits its N-D labeled arrays representation. Built upon the `pandas` and `numpy` Python packages, `xarrays` is quickly becoming a de-facto standard for the representation of multidimensional labelled arrays in Python. In addition to the native `xarray.Dataset` funcionalities, the OMAS python library checks for consistency with IMAS definitions on the fly.
