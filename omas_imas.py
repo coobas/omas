@@ -215,6 +215,13 @@ def save_omas_imas(ods, user, tokamak, version, shot, run, new=False):
         hmas_set(ids,path,hierarchy,True)
     return set_paths
 
+def load_omas_imas(user, tokamak, version, shot, run, paths):
+    ids=imas_open(user,tokamak,version,shot,run)
+    tmp={}
+    for path in paths:
+        tmp[path]=imas_get(ids,path,None)
+    return tmp
+
 def test_omas_imas(ods):
     '''
     test save and load OMAS IMAS
@@ -230,12 +237,9 @@ def test_omas_imas(ods):
     run=0
 
     paths=save_omas_imas(ods,user,tokamak,version,shot,run)#,True)
+    ods=load_omas_imas(ods,user,tokamak,version,shot,run,paths)
 
-    ids=imas_open(user,tokamak,version,shot,run)
-    for path in paths:
-        print('%s = %s'%(j2i(path),repr(imas_get(ids,path,None))))
-
-    return paths
+    return ods
 
 #------------------------------
 if __name__ == '__main__':
