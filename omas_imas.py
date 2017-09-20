@@ -217,10 +217,23 @@ def save_omas_imas(ods, user, tokamak, version, shot, run, new=False):
 
 def load_omas_imas(user, tokamak, version, shot, run, paths):
     ids=imas_open(user,tokamak,version,shot,run)
-    tmp={}
+    hierarchy={}
     for path in paths:
-        tmp[path]=imas_get(ids,path,None)
-    return tmp
+        location = hierarchy
+        for k in range(len(path)-1):
+            step=path[k]
+            next_step=path[k+1]
+            if isinstance(step,basestring) and not isinstance(next_step,int):
+                location.setdefault(step,{})
+            elif isinstance(step,basestring) and isinstance(next_step,int):
+                location.setdefault(step,[])
+            else:
+                for ks in range(step-len(location)+1):
+                    location.append({})
+            location=location[step]
+        location[path[-1]]={'__data__':imas_get(ids,path,None)}
+    pprint(hierarchy)
+    return hierarchy
 
 def test_omas_imas(ods):
     '''
@@ -237,7 +250,7 @@ def test_omas_imas(ods):
     run=0
 
     paths=save_omas_imas(ods,user,tokamak,version,shot,run)#,True)
-    ods=load_omas_imas(ods,user,tokamak,version,shot,run,paths)
+    ods=load_omas_imas(user,tokamak,version,shot,run,paths)
 
     return ods
 

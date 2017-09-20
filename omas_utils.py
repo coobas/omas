@@ -167,6 +167,16 @@ def j2i(jpath):
             ipath+='.%s'%step
     return ipath
 
+def j2o(jpath):
+    '''
+    Formats a json path as a OMAS path
+
+    :param jpath: json path, that is a list with strings and indices
+
+    :return: OMAS path
+    '''
+    return separator.join(filter(lambda x:isinstance(x,basestring), jpath ))
+
 #----------------------------------------------
 # handling of OMAS json structures
 #----------------------------------------------
