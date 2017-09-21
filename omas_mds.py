@@ -1,4 +1,5 @@
-from __future__ import absolute_import, print_function, division, unicode_literals
+from __future__ import absolute_import, print_function, division#, unicode_literals
+#MDSplus package is incompatible with unicode_litterals?
 
 from omas_structure import *
 from omas import omas
@@ -98,6 +99,8 @@ def write_mds_node(server, tree, shot, meta, write_start=True, write=True, write
 
     #fill in the attributes
     for key in meta.keys():
+        if len(key)>12:
+            raise(AttributeError('Invalid attribute `%s` for entry `%s`: MDS+ does not accept attributes longer than 12 chars'%(key,path)))
         if key!='hash':
             printd('%s     %s:%s [%s]'%(' '*len(hash),path,key,meta[key]),topic='mds')
             if write:

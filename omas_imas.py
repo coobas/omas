@@ -252,7 +252,7 @@ def load_omas_imas(user, tokamak, version, shot, run, paths):
                                 '__coordinates__':['1...N']}
         else:
             tmp=info_node(j2o(path))
-            dd=tmp['imas_coordinates']
+            dd=tmp['imas_coords']
             coords=tmp['coordinates']
             for k in range(len(dd)):
                 if '1...N' in dd[k]:

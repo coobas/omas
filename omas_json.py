@@ -234,5 +234,3 @@ if __name__ == '__main__':
     ods=omas_data_sample()
 
     ods=test_omas_json(ods)
-
-#    ods=test_omas_json(ods)
