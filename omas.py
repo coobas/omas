@@ -197,11 +197,19 @@ if __name__ == '__main__':
     os.environ['OMAS_DEBUG_TOPIC']='*'
     ods=omas_data_sample()
 
-    tests=['mds','json','jsonnd']
+    tests=['json','jsonnd','nc','mds','imas']
+    results=numpy.zeros((len(tests),len(tests)))
 
-    for t1 in tests:
-        ods=locals()['test_omas_'+t1](ods)
-        for t2 in tests:
-            if t1!=t2:
+    for k1,t1 in enumerate(tests):
+        try:
+            ods1=locals()['test_omas_'+t1](ods)
+        except Exception:
+            continue
+        for k2,t2 in enumerate(tests):
+            try:
                 print(t1,t2)
-                ods=locals()['test_omas_'+t2](ods)
+                ods2=locals()['test_omas_'+t2](ods1)
+                results[k1,k2]=1.0
+            except Exception:
+                pass
+    print(results.astype(int))
