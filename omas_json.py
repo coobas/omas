@@ -235,4 +235,4 @@ if __name__ == '__main__':
 
     ods=test_omas_json(ods)
 
-    ods=test_omas_json(ods)
+#    ods=test_omas_json(ods)

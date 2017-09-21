@@ -57,7 +57,7 @@ class omas(xarray.Dataset):
         if opath not in structure:
             if len(data_array.dims)==1 and data_array.dims[0]==opath or opath.endswith('.time'):
                 return
-            raise(Exception('Entry `%s` is not part of the `%s` data structure'%(opath,data_structure)))
+            raise(Exception('Entry `%s` with dimensions `%s` is not part of the `%s` data structure'%(opath,str(data_array.dims),data_structure)))
 
         if 'base_coord' in structure[opath]:
             return
@@ -130,6 +130,7 @@ def load_omas_hierarchy(hierarchy, **kw):
     ods=omas()
     for item in mapper:
         if item in dependencies:
+            #print('dependency:',item)
             path=mapper[item]['path'][0]
             node=gethdata(hierarchy,path)
             ods[item]=xarray.DataArray(node['__data__'],dims=mapper[item]['dims'])
@@ -137,6 +138,7 @@ def load_omas_hierarchy(hierarchy, **kw):
     #load others then
     for item in mapper:
         if item not in dependencies and not item.endswith('.time'):
+            #print('others:',item)
             #create empty data of the right size
             ods[item]=data=xarray.DataArray(numpy.nan+numpy.zeros(map(lambda node:ods[node].size,mapper[item]['dims'])),dims=mapper[item]['dims'])
             #fill in the actual data

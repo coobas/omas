@@ -2,7 +2,7 @@ from __future__ import absolute_import, print_function, division, unicode_litera
 
 from omas_structure import *
 from omas_json import *
-from omas import omas
+from omas import omas, load_omas_hierarchy
 
 def imas_open(user, tokamak, version, shot, run, new=False):
     '''
@@ -217,8 +217,15 @@ def save_omas_imas(ods, user, tokamak, version, shot, run, new=False):
 
 def load_omas_imas(user, tokamak, version, shot, run, paths):
     ids=imas_open(user,tokamak,version,shot,run)
+
+    #generate hierarchy
     hierarchy={}
     for path in paths:
+        data=imas_get(ids,path,None)
+        try:
+            data=data.tolist()
+        except AttributeError:
+            pass
         location = hierarchy
         for k in range(len(path)-1):
             step=path[k]
@@ -231,9 +238,37 @@ def load_omas_imas(user, tokamak, version, shot, run, paths):
                 for ks in range(step-len(location)+1):
                     location.append({})
             location=location[step]
-        location[path[-1]]={'__data__':imas_get(ids,path,None)}
-    pprint(hierarchy)
-    return hierarchy
+
+        if path[-1]=='time':
+            hierarchy.setdefault('time',{})
+            hierarchy['time'].setdefault('__data__',[])
+            hierarchy['time']['__data__'].extend(numpy.atleast_1d(data))
+            hierarchy['time']['__dims__']=['time']
+            hierarchy['time']['__data__']=numpy.unique(hierarchy['time']['__data__']).tolist()
+            hierarchy['time']['__coordinates__']=['1...N']
+
+            location[path[-1]]={'__data__':data,
+                                '__dims__':[],
+                                '__coordinates__':['1...N']}
+        else:
+            tmp=info_node(j2o(path))
+            dd=tmp['imas_coordinates']
+            coords=tmp['coordinates']
+            for k in range(len(dd)):
+                if '1...N' in dd[k]:
+                    new_dim='_'.join(j2o(path[1:]).split(separator))+'_dim%s'%k
+                    dd[k]=path[0]+separator+new_dim
+                    if new_dim not in hierarchy[path[0]]:
+                        hierarchy[path[0]][new_dim]={'__data__':range(len(data)),'__dims__':[dd[k]]}
+
+            location[path[-1]]={'__data__':data,
+                                '__dims__':dd,
+                                '__coordinates__':coords}
+    #pprint(hierarchy)
+    #json_string=json.dumps(hierarchy, default=json_dumper, indent=1, separators=(',',': '))
+    #open('test.imas','w').write(json_string)
+
+    return load_omas_hierarchy(hierarchy)
 
 def test_omas_imas(ods):
     '''
