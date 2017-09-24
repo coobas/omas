@@ -73,7 +73,7 @@ Translation from one OMAS storage system to another occurs by first reading the 
 
   ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
                                                               dims=['time','equilibrium.psin'])
-```
+  ```
 
 ### OMAS storage to NetCDF
 NetCDF is a computational standard compatible with HPC I/O, and support for dynamic loading and out-of-core parallel calculations. The OMAS Python class is natively represented as a NetCDF file via the native `xarray.Dataset` functionality.
