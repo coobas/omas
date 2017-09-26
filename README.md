@@ -94,6 +94,32 @@ NetCDF is a computational standard compatible with HPC I/O, and support for dyna
   ods=load_omas_nc(filename)
   ```
 
+### OMAS storage to ascii-ND
+
+The OMAS ascii-ND format saves the OMAS data as N-D arrays, each defined in a separate ascii file contained in a directory.
+The content of each file is defined on four lines:
+1. Name of the dimensions
+2. Shape of the multidimensional array followed
+3. Order of the flattened data: 'C' means in row-major (C-style) order, 'F' means in column-major (Fortran-style) order 
+4. Flattened data
+This format can be easily read/written by low level C/C++ and FORTRAN codes.
+
+* The OMAS ascii-ND filename convention mirrors the same naming convention as the OMAS Python library `opath`.
+
+  **opath**: `equilibrium.time_slice.global_quantities.ip`
+
+* Sample usage:
+
+  ```python
+  from omas import *
+  ods=omas_data_sample()
+  
+  filename='test.asciind'
+  
+  save_omas_asciind(ods,filename)
+  ods=load_omas_asciind(filename)
+  ```
+
 ### OMAS storage to Json-ND
 
 Json is a ASCII file format widely used as a way to transfer data across diverse platforms. The OMAS Json-ND format saves the OMAS data as N-D arrays organized in a labeled Json dictionary.

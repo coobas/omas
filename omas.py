@@ -1,10 +1,11 @@
 from __future__ import absolute_import, print_function, division, unicode_literals
 
-__all__=['omas',             'omas_data_sample',
-         'save_omas_nc',     'load_omas_nc',     'test_omas_nc',
-         'save_omas_mds',    'load_omas_mds',    'test_omas_mds',   'o2m', 'm2o',
-         'save_omas_json',   'load_omas_json',   'test_omas_json',
-         'save_omas_jsonnd', 'load_omas_jsonnd', 'test_omas_jsonnd',
+__all__=['omas',              'omas_data_sample',
+         'save_omas_nc',      'load_omas_nc',      'test_omas_nc',
+         'save_omas_mds',     'load_omas_mds',     'test_omas_mds',    'o2m', 'm2o',
+         'save_omas_json',    'load_omas_json',    'test_omas_json',
+         'save_omas_jsonnd',  'load_omas_jsonnd',  'test_omas_jsonnd',
+         'save_omas_asciind', 'load_omas_asciind', 'test_omas_asciind',
          'save_omas_imas'
          ]
 
@@ -190,6 +191,7 @@ from omas_mds import *
 from omas_nc import *
 from omas_json import *
 from omas_imas import *
+from omas_asciind import *
 
 #------------------------------
 if __name__ == '__main__':
@@ -197,7 +199,7 @@ if __name__ == '__main__':
     os.environ['OMAS_DEBUG_TOPIC']='*'
     ods=omas_data_sample()
 
-    tests=['json','jsonnd','nc','mds','imas']
+    tests=['json','jsonnd','nc','asciind','mds','imas']
     results=numpy.zeros((len(tests),len(tests)))
 
     for k1,t1 in enumerate(tests):

@@ -57,9 +57,14 @@ structure_time['hash']=md5_hasher('time')
 structure_time['full_path']='time'
 
 fix={}
-fix['ic.surface_current.n_pol']='ic.surface_current.n_tor'
-fix['waveform.value.time']='waveform.time'
-fix['unit.beamlets_group.beamlets.positions.R']='unit.beamlets_group.beamlets.positions.r'
+fix['ic/surface_current/n_pol']='ic/surface_current/n_tor'
+fix['waveform/value.time']='waveform/time'
+fix['unit/beamlets_group/beamlets/positions/R']='unit/beamlets_group/beamlets/positions/r'
+fix['grid/rho_tor_norm']='distribution/profiles_1d/grid/rho_tor_norm'
+fix['distribution/grid/rho_tor_norm']='distribution/profiles_1d/grid/rho_tor_norm'
+fix['distribution/profiles_2d/grid/grid/rho_tor_norm']='distribution/profiles_1d/grid/rho_tor_norm'
+fix['grid/theta_straight']='distribution/profiles_2d/grid/theta_straight'
+fix['distribution/profiles_2d/grid/grid/grid/theta_straight']='distribution/profiles_2d/grid/theta_straight'
 
 def create_json_structure(imas_version, data_structures=[]):
     '''
