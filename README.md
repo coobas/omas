@@ -2,7 +2,7 @@
 
 OMAS is a set of tools that aim at simplifying the interface between third-party codes and the ITER IMAS data storage infrastructure. IMAS is a set of codes, an execution framework, a data model, a data get/put API, and a data storage infrastructure used for manipulating ITER data. The idea behind OMAS is that as long as the IMAS data model is respected, one should be able to write/read to/from the IMAS data storage infrastructure, without relying on the IMAS framework or API. 
 
-The ability of OMAS to handle data without relying on the IMAS library itself, exempts codes from such cumbersome dependency, while always remaining IMAS compatible. Any physics code or programming language that is capable of reading/writing data using one of the many OMAS supported data formats can take advantage of the functionalities provided by OMAS.
+The ability of OMAS to handle data in an IMAS-compatible way, without relying on the IMAS library itself, exempts codes from such cumbersome dependency. Any physics code or programming language that is capable of reading/writing data using one of the many OMAS supported data formats can take advantage of the functionalities provided by OMAS.
 
 OMAS is geared towads handling of simulation data (as opposed to experimental data), and operates under the assumption that the data it manipulates can be represented as a set of N-D labeled arrays. This is a very powerful simplification since most physics codes natively represent data in such a way.
 

@@ -23,11 +23,15 @@ def save_omas_nc(ods, filename, **kw):
     kw['path']=filename
     return ods.to_netcdf(**kw)
 
-def load_omas_nc(filename, **kw):
+def load_omas_nc(filename, dynaLoad=True, **kw):
     '''
     Load an OMAS data set from NetCDF
 
     :param filename: filename to load from
+
+    :param dynaLoad: If True, do not load data in memory by default.
+                     Loading the data is only done at the execution time if needed.
+                     Use False when working with many file objects on disk or want to over-write files.
 
     :param kw: arguments passed to the xarray dataset.open_dataset method
 
@@ -37,14 +41,18 @@ def load_omas_nc(filename, **kw):
     printd('Loading OMAS data to netCDF: %s'%filename, topic='nc')
 
     kw['filename_or_obj']=filename
-    data = xarray.open_dataset(**kw)
-    data.__class__=omas
-    data._initialized=False
-    data._structure={}
-    data._initialized=True
-    for item in [item for item in data.attrs if item.startswith('structure_')]:
-        data._structure[re.sub('^structure_','',item)]=eval(data.attrs[item])
-    return data
+    ods = xarray.open_dataset(**kw)
+    ods.__class__=omas
+    ods._initialized=False
+    ods._structure={}
+    ods._initialized=True
+    if not dynaLoad:
+        for item in ods:
+            ods[item].load()
+        ods.close()
+    for item in [item for item in ods.attrs if item.startswith('structure_')]:
+        ods._structure[re.sub('^structure_','',item)]=eval(ods.attrs[item])
+    return ods
 
 def test_omas_nc(ods):
     '''
@@ -56,7 +64,7 @@ def test_omas_nc(ods):
     '''
     filename='test.nc'
     save_omas_nc(ods,filename)
-    ods=load_omas_nc(filename)
+    ods=load_omas_nc(filename, dynaLoad=False)
     return ods
 
 #------------------------------

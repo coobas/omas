@@ -283,7 +283,7 @@ def load_omas_mds(server, tree, shot):
                 coordinates="['1...N']"
             coordinates=eval(coordinates)
             dependencies.extend(coordinates)
-    dependencies=numpy.unique(dependencies)
+    dependencies=numpy.unique(dependencies).tolist()
     mds_dependencies=map(lambda x:o2m(tree,x),dependencies)
 
     #load dependencies first

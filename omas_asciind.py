@@ -49,6 +49,7 @@ def load_omas_asciind(filename, **kw):
     for item in items:
         with open(filename+os.sep+item,'r') as f:
             dependencies+=f.readline().split()
+    dependencies=numpy.unique(dependencies).tolist()
 
     #load dependencies first
     ods=omas()
