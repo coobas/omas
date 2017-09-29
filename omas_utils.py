@@ -15,7 +15,7 @@ def printd(*objects, **kw):
         topic=[topic]
     topic=map(lambda x:x.lower(),topic)
     objects=['DEBUG:']+list(objects)
-    if os.environ.get('OMAS_DEBUG_TOPIC','') in topic or '*' in topic and len(os.environ.get('OMAS_DEBUG_TOPIC','')):
+    if os.environ.get('OMAS_DEBUG_TOPIC','') in topic or ('*' in topic and len(os.environ.get('OMAS_DEBUG_TOPIC',''))):
         print(*objects, **kw)
 
 def printe(*objects, **kw):
@@ -122,6 +122,65 @@ def md5_hasher(inv):
     :return: shortened md5sum hash
     '''
     return str('H'+md5(inv).hexdigest()[:11]).upper()
+
+def credentials(system):
+    c={}
+    c['s3']={}
+    c['s3']['region_name']='us-east-1'
+    c['s3']['aws_access_key_id']='AKIAIDWE2IM2V73OGOPA'
+    c['s3']['aws_secret_access_key']='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'
+    return c[system]
+
+def remote_uri(uri, filename, up_down):
+    '''
+
+    :param uri:
+    :param filename:
+    :param up_down:
+    :return:
+    '''
+    if not re.match('\w+://\w+.*',uri):
+        return uri
+
+    tmp=uri.split('://')
+    system=tmp[0]
+    location='://'.join(tmp[1:])
+
+    if up_down=='down':
+        printd('Downloading %s to %s'%(uri,filename),topic='*')
+    elif up_down=='up':
+        printd('Uploading %s to %s'%(filename,uri),topic='*')
+    else:
+        raise(AttributeError('up_down attribute must be set to either `up` or `down`'))
+
+    if system=='s3':
+        import boto3
+        s3bucket=location.split('/')[0]
+        s3connection = boto3.resource('s3',**credentials('s3'))
+        s3filename='/'.join(location.split('/')[1:])
+        if up_down=='down':
+            if filename is None:
+                filename=s3filename.split('/')[-1]
+            obj=s3connection.Object(s3bucket, s3filename)
+            obj.download_file(os.path.split(filename)[1])
+
+        elif up_down=='up':
+            from botocore.exceptions import ClientError
+            if s3filename.endswith('/'):
+                s3filename+=filename.split('/')[-1]
+            try:
+                s3connection.meta.client.head_bucket(Bucket=s3bucket)
+            except ClientError as _excp:
+                # If a client error is thrown, then check that it was a 404 error.
+                # If it was a 404 error, then the bucket does not exist.
+                error_code = int(_excp.response['Error']['Code'])
+                if error_code == 404:
+                    s3connection.create_bucket(Bucket=s3bucket)
+                else:
+                    raise
+            bucket = s3connection.Bucket(s3bucket)
+            data = open(filename, 'rb')
+            bucket.put_object(Key=s3filename, Body=data)#, Metadata=meta)
 
 #-----------------
 # path conversions
@@ -285,3 +344,14 @@ def info_node(node):
     data_structure=node.split(separator)[0]
     structure=load_structure(data_structure)[0]
     return structure[node]
+
+#------------------------------
+if __name__ == '__main__':
+
+    from omas import omas_data_sample
+    os.environ['OMAS_DEBUG_TOPIC']='*'
+
+    uri='s3://omas3/{username}/'.format(username=os.environ['USER'])
+    remote_uri(uri,'test.nc','up')
+
+    remote_uri(uri+'test.nc','test_downS3.nc','down')
