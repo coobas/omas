@@ -285,9 +285,9 @@ def test_omas_imas(ods):
     run=0
 
     paths=save_omas_imas(ods,user,tokamak,version,shot,run)#,True)
-    ods=load_omas_imas(user,tokamak,version,shot,run,paths)
-
-    return ods
+    ods1=load_omas_imas(user,tokamak,version,shot,run,paths)
+    equal_ods(ods,ods1)
+    return ods1
 
 #------------------------------
 if __name__ == '__main__':

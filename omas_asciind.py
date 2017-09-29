@@ -86,8 +86,9 @@ def test_omas_asciind(ods):
     '''
     filename='test.asciind'
     save_omas_asciind(ods,filename,'F')
-    ods=load_omas_asciind(filename)
-    return ods
+    ods1=load_omas_asciind(filename)
+    equal_ods(ods,ods1)
+    return ods1
 
 #------------------------------
 if __name__ == '__main__':

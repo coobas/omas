@@ -146,25 +146,24 @@ def remote_uri(uri, filename, up_down):
     system=tmp[0]
     location='://'.join(tmp[1:])
 
-    if up_down=='down':
-        printd('Downloading %s to %s'%(uri,filename),topic='*')
-    elif up_down=='up':
-        printd('Uploading %s to %s'%(filename,uri),topic='*')
-    else:
-        raise(AttributeError('up_down attribute must be set to either `up` or `down`'))
+    if up_down not in ['down','up']:
+        raise(AttributeError('remote_uri up_down attribute must be set to either `up` or `down`'))
 
     if system=='s3':
         import boto3
         s3bucket=location.split('/')[0]
         s3connection = boto3.resource('s3',**credentials('s3'))
         s3filename='/'.join(location.split('/')[1:])
+
         if up_down=='down':
             if filename is None:
                 filename=s3filename.split('/')[-1]
+            printd('Downloading %s to %s'%(uri,filename),topic='s3')
             obj=s3connection.Object(s3bucket, s3filename)
             obj.download_file(os.path.split(filename)[1])
 
         elif up_down=='up':
+            printd('Uploading %s to %s'%(filename,uri),topic='s3')
             from botocore.exceptions import ClientError
             if s3filename.endswith('/'):
                 s3filename+=filename.split('/')[-1]
@@ -182,6 +181,31 @@ def remote_uri(uri, filename, up_down):
             data = open(filename, 'rb')
             bucket.put_object(Key=s3filename, Body=data)#, Metadata=meta)
 
+def equal_ods(ods1,ods2):
+    equal=True
+    k1=set(ods1.keys())
+    k2=set(ods2.keys())
+    for k in k1.difference(k2):
+        print('DIFF: key `%s` missing in 2nd ods'%k)
+        equal=False
+    for k in k2.difference(k1):
+        print('DIFF: key `%s` missing in 1st ods'%k)
+        equal=False
+    for k in k1.intersection(k2):
+        if not numpy.allclose(ods1[k].values,ods2[k].values):
+            print('DIFF: `%s` differ in value'%k)
+            print(ods1[k].values)
+            print(ods2[k].values)
+            equal=False
+        a1=set(ods1[k].attrs)
+        a2=set(ods2[k].attrs)
+        for a in a1.difference(a2):
+            print('DIFF: attr `%s` missing in key `%s` of 2nd ods'%(a,k))
+            equal=False
+        for a in a2.difference(a1):
+            print('DIFF: attr `%s` missing in key `%s` of 1st ods'%(a,k))
+            equal=False
+    return equal
 #-----------------
 # path conversions
 #-----------------

@@ -313,8 +313,9 @@ def test_omas_mds(ods):
     shot=999
 
     save_omas_mds(ods, mds_server, treename, shot)
-    ods=load_omas_mds(mds_server, treename, shot)
-    return ods
+    ods1=load_omas_mds(mds_server, treename, shot)
+    equal_ods(ods,ods1)
+    return ods1
 
 #------------------------------
 if __name__ == '__main__':

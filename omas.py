@@ -2,6 +2,7 @@ from __future__ import absolute_import, print_function, division, unicode_litera
 
 __all__=['omas',              'omas_data_sample',
          'save_omas_nc',      'load_omas_nc',      'test_omas_nc',
+         'save_omas_s3',      'load_omas_s3',      'test_omas_s3',
          'save_omas_mds',     'load_omas_mds',     'test_omas_mds',    'o2m', 'm2o',
          'save_omas_json',    'load_omas_json',    'test_omas_json',
          'save_omas_jsonnd',  'load_omas_jsonnd',  'test_omas_jsonnd',
@@ -196,22 +197,26 @@ from omas_asciind import *
 #------------------------------
 if __name__ == '__main__':
 
-    os.environ['OMAS_DEBUG_TOPIC']='*'
+    os.environ['OMAS_DEBUG_TOPIC']=''
     ods=omas_data_sample()
 
-    tests=['json','jsonnd','nc','asciind','mds','imas']
+    tests=['json','jsonnd','nc','asciind','s3','mds','imas']
     results=numpy.zeros((len(tests),len(tests)))
 
     for k1,t1 in enumerate(tests):
         try:
             ods1=locals()['test_omas_'+t1](ods)
-        except Exception:
-            continue
+        except Exception as _excp:
+            printe(repr(_excp))
         for k2,t2 in enumerate(tests):
             try:
                 print(t1,t2)
                 ods2=locals()['test_omas_'+t2](ods1)
-                results[k1,k2]=1.0
-            except Exception:
-                pass
+                if equal_ods(ods1,ods2):
+                    results[k1,k2]=1.0
+                else:
+                    results[k1,k2]=-1.0
+            except Exception as _excp:
+                printe(repr(_excp))
+
     print(results.astype(int))

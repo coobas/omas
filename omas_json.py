@@ -151,8 +151,9 @@ def test_omas_json(ods):
     '''
     filename='test.json'
     save_omas_json(ods,filename)
-    ods=load_omas_json(filename)
-    return ods
+    ods1=load_omas_json(filename)
+    equal_ods(ods,ods1)
+    return ods1
 
 def save_omas_jsonnd(ods, filename, **kw):
     '''
@@ -223,8 +224,9 @@ def test_omas_jsonnd(ods):
     '''
     filename='test.json_nd'
     save_omas_jsonnd(ods,filename)
-    ods=load_omas_jsonnd(filename)
-    return ods
+    ods1=load_omas_jsonnd(filename)
+    equal_ods(ods,ods1)
+    return ods1
 
 #------------------------------
 if __name__ == '__main__':
