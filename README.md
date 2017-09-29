@@ -36,25 +36,22 @@ The idea at the base of OMAS is that as long as data is organized in a way that 
 
 Currently OMAS supports the following storage systems:
 
-| OMAS format   | Representation  | Storage type  | Requirements  |
-|:-------------:|:---------------:|:-------------:|:-------------:|
-| xarray        |  N-D arrays     | Python memory | xarray library
-| NetCDF        |  N-D arrays     | Binary files  | NetCDF library
-| MDS+          |  N-D arrays     | Database      | MDS+ library
-| Json-ND       |  N-D arrays     | ASCII files   | -
-| IMAS          |  IMAS hierarchy | Database      | IMAS library
-| Json-H        |  IMAS hierarchy | ASCII file    | -
+| OMAS format   | Representation  | Storage type  | Remote | Path   | Requirements  |
+|:-------------:|:---------------:|:-------------:|:------:|:------:|:-------------:|
+| xarray        |  N-D arrays     | Python memory | no     | opath  | xarray        |
+| NetCDF        |  N-D arrays     | Binary files  | no     | opath  | NetCDF        |
+| S3            |  N-D arrays     | Database      | yes    | opath  | NetCDF, boto  |
+| ascii-ND      |  N-D arrays     | ASCII files   | no     | opath  | -             |
+| MDS+          |  N-D arrays     | Database      | yes    | mpath  | MDS+          |
+| Json-ND       |  N-D arrays     | ASCII files   | no     | opath  | -             |
+| Json-H        |  IMAS hierarchy | ASCII files   | no     | jpath  | -             |
+| IMAS          |  IMAS hierarchy | Database      | no     | ipath  | IMAS          |
 
 ### Python OMAS library
 The Python `omas` class is a subclass of the `xarray.Dataset` class <http://xarray.pydata.org>, and thus it inherits its N-D labeled arrays representation. Built upon the `pandas` and `numpy` Python packages, `xarrays` is quickly becoming a de-facto standard for the representation of multidimensional labelled arrays in Python. In addition to the native `xarray.Dataset` funcionalities, the OMAS python library checks for consistency with IMAS definitions on the fly.
 
 Translation from one OMAS storage system to another occurs by first reading the original OMAS data format to memory, organizing it into a `xarray.Dataset` within the OMAS class, and writing it from memory to the new data format.
-
-* The Python OMAS naming convention takes the form of a string with the IMAS node-names separated by dots. We refer to this naming convention as the `opath`.
-
-  **opath**: `equilibrium.time_slice.global_quantities.ip`
-
-* Sample usage:
+The Python OMAS naming convention takes the form of a string with the IMAS node-names separated by dots.
 
   ```python
   ods=omas()
@@ -78,20 +75,27 @@ Translation from one OMAS storage system to another occurs by first reading the 
 ### OMAS storage to NetCDF
 NetCDF is a computational standard compatible with HPC I/O, and support for dynamic loading and out-of-core parallel calculations. The OMAS Python class is natively represented as a NetCDF file via the native `xarray.Dataset` functionality.
 
-* The OMAS NetCDF naming convention mirrors the same naming convention as the OMAS Python library `opath`.
+  ```python
+  from omas import *
+  ods=omas_data_sample()
+  
+  filename='ods.nc'
+  
+  save_omas_nc(ods,filename)
+  ods=load_omas_nc(filename)
+  ```
 
-  **opath**: `equilibrium.time_slice.global_quantities.ip`
-
-* Sample usage:
+### OMAS storage to S3
+S3 object-storage uses Amazon S3 server to remotely store/retrieve OMAS NetCDF save files.
 
   ```python
   from omas import *
   ods=omas_data_sample()
   
-  filename='ods.Json'
+  filename='ods.nc'
   
-  save_omas_nc(ods,filename)
-  ods=load_omas_nc(filename)
+  save_omas_s3(ods,filename)
+  ods=load_omas_s3(filename)
   ```
 
 ### OMAS storage to ascii-ND
@@ -104,12 +108,6 @@ The content of each file is defined on four lines:
 4. Flattened data
 This format can be easily read/written by low level C/C++ and FORTRAN codes.
 
-* The OMAS ascii-ND filename convention mirrors the same naming convention as the OMAS Python library `opath`.
-
-  **opath**: `equilibrium.time_slice.global_quantities.ip`
-
-* Sample usage:
-
   ```python
   from omas import *
   ods=omas_data_sample()
@@ -120,34 +118,8 @@ This format can be easily read/written by low level C/C++ and FORTRAN codes.
   ods=load_omas_asciind(filename)
   ```
 
-### OMAS storage to Json-ND
-
-Json is a ASCII file format widely used as a way to transfer data across diverse platforms. The OMAS Json-ND format saves the OMAS data as N-D arrays organized in a labeled Json dictionary.
-
-* The OMAS Json-ND naming convention mirrors the same naming convention as the OMAS Python library `opath`.
-
-  **opath**: `equilibrium.time_slice.global_quantities.ip`
-
-* Sample usage:
-
-  ```python
-  from omas import *
-  ods=omas_data_sample()
-  
-  filename='ods.json'
-  
-  save_omas_jsonnd(ods,filename)
-  ods=load_omas_jsonnd(filename)
-  ```
-
 ### OMAS storage to MDS+
-MDS+ is the most-widely adopted standard for storing data in the tokamak community. OMAS dynamically creates the MDS+ tree structure. This is a break with respect to the typical MDS+ approach of using a model tree, but has several advantages: 1) data is allocated only when it is used; 2) extensible and support for different IMAS version; 3) simplified data exploration.
-
-* The OMAS data is saved in MDS+ as a flat list of MDS+ nodes within a MDS+ tree. MDS+ limits the the maximum length of its nodes to 12 characters. Hence a shortened version of the md5sum hash of the `opath` was used for internal storage. MDS+ also requires nodes names to start with a string, hence a leading `H` in front of the hash. Conversion from/to opath and mpath can be performed with the `o2m` and `m2o` functions. We refer to this path as the `mpath`.
-
-  **mpath**: `\\treename::TOP.equilibrium.H797B74E6973`
-
-* Sample usage:
+MDS+ is the most-widely adopted standard for storing data in the tokamak community. OMAS dynamically creates the MDS+ tree structure. This is different from the typical MDS+ approach of using a model tree, but has several advantages: 1) data is allocated only when it is used; 2) extensible and support for different IMAS version; 3) simplified data exploration.
 
   ```python
   from omas import *
@@ -160,17 +132,25 @@ MDS+ is the most-widely adopted standard for storing data in the tokamak communi
   ods=load_omas_mds(mds_server, treename, shot)
   ```
 
+### OMAS storage to Json-ND
+
+Json is a ASCII file format widely used as a way to transfer data across diverse platforms. The OMAS Json-ND format saves the OMAS data as N-D arrays organized in a labeled Json dictionary.
+
+  ```python
+  from omas import *
+  ods=omas_data_sample()
+  
+  filename='ods.json'
+  
+  save_omas_jsonnd(ods,filename)
+  ods=load_omas_jsonnd(filename)
+  ```
+
 ### OMAS storage to Json-H
 
 Json is a ASCII file format for representing hierarchical data. The OMAS Json-H format saves the OMAS data as a hierarchical structure where data is stored in the leaf nodes, and the branches are structures or arrays of structures.
 
 This format closely mirrors the IMAS hierarchical organization. Internally the OMAS methods for converting between labeled multidimensional arrays and the IMAS compatible hierarchical structure are shared by the OMAS Json-H and OMAS IMAS methods.
-
-* The OMAS Json-H naming convention takes the form a list of strings and integers separated. We refer to this naming convention as the `jpath`.
-
-  **jpath** `['equilibrium','time_slice',0,'global_quantities','ip']`
-
-* Sample usage:
 
   ```python
   from omas import *
@@ -186,12 +166,6 @@ This format closely mirrors the IMAS hierarchical organization. Internally the O
 
 IMAS is a set of codes, an execution framework, a data model, a data get/put API, and a data storage infrastructure used for manipulating ITER data.
 
-* OMAS uses the native IMAS naming convention for interfacing with IMAS. We refer to this naming convention as the `ipath`.
-
-  **ipath**: `equilibrium.time_slice[0].global_quantities.ip`
-
-* Sample usage:
-
   ```python
   from omas import *
   ods=omas_data_sample()
@@ -206,3 +180,33 @@ IMAS is a set of codes, an execution framework, a data model, a data get/put API
   ods=load_omas_imas(ods,user,tokamak,imas_version,shot,run,paths)
   ```
 
+## Paths representation internal to different storage methods
+
+  For users accessing data via the OMAS library, the `opath` is the only way of addressing data that they should be aware of;
+  other ways of addressing data are specific to the storage method and are only used internal to the OMAS library.
+
+* The Python OMAS naming convention takes the form of a string with the IMAS node-names separated by dots.
+  The same naming convention is used also for NetCDF, S3, ascii-ND, and Json-ND storage.
+  We refer to this naming convention as the `opath`.
+
+  **opath**: `equilibrium.time_slice.global_quantities.ip`
+
+* The OMAS data is saved in MDS+ as a flat list of MDS+ nodes within a MDS+ tree.
+  MDS+ limits the the maximum length of its nodes to 12 characters.
+  Hence a shortened version of the md5sum hash of the `opath` was used for internal storage.
+  MDS+ also requires nodes names to start with a string, hence a leading `H` in front of the hash.
+  Conversion from/to opath and mpath can be performed with the `o2m` and `m2o` functions.
+  We refer to this path as the `mpath`.
+
+  **mpath**: `\\treename::TOP.equilibrium.H797B74E6973`
+
+* The OMAS data saved as Json-H as a hierarchy of structures that closely follows the IMAS schema. 
+  Internally, the naming convention takes the form a list of strings and integers separated.
+  We refer to this naming convention as the `jpath`.
+
+  **jpath** `['equilibrium','time_slice',0,'global_quantities','ip']`
+
+* Internally OMAS uses the native IMAS naming convention for interfacing with IMAS.
+  We refer to this naming convention as the `ipath`.
+
+  **ipath**: `equilibrium.time_slice[0].global_quantities.ip`
