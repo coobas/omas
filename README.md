@@ -40,11 +40,11 @@ Currently OMAS supports the following storage systems:
 |:-------------:|:---------------:|:-------------:|:------:|:------:|:-------------:|
 | xarray        |  N-D arrays     | Python memory | no     | opath  | xarray        |
 | NetCDF        |  N-D arrays     | Binary files  | no     | opath  | NetCDF        |
-| S3            |  N-D arrays     | Database      | yes    | opath  | NetCDF, boto  |
+| S3            |  N-D arrays     | Binary files DB      | yes    | opath  | NetCDF, boto  |
 | ascii-ND      |  N-D arrays     | ASCII files   | no     | opath  | -             |
 | MDS+          |  N-D arrays     | Database      | yes    | mpath  | MDS+          |
 | Json-ND       |  N-D arrays     | ASCII files   | no     | opath  | -             |
-| Json-H        |  IMAS hierarchy | ASCII files   | no     | jpath  | -             |
+| Json          |  IMAS hierarchy | ASCII files   | no     | jpath  | -             |
 | IMAS          |  IMAS hierarchy | Database      | no     | ipath  | IMAS          |
 
 ### Python OMAS library
@@ -73,11 +73,12 @@ The Python OMAS naming convention takes the form of a string with the IMAS node-
   ```
 
 ### OMAS storage to NetCDF
-NetCDF is a computational standard compatible with HPC I/O, and support for dynamic loading and out-of-core parallel calculations. The OMAS Python class is natively represented as a NetCDF file via the native `xarray.Dataset` functionality.
+NetCDF is a computational standard compatible with HPC I/O, and support for dynamic loading and out-of-core parallel calculations.
+The OMAS Python class is natively represented as a NetCDF file via the native `xarray.Dataset` functionality.
 
   ```python
   from omas import *
-  ods=omas_data_sample()
+  ods=ods_sample()
   
   filename='ods.nc'
   
@@ -90,7 +91,7 @@ S3 object-storage uses Amazon S3 server to remotely store/retrieve OMAS NetCDF s
 
   ```python
   from omas import *
-  ods=omas_data_sample()
+  ods=ods_sample()
   
   filename='ods.nc'
   
@@ -110,7 +111,7 @@ This format can be easily read/written by low level C/C++ and FORTRAN codes.
 
   ```python
   from omas import *
-  ods=omas_data_sample()
+  ods=ods_sample()
   
   filename='test.asciind'
   
@@ -119,26 +120,32 @@ This format can be easily read/written by low level C/C++ and FORTRAN codes.
   ```
 
 ### OMAS storage to MDS+
-MDS+ is the most-widely adopted standard for storing data in the tokamak community. OMAS dynamically creates the MDS+ tree structure. This is different from the typical MDS+ approach of using a model tree, but has several advantages: 1) data is allocated only when it is used; 2) extensible and support for different IMAS version; 3) simplified data exploration.
+MDS+ is the most-widely adopted standard for storing data in the tokamak community.
+OMAS dynamically creates the MDS+ tree structure.
+This is different from the typical MDS+ approach of using a model tree, but has several advantages:
+1. data is allocated only when it is used;
+2. extensible and support for different IMAS version;
+3. simplified data exploration.
 
   ```python
   from omas import *
-  ods=omas_data_sample()
+  ods=ods_sample()
   
   shot=999
   treename='test'
   
-  save_omas_mds(ods, mds_server, treename, shot)
-  ods=load_omas_mds(mds_server, treename, shot)
+  save_omas_mds(ods, treename, shot)
+  ods=load_omas_mds(treename, shot)
   ```
 
 ### OMAS storage to Json-ND
 
-Json is a ASCII file format widely used as a way to transfer data across diverse platforms. The OMAS Json-ND format saves the OMAS data as N-D arrays organized in a labeled Json dictionary.
+Json is a ASCII file format widely used as a way to transfer data across diverse platforms.
+The OMAS Json-ND format saves the OMAS data as N-D arrays organized in a labeled Json dictionary.
 
   ```python
   from omas import *
-  ods=omas_data_sample()
+  ods=ods_sample()
   
   filename='ods.json'
   
@@ -146,15 +153,17 @@ Json is a ASCII file format widely used as a way to transfer data across diverse
   ods=load_omas_jsonnd(filename)
   ```
 
-### OMAS storage to Json-H
+### OMAS storage to Json
 
-Json is a ASCII file format for representing hierarchical data. The OMAS Json-H format saves the OMAS data as a hierarchical structure where data is stored in the leaf nodes, and the branches are structures or arrays of structures.
+Json is a ASCII file format for representing hierarchical data.
+The OMAS Json format saves the OMAS data as a hierarchical structure where data is stored in the leaf nodes, and the branches are structures or arrays of structures.
 
-This format closely mirrors the IMAS hierarchical organization. Internally the OMAS methods for converting between labeled multidimensional arrays and the IMAS compatible hierarchical structure are shared by the OMAS Json-H and OMAS IMAS methods.
+This format closely mirrors the IMAS hierarchical organization.
+Internally the OMAS methods for converting between labeled multidimensional arrays and the IMAS compatible hierarchical structure are shared by the OMAS Json and OMAS IMAS methods.
 
   ```python
   from omas import *
-  ods=omas_data_sample()
+  ods=ods_sample()
   
   filename='ods.json'
   
@@ -165,10 +174,11 @@ This format closely mirrors the IMAS hierarchical organization. Internally the O
 ### OMAS storage to IMAS
 
 IMAS is a set of codes, an execution framework, a data model, a data get/put API, and a data storage infrastructure used for manipulating ITER data.
+The OMAS IMAS format should be used to store/retrieve data to/from the ITER IMAS database.
 
   ```python
   from omas import *
-  ods=omas_data_sample()
+  ods=ods_sample()
   
   user='meneghini'
   tokamak='D3D'

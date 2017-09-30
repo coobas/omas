@@ -123,9 +123,9 @@ def test_omas_s3(ods):
 #------------------------------
 if __name__ == '__main__':
 
-    from omas import omas_data_sample
+    from omas import ods_sample
     os.environ['OMAS_DEBUG_TOPIC']='nc'
-    ods=omas_data_sample()
+    ods=ods_sample()
 
     ods1=test_omas_nc(ods)
 

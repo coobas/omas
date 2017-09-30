@@ -222,7 +222,7 @@ def test_omas_jsonnd(ods):
 
     :return: ods
     '''
-    filename='test.json_nd'
+    filename='test.jsonnd'
     save_omas_jsonnd(ods,filename)
     ods1=load_omas_jsonnd(filename)
     equal_ods(ods,ods1)
@@ -231,8 +231,8 @@ def test_omas_jsonnd(ods):
 #------------------------------
 if __name__ == '__main__':
 
-    from omas import omas_data_sample
+    from omas import ods_sample
     os.environ['OMAS_DEBUG_TOPIC']='json'
-    ods=omas_data_sample()
+    ods=ods_sample()
 
     ods=test_omas_json(ods)

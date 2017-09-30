@@ -3,6 +3,7 @@ __pycache__/
 *$py.class
 *~
 *.idea
+/asd.py
 
 imas_json
 imas_structures/*/clean.html

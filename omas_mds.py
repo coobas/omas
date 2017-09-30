@@ -212,17 +212,17 @@ def mds2xarray(server, tree, shot, node):
 #---------------------------
 # save and load OMAS to MDS+
 #---------------------------
-def save_omas_mds(ods, server, tree, shot, dynamic=True):
+def save_omas_mds(ods, tree, shot, server=None, dynamic=True):
     '''
     Save a OMAS data set to MDS+
 
     :param ods: OMAS data set
 
-    :param server: MDS+ server
-
     :param tree: MDS+ tree name
 
     :param shot: MDS+ shot
+
+    :param server: MDS+ server (if None use default OMAS MDS+ server)
 
     :param dynamic: dynamic tree nodes generation (False: use model tree)
     '''
@@ -230,6 +230,8 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True):
     printd('Saving to MDS+: %s `%s` %d'%(server, tree, shot),topic='mds')
 
     import MDSplus
+    if server is None:
+        server=default_omas_mds_server
     if isinstance(server,basestring):
         server=MDSplus.Connection(server)
 
@@ -250,21 +252,23 @@ def save_omas_mds(ods, server, tree, shot, dynamic=True):
         text,args,dims=xarray2mds(ods[item])
         server.put(str(':%s.%s:data'%(ds,hash)),text,*args)
 
-def load_omas_mds(server, tree, shot):
+def load_omas_mds(tree, shot, server=None):
     '''
     load OMAS data set from MDS+
-
-    :param server: MDS+ server
 
     :param tree: MDS+ tree name
 
     :param shot: MDS+ shot
+
+    :param server: MDS+ server (if None use default OMAS MDS+ server)
 
     :return: OMAS data set
     '''
     printd('Loading from MDS+: %s `%s` %d'%(server, tree, shot),topic='mds')
 
     import MDSplus
+    if server is None:
+        server=default_omas_mds_server
     if isinstance(server,basestring):
         server=MDSplus.Connection(server)
     server.openTree(tree,shot)
@@ -312,16 +316,16 @@ def test_omas_mds(ods):
     treename='test'
     shot=999
 
-    save_omas_mds(ods, mds_server, treename, shot)
-    ods1=load_omas_mds(mds_server, treename, shot)
+    save_omas_mds(ods, treename, shot)
+    ods1=load_omas_mds(treename, shot)
     equal_ods(ods,ods1)
     return ods1
 
 #------------------------------
 if __name__ == '__main__':
 
-    from omas import omas_data_sample
+    from omas import ods_sample
     os.environ['OMAS_DEBUG_TOPIC']='mds'
-    ods=omas_data_sample()
+    ods=ods_sample()
 
     ods=test_omas_mds(ods)

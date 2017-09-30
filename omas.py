@@ -1,6 +1,6 @@
 from __future__ import absolute_import, print_function, division, unicode_literals
 
-__all__=['omas',              'omas_data_sample',
+__all__=['omas',              'ods_sample',
          'save_omas_nc',      'load_omas_nc',      'test_omas_nc',
          'save_omas_s3',      'load_omas_s3',      'test_omas_s3',
          'save_omas_mds',     'load_omas_mds',     'test_omas_mds',    'o2m', 'm2o',
@@ -165,7 +165,7 @@ def load_omas_hierarchy(hierarchy, **kw):
 
     return ods
 
-def omas_data_sample():
+def ods_sample():
 
     printd('Creating sample OMAS data structure',topic='*')
 
@@ -198,7 +198,7 @@ from omas_asciind import *
 if __name__ == '__main__':
 
     os.environ['OMAS_DEBUG_TOPIC']=''
-    ods=omas_data_sample()
+    ods=ods_sample()
 
     tests=['json','jsonnd','nc','asciind','s3','mds','imas']
     results=numpy.zeros((len(tests),len(tests)))

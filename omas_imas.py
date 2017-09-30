@@ -293,8 +293,8 @@ def test_omas_imas(ods):
 if __name__ == '__main__':
     print('='*20)
 
-    from omas import omas_data_sample
+    from omas import ods_sample
     os.environ['OMAS_DEBUG_TOPIC']='imas'
-    ods=omas_data_sample()
+    ods=ods_sample()
 
     ods=test_omas_imas(ods)

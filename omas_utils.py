@@ -372,7 +372,7 @@ def info_node(node):
 #------------------------------
 if __name__ == '__main__':
 
-    from omas import omas_data_sample
+    from omas import ods_sample
     os.environ['OMAS_DEBUG_TOPIC']='*'
 
     uri='s3://omas3/{username}/'.format(username=os.environ['USER'])
