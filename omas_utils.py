@@ -339,7 +339,7 @@ def gethdata(hierarchy, path):
 #----------------------------------------------
 _structures={}
 _structures_by_hash={}
-def load_structure(file):
+def load_structure(file=None):
     '''
     load omas json structure file
 
@@ -347,6 +347,8 @@ def load_structure(file):
 
     :return: tuple with structure, hashing mapper, and ods
     '''
+    if file is None:
+        return glob.glob(imas_json_dir+os.sep+imas_version+os.sep+'*'+'.json')
     if os.sep not in file:
         file=glob.glob(imas_json_dir+os.sep+imas_version+os.sep+file+'*'+'.json')[0]
     if file not in _structures:

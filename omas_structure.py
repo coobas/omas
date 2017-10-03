@@ -261,6 +261,31 @@ def create_json_structure(imas_version, data_structures=[]):
         json_string=json.dumps(structure, default=json_dumper, indent=1, separators=(',',': '))
         open(imas_json_dir+os.sep+imas_version+os.sep+section+'.json','w').write(json_string)
 
+def create_html_documentation(imas_version):
+    filename=os.path.abspath(os.sep.join([imas_json_dir,imas_version,'omas_doc.html']))
+
+    rows={}
+    for structure_file in load_structure():
+        print('Adding to html documentation: '+os.path.splitext(os.path.split(structure_file)[1])[0])
+        structure=load_structure(structure_file)[0]
+        for item in structure:
+            if not any([ item.endswith(k) for k in ['_error_index','_error_lower','_error_upper']]):
+                rows[item]='<tr><td>{item}</td><td>{coordinates}</td><td>{data_type}</td><td>{description}</td></tr>'.format(
+                    item=item,
+                    coordinates=re.sub(',',',<br>',str(map(str,structure[item]['coordinates']))),
+                    description=structure[item]['description'],
+                    data_type=structure[item]['data_type'],
+                )
+
+    lines=[]
+    lines.append('<table border=1>')
+    for row in sorted(rows.keys()):
+        lines.append(rows[row])
+    lines.append('</table>')
+
+    with open(filename,'w') as f:
+        f.write('\n'.join(lines))
+
 #----------------------------------------------
 # must be run to generate necessary .json files
 #----------------------------------------------
@@ -270,3 +295,5 @@ if __name__ == '__main__' and os.path.exists(imas_html_dir):
         aggregate_imas_html_docs(imas_html_dir, imas_version)
 
     create_json_structure(imas_version)
+
+    create_html_documentation(imas_version)
