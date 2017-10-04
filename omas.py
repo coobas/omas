@@ -71,7 +71,7 @@ class omas(xarray.Dataset):
             elif data_array.dims[k]==c:
                 continue
             elif c not in data_array and c not in self:
-                raise(Exception('Must define `%s` as part of the `%s` data structure'%(c,data_structure)))
+                raise(Exception('`%s`: must define `%s` as part of the `%s` data structure'%(opath,c,data_structure)))
 
     def __setitem__(self, opath, data_array):
         '''

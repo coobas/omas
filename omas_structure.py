@@ -141,6 +141,9 @@ def create_json_structure(imas_version, data_structures=[]):
                         entries[k][col]=map(lambda x:fix.get(x,x),entries[k][col])
                         entries[k][col]=map(lambda x:x.split(' OR ')[0],entries[k][col])
                         entries[k][col]=map(lambda x:x.split('IDS:')[-1],entries[k][col])
+                        for k1 in range(len(entries[k][col])):
+                            if entries[k][col][k1].startswith('1...N_'):
+                                entries[k][col][k1]=re.sub('1...N_(.*)s',r'\1_index',entries[k][col][k1]).lower()
                     elif col=='data_type':
                         entries[k][col]='\n'.join(entries[k][col])
                         if entries[k][col]=='int_type':
@@ -178,12 +181,11 @@ def create_json_structure(imas_version, data_structures=[]):
                 if k not in key:
                     struct_array.pop()
             if 'struct_array' in structure[key]['data_type']:
-                for k,c in enumerate(structure[key]['coordinates']):
-                    struct_array.append(key)
-                    if not c.startswith('1...'): #add a dimension to this coordinate
-                        structure[c]['coordinates'].append('1...N')
+                struct_array[:]=struct_array+[key]
+                if structure[key]['coordinates'][0].startswith('1...'):
+                    structure[key]['coordinates'][0]=key
             else:
-                for k in struct_array[::-1]:
+                for k in struct_array[-1:]:
                     if key not in structure[k]['coordinates']:
                         structure[key]['coordinates']=structure[k]['coordinates']+structure[key]['coordinates']
 
@@ -224,10 +226,11 @@ def create_json_structure(imas_version, data_structures=[]):
 
         #prepend structure name to all entries
         for key in structure.keys():
-            for k,c in enumerate(structure[key]['coordinates']):
-                if c.startswith('1...'):
-                    continue
-                structure[key]['coordinates'][k]=section+'/'+c
+            for what in ['coordinates','imas_coords']:
+                for k,c in enumerate(structure[key][what]):
+                    if c.startswith('1...'):
+                        continue
+                    structure[key][what][k]=section+'/'+c
             structure[section+'/'+key]=structure[key]
             del structure[key]
 
@@ -236,10 +239,11 @@ def create_json_structure(imas_version, data_structures=[]):
             if key.endswith('/time'):
                 del structure[key]
             else:
-                coords=structure[key]['coordinates']
-                for k,c in enumerate(coords):
-                    if c.endswith('/time'):
-                        coords[k]='time'
+                for what in ['coordinates','imas_coords']:
+                    coords=structure[key][what]
+                    for k,c in enumerate(coords):
+                        if c.endswith('/time'):
+                            coords[k]='time'
         structure['time']=structure_time
 
         #convert separator
@@ -274,11 +278,12 @@ def create_html_documentation(imas_version):
                     item=item,
                     coordinates=re.sub(',',',<br>',str(map(str,structure[item]['coordinates']))),
                     description=structure[item]['description'],
-                    data_type=structure[item]['data_type'],
+                    data_type=type_mapper(structure[item]['data_type']),
                 )
 
     lines=[]
-    lines.append('<table border=1>')
+    lines.append("<table border=1, width='100%'>")
+    lines.append("<tr><th>OMAS name</th><th>OMAS dimensions</th><th>Type</th><th>Description</th></tr>")
     for row in sorted(rows.keys()):
         lines.append(rows[row])
     lines.append('</table>')

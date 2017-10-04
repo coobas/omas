@@ -206,6 +206,16 @@ def equal_ods(ods1,ods2):
             print('DIFF: attr `%s` missing in key `%s` of 1st ods'%(a,k))
             equal=False
     return equal
+
+def type_mapper(kind):
+    mapper={'struct':'',
+            'flt':'float',
+            'int':'int',
+            'str':'str'}
+    for k in mapper:
+        if k in kind.lower():
+            return mapper[k]
+
 #-----------------
 # path conversions
 #-----------------
