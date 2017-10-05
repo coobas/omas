@@ -19,8 +19,9 @@ def save_omas_asciind(ods, filename, order='C'):
 
     printd('Saving OMAS data to ascii-ND: %s'%filename, topic='asciind')
 
-    if not os.path.exists(filename):
-        os.makedirs(filename)
+    if os.path.exists(filename):
+        shutil.rmtree(filename, ignore_errors=False)
+    os.makedirs(filename)
 
     for item in ods.keys():
         with open(filename+os.sep+item,'w') as f:
