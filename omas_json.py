@@ -36,9 +36,7 @@ def j_data_filler(hierarchy, path, data):
     if len(path)==1:
         if not len(hierarchy[step]):
             hierarchy[step]=xarray_to_dict(data)
-            return
-        else:
-            raise(Exception('Attempting to write to a hierarchy location that is not a leaf'))
+        return #No need to write to a hierarchy location that is not a leaf
     #traverse structures
     if isinstance(hierarchy[step],dict):
         j_data_filler(hierarchy[step], path[1:], data)
@@ -68,6 +66,7 @@ def ods_to_json(ods):
     hierarchy={}
     tr=[]
     for key in map(str,sorted(ods.keys()))[::-1]:
+        print(key)
         if key=='time':
             hierarchy['time']={}
             continue

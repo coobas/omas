@@ -189,7 +189,7 @@ def create_json_structure(imas_version, data_structures=[]):
                     if key not in structure[k]['coordinates']:
                         structure[key]['coordinates']=structure[k]['coordinates']+structure[key]['coordinates']
 
-        #find fundamental coordinates
+        #find base coordinates
         base_coords=[]
         for key in structure.keys():
             coords=structure[key]['coordinates']
@@ -200,10 +200,29 @@ def create_json_structure(imas_version, data_structures=[]):
                     structure[ re.sub('(_error_upper|_error_lower|_error_index)$','',key) ]['base_coord']=True
         base_coords=numpy.unique(base_coords).tolist()
 
+        #find independent coordinates
+        for key in structure.keys():
+            if 'base_coord' in structure[key]:
+                if len(structure[key]['coordinates'])==1:
+                    structure[key]['independent_coordinate']=True
+                else:
+                    key_c=key+'_coordinate'
+                    structure[key_c]={}
+                    structure[key_c]['description']='imas missing dimension'
+                    structure[key_c]['coordinates']=['1...N']
+                    structure[key_c]['imas_coords']=['1...N']
+                    structure[key_c]['data_type']='INT_1D'
+                    structure[key_c]['base_coord']=True
+                    structure[key_c]['independent_coordinate']=True
+                    structure[key]['coordinates'][-1]=key_c
+                    for key1 in structure.keys():
+                        for k,c in enumerate(structure[key1]['coordinates']):
+                            if c==key:
+                                structure[key1]['coordinates'][k]=key_c
+
         #make sure all coordinates exist
         for key in structure.keys():
             if 'base_coord' in structure[key] and len(structure[key]['coordinates'])==1:
-                #structure[key]['independent_coordinate']=True
                 continue
             coords=structure[key]['coordinates']
             if not len(coords):
@@ -274,7 +293,7 @@ def create_html_documentation(imas_version):
         structure=load_structure(structure_file)[0]
         for item in structure:
             if not any([ item.endswith(k) for k in ['_error_index','_error_lower','_error_upper']]):
-                rows[item]='<tr><td>{item}</td><td>{coordinates}</td><td>{data_type}</td><td>{description}</td></tr>'.format(
+                rows[item]="<tr><td><p>{item}</p></td><td><p>{coordinates}</p></td><td><p>{data_type}</p></td><td><p>{description}</p></td></tr>".format(
                     item=item,
                     coordinates=re.sub(',',',<br>',str(map(str,structure[item]['coordinates']))),
                     description=structure[item]['description'],
@@ -299,6 +318,6 @@ if __name__ == '__main__' and os.path.exists(imas_html_dir):
     if not os.path.exists(os.sep.join([imas_json_dir,imas_version,'clean.xls'])):
         aggregate_imas_html_docs(imas_html_dir, imas_version)
 
-    create_json_structure(imas_version)
+    create_json_structure(imas_version,['equilibrium'])
 
     create_html_documentation(imas_version)

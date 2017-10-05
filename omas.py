@@ -53,6 +53,8 @@ class omas(xarray.Dataset):
             self._structure[data_structure]=structure
             self.attrs['structure_'+data_structure]=repr(self._structure[data_structure])
 
+        return
+
         #consistency checks
         structure=self._structure[data_structure]
 
@@ -72,6 +74,14 @@ class omas(xarray.Dataset):
                 continue
             elif c not in data_array and c not in self:
                 raise(Exception('`%s`: must define `%s` as part of the `%s` data structure'%(opath,c,data_structure)))
+
+    def info_node(self,node):
+        data_structure=node.split(separator)[0]
+        location=separator.join(node.split(separator)[1:])
+        if location in ods._structure[data_structure]:
+            return ods._structure[data_structure][location]
+        else:
+            return {}
 
     def __setitem__(self, opath, data_array):
         '''
@@ -166,7 +176,6 @@ def load_omas_hierarchy(hierarchy, **kw):
     return ods
 
 def ods_sample():
-
     printd('Creating sample OMAS data structure',topic='*')
 
     ods=omas()
@@ -180,11 +189,72 @@ def ods_sample():
     ods['equilibrium.time_slice.global_quantities.magnetic_axis.z']=xarray.DataArray(numpy.atleast_1d([0.001,0.002]),
                                                                                      dims=['time'])
 
+    # assign time-dependent 1D quantities
     ods['equilibrium.psin']=xarray.DataArray(numpy.atleast_1d(numpy.linspace(0.,1.,3)),
                                                               dims=['equilibrium.psin'])
 
     ods['equilibrium.time_slice.profiles_1d.psi']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(-1,1,3)]*2),
-                                                                dims=['time','equilibrium.psin'])
+                                                                   dims=['time',
+                                                                         'equilibrium.psin'])
+
+    ods['equilibrium.time_slice.profiles_1d.area']=xarray.DataArray(numpy.atleast_2d([numpy.linspace(0,10,3)]*2),
+                                                                    dims=['time',
+                                                                          'equilibrium.psin'])
+
+    # strict way
+    ods['equilibrium.time_slice.profiles_2d']=xarray.DataArray(numpy.atleast_1d([0]),
+                                                               dims=['equilibrium.time_slice.profiles_2d'])
+
+    ods['equilibrium.time_slice.profiles_2d.grid.dim1_coordinate']=xarray.DataArray(numpy.linspace(1.,2.,4),
+                                                                              dims=['equilibrium.time_slice.profiles_2d.grid.dim1_coordinate'])
+
+    ods['equilibrium.time_slice.profiles_2d.grid.dim2_coordinate']=xarray.DataArray(numpy.linspace(1.,2.,4),
+                                                                              dims=['equilibrium.time_slice.profiles_2d.grid.dim2_coordinate'])
+
+    ods['equilibrium.time_slice.profiles_2d.grid.dim1']=xarray.DataArray(numpy.atleast_3d([[numpy.linspace(1.,2.,4)]]*2),
+                                                                         dims=['time',
+                                                                               'equilibrium.time_slice.profiles_2d',
+                                                                               'equilibrium.time_slice.profiles_2d.grid.dim1_coordinate'])
+
+    ods['equilibrium.time_slice.profiles_2d.grid.dim2']=xarray.DataArray(numpy.atleast_3d([[numpy.linspace(-2.,2.,4)]]*2),
+                                                                         dims=['time',
+                                                                               'equilibrium.time_slice.profiles_2d',
+                                                                               'equilibrium.time_slice.profiles_2d.grid.dim2_coordinate'])
+
+    ods['equilibrium.time_slice.profiles_2d.psi']=xarray.DataArray(numpy.array([[numpy.zeros((4,4))]]*2),
+                                                                   dims=['time',
+                                                                         'equilibrium.time_slice.profiles_2d',
+                                                                         'equilibrium.time_slice.profiles_2d.grid.dim1_coordinate',
+                                                                         'equilibrium.time_slice.profiles_2d.grid.dim2_coordinate'])
+
+    # # reasonable way
+    # ods['equilibrium.time_slice.profiles_2d']=xarray.DataArray(numpy.atleast_1d([0]),
+    #                                                            dims=['equilibrium.time_slice.profiles_2d'])
+    #
+    # ods['equilibrium.time_slice.profiles_2d.grid.dim1']=xarray.DataArray(numpy.linspace(1.,2.,4),
+    #                                                                      dims=['equilibrium.time_slice.profiles_2d.grid.dim1'])
+    #
+    # ods['equilibrium.time_slice.profiles_2d.grid.dim2']=xarray.DataArray(numpy.linspace(-2.,2.,4),
+    #                                                                      dims=['equilibrium.time_slice.profiles_2d.grid.dim2'])
+    #
+    # ods['equilibrium.time_slice.profiles_2d.psi']=xarray.DataArray(numpy.array([[numpy.zeros((4,4))]]*2),
+    #                                                                dims=['time',
+    #                                                                      'equilibrium.time_slice.profiles_2d',
+    #                                                                      'equilibrium.time_slice.profiles_2d.grid.dim1',
+    #                                                                      'equilibrium.time_slice.profiles_2d.grid.dim2'])
+
+    # # ideal way
+    # ods['equilibrium.time_slice.profiles_2d.grid.dim1']=xarray.DataArray(numpy.linspace(1.,2.,4),
+    #                                                                      dims=['equilibrium.time_slice.profiles_2d.grid.dim1'])
+    #
+    # ods['equilibrium.time_slice.profiles_2d.grid.dim2']=xarray.DataArray(numpy.linspace(-2.,2.,4),
+    #                                                                      dims=['equilibrium.time_slice.profiles_2d.grid.dim2'])
+    #
+    # ods['equilibrium.time_slice.profiles_2d.psi']=xarray.DataArray(numpy.array([numpy.zeros((4,4))]*2),
+    #                                                                dims=['time',
+    #                                                                      'equilibrium.time_slice.profiles_2d.grid.dim1',
+    #                                                                      'equilibrium.time_slice.profiles_2d.grid.dim2'])
+
     return ods
 
 from omas_structure import *

@@ -322,6 +322,8 @@ def htraverse(hierarchy, **kw):
             dests=dests_in
             dims=copy.deepcopy(dims_in)
             dims.extend(info_node(separator.join(dests_in))['coordinates'])
+            #mapper.setdefault(separator.join(dests),{'path':[],'dims':dims})
+            #mapper[separator.join(dests)]['path'].append(paths)
             tmp=htraverse(hierarchy[k],paths=paths,dests=dests,mapper=mapper,dims=dims)
             paths_out.extend( tmp[0] )
             dests_out.extend( tmp[1] )
