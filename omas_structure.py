@@ -185,7 +185,7 @@ def create_json_structure(imas_version, data_structures=[]):
                 if structure[key]['coordinates'][0].startswith('1...'):
                     structure[key]['coordinates'][0]=key
             else:
-                for k in struct_array[-1:]:
+                for k in struct_array[::-1]:
                     if key not in structure[k]['coordinates']:
                         structure[key]['coordinates']=structure[k]['coordinates']+structure[key]['coordinates']
 
@@ -278,7 +278,7 @@ def create_html_documentation(imas_version):
                     item=item,
                     coordinates=re.sub(',',',<br>',str(map(str,structure[item]['coordinates']))),
                     description=structure[item]['description'],
-                    data_type=type_mapper(structure[item]['data_type']),
+                    data_type=structure[item]['data_type']#type_mapper(structure[item]['data_type']),
                 )
 
     lines=[]
