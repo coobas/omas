@@ -32,9 +32,13 @@ def j_data_filler(hierarchy, path, data):
     step=path[0]
     #print(len(path),step)
     #if reached the end of the path then assign data
+    #and this is a leaf of the hierarchy
     if len(path)==1:
-        hierarchy[step]=xarray_to_dict(data)
-        return
+        if not len(hierarchy[step]):
+            hierarchy[step]=xarray_to_dict(data)
+            return
+        else:
+            raise(Exception('Attempting to write to a hierarchy location that is not a leaf'))
     #traverse structures
     if isinstance(hierarchy[step],dict):
         j_data_filler(hierarchy[step], path[1:], data)
@@ -58,6 +62,8 @@ def ods_to_json(ods):
     '''
 
     #generate empty hierarchical data structure
+    #and count how many times the data structures
+    #are repeated based on the data dimensions
     struct_array={}
     hierarchy={}
     tr=[]
