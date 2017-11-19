@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>omas.omas_core &#8212; OMAS</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img height=40, src="../../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../how.html">Concept</a></li>
+                <li><a href="../../usage.html">Examples</a></li>
+                <li><a href="../../install.html">Installation</a></li>
+                <li><a href="../../schema.html">Data schema</a></li>
+                <li><a href="../../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for omas.omas_core</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">.omas_utils</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">__all__</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;omas_rcparams&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;omas&#39;</span><span class="p">,</span>                     <span class="s1">&#39;ods_sample&#39;</span><span class="p">,</span>            <span class="s1">&#39;different_ods&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;save_omas&#39;</span><span class="p">,</span>                <span class="s1">&#39;load_omas&#39;</span><span class="p">,</span>             <span class="s1">&#39;test_omas_suite&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;save_omas_pkl&#39;</span><span class="p">,</span>            <span class="s1">&#39;load_omas_pkl&#39;</span><span class="p">,</span>         <span class="s1">&#39;test_omas_pkl&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;save_omas_json&#39;</span><span class="p">,</span>           <span class="s1">&#39;load_omas_json&#39;</span><span class="p">,</span>        <span class="s1">&#39;test_omas_json&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;save_omas_nc&#39;</span><span class="p">,</span>             <span class="s1">&#39;load_omas_nc&#39;</span><span class="p">,</span>          <span class="s1">&#39;test_omas_nc&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;save_omas_imas&#39;</span><span class="p">,</span>           <span class="s1">&#39;load_omas_imas&#39;</span><span class="p">,</span>        <span class="s1">&#39;test_omas_imas&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;save_omas_s3&#39;</span><span class="p">,</span>             <span class="s1">&#39;load_omas_s3&#39;</span><span class="p">,</span>          <span class="s1">&#39;test_omas_s3&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;aggregate_imas_html_docs&#39;</span><span class="p">,</span> <span class="s1">&#39;create_json_structure&#39;</span><span class="p">,</span> <span class="s1">&#39;create_html_documentation&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;imas_json_dir&#39;</span><span class="p">,</span>            <span class="s1">&#39;default_imas_version&#39;</span>
+         <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">_omas_key_dict_preprocessor</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    converts a omas string path to a list of keys that make the path</span>
+
+<span class="sd">    :param key: omas string path</span>
+
+<span class="sd">    :return: list of keys that make the path</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,(</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\]&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\[&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">key</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">key</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">key</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">key</span>
+
+<div class="viewcode-block" id="omas"><a class="viewcode-back" href="../../code.html#omas.omas_core.omas">[docs]</a><span class="k">class</span> <span class="nc">omas</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    OMAS class</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">consistency_check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">instance</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">imas_version</span><span class="o">=</span><span class="kc">None</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">structure</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">_consistency_check</span><span class="o">=</span><span class="n">consistency_check</span>
+        <span class="k">return</span> <span class="n">instance</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param imas_version: IMAS version to use as a constrain for the nodes names</span>
+
+<span class="sd">        :param consistency_check: whether to enforce consistency with IMAS schema</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">imas_version</span><span class="o">=</span><span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;imas_version&#39;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">imas_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">imas_version</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">imas_json_dir</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imas_version</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">imas_version</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">consistency_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        property that sets whether consistency with IMAS schema is enabled or not</span>
+
+<span class="sd">        :return: True/False</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consistency_check</span>
+
+    <span class="nd">@consistency_check</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">consistency_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_consistency_check</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">item</span><span class="p">],</span><span class="n">omas</span><span class="p">):</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">consistency_check</span><span class="o">=</span><span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        property that returns the path in the IMAS schema</span>
+
+<span class="sd">        :return: string with location of current object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">h</span><span class="o">=</span><span class="bp">self</span>
+        <span class="n">location</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">while</span> <span class="nb">str</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">location</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,[</span><span class="nb">str</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">name</span><span class="p">),</span><span class="n">location</span><span class="p">]))</span>
+            <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">location</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1">#handle individual keys as well as full paths</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">_omas_key_dict_preprocessor</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="c1">#if the user has entered path rather than a single key</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">pass_on_value</span><span class="o">=</span><span class="n">value</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">omas</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">imas_version</span><span class="p">)</span>
+
+        <span class="n">structure</span><span class="o">=</span><span class="p">{}</span>
+        <span class="c1">#if structural checks are enabled</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">consistency_check</span><span class="p">:</span>
+            <span class="c1">#if this is the head</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">=</span><span class="n">load_structure</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1">#consistency checking</span>
+            <span class="n">location</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])]))</span>
+            <span class="n">structure_location</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\.[0-9:]+&#39;</span><span class="p">,</span><span class="s1">&#39;[:]&#39;</span><span class="p">,</span><span class="n">location</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">structure_location</span><span class="p">):</span>
+                    <span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="p">):</span>
+                <span class="n">options</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\[:\]&#39;</span><span class="p">,</span><span class="s1">&#39;.:&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\.[0-9]+&#39;</span><span class="p">,</span><span class="s1">&#39;.:&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">))</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;:&#39;</span><span class="p">:</span>
+                    <span class="n">options</span><span class="o">=</span><span class="s1">&#39;A numerical index is needed&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">options</span><span class="o">=</span><span class="s1">&#39;Did you mean: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">options</span>
+                <span class="n">spaces</span><span class="o">=</span><span class="s1">&#39;           &#39;</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">raise</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;`</span><span class="si">%s</span><span class="s1">` is not a valid IMAS location</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">location</span><span class="o">+</span><span class="n">spaces</span><span class="o">+</span><span class="s1">&#39;^</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span><span class="n">spaces</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">options</span><span class="p">))</span>
+
+        <span class="c1">#if the value is a dictionary structure</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="n">omas</span><span class="p">):</span>
+            <span class="n">old_name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1">#deepcopy necessary to keep the location straight</span>
+            <span class="k">if</span> <span class="n">old_name</span> <span class="ow">and</span> <span class="n">old_name</span><span class="o">!=</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">value1</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">raise</span>
+                <span class="k">finally</span><span class="p">:</span>
+                    <span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="n">old_name</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">value1</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">parent</span><span class="o">=</span><span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">structure</span><span class="o">=</span><span class="n">structure</span>
+
+        <span class="c1">#if the user has entered path rather than a single key</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">pass_on_value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span> <span class="n">key</span><span class="p">,</span> <span class="nb">slice</span> <span class="p">)</span> <span class="p">:</span>
+            <span class="c1">#Get the start, stop, and step from the slice</span>
+            <span class="k">return</span> <span class="p">[</span><span class="nb">dict</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ii</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">*</span><span class="n">key</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)))]</span>
+
+        <span class="c1">#handle individual keys as well as full paths</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">_omas_key_dict_preprocessor</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="c1">#data slicing</span>
+        <span class="k">if</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;:&#39;</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span> <span class="p">)</span>
+            <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c1">#dynamic path creation</span>
+        <span class="k">elif</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">omas</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">imas_version</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="c1">#if the user has entered path rather than a single key</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="c1">#handle individual keys as well as full paths</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">_omas_key_dict_preprocessor</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="c1">#if the user has entered path rather than a single key</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<div class="viewcode-block" id="omas.paths"><a class="viewcode-back" href="../../code.html#omas.omas_core.omas.paths">[docs]</a>    <span class="k">def</span> <span class="nf">paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Traverse the ods and return paths that have data</span>
+
+<span class="sd">        :return: list of paths that have data</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">paths</span><span class="o">=</span><span class="n">kw</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;paths&#39;</span><span class="p">,[])</span>
+        <span class="n">path</span><span class="o">=</span><span class="n">kw</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,[])</span>
+        <span class="k">for</span> <span class="n">kid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">kid</span><span class="p">],</span> <span class="n">omas</span><span class="p">):</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">paths</span><span class="p">(</span><span class="n">paths</span><span class="o">=</span><span class="n">paths</span><span class="p">,</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="o">+</span><span class="p">[</span><span class="n">kid</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="p">[</span><span class="n">kid</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">paths</span></div>
+
+<div class="viewcode-block" id="omas.flat"><a class="viewcode-back" href="../../code.html#omas.omas_core.omas.flat">[docs]</a>    <span class="k">def</span> <span class="nf">flat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :return: flat dictionary representation of the data</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">tmp</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">():</span>
+            <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">path</span><span class="p">))]</span><span class="o">=</span><span class="bp">self</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">tmp</span></div>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">memo</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s1">&#39;_consistency_check&#39;</span><span class="p">):</span>
+            <span class="n">_consistency_checkBKP</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_consistency_check</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_consistency_checkBKP</span><span class="o">=</span><span class="n">omas_rcparams</span><span class="p">[</span><span class="s1">&#39;consistency_check&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">consistency_check</span><span class="o">=</span><span class="kc">False</span>
+            <span class="n">tmp</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">))</span>
+            <span class="n">tmp</span><span class="o">.</span><span class="n">consistency_check</span><span class="o">=</span><span class="n">_consistency_checkBKP</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">consistency_check</span><span class="o">=</span><span class="n">_consistency_checkBKP</span>
+        <span class="k">return</span> <span class="n">tmp</span>
+
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#switching between weak/strong reference for .parent attribute</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]()</span>
+        <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="c1">#switching between weak/strong reference for .parent attribute</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">__getnewargs__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="kc">False</span><span class="p">,)</span></div>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># save and load OMAS with Python pickle</span>
+<span class="c1">#--------------------------------------------</span>
+<div class="viewcode-block" id="save_omas_pkl"><a class="viewcode-back" href="../../code.html#omas.omas_core.save_omas_pkl">[docs]</a><span class="k">def</span> <span class="nf">save_omas_pkl</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Save OMAS data set to Python pickle</span>
+
+<span class="sd">    :param ods: OMAS data set</span>
+
+<span class="sd">    :param filename: filename to save to</span>
+
+<span class="sd">    :param kw: keywords passed to pickle.dump function</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;Saving to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;pkl&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="load_omas_pkl"><a class="viewcode-back" href="../../code.html#omas.omas_core.load_omas_pkl">[docs]</a><span class="k">def</span> <span class="nf">load_omas_pkl</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Load OMAS data set from Python pickle</span>
+
+<span class="sd">    :param filename: filename to save to</span>
+
+<span class="sd">    :returns: ods OMAS data set</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;Loading from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;pkl&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="test_omas_pkl"><a class="viewcode-back" href="../../code.html#omas.omas_core.test_omas_pkl">[docs]</a><span class="k">def</span> <span class="nf">test_omas_pkl</span><span class="p">(</span><span class="n">ods</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    test save and load Python pickle</span>
+
+<span class="sd">    :param ods: ods</span>
+
+<span class="sd">    :return: ods</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;test.pkl&#39;</span>
+    <span class="n">save_omas_pkl</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">ods1</span><span class="o">=</span><span class="n">load_omas_pkl</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ods1</span></div>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># tools</span>
+<span class="c1">#--------------------------------------------</span>
+<div class="viewcode-block" id="ods_sample"><a class="viewcode-back" href="../../code.html#omas.omas_core.ods_sample">[docs]</a><span class="k">def</span> <span class="nf">ods_sample</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    create sample ODS data</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">ods</span><span class="o">=</span><span class="n">omas</span><span class="p">()</span>
+
+    <span class="c1">#info ODS is used for keeping track of IMAS metadata</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.user&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">unicode</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;USER&#39;</span><span class="p">])</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.tokamak&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;ITER&#39;</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.imas_version&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">unicode</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;IMAS_VERSION&#39;</span><span class="p">,</span><span class="s1">&#39;3.10.1&#39;</span><span class="p">))</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.shot&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.run&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">1000.</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;global_quantities&#39;</span><span class="p">][</span><span class="s1">&#39;ip&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">1.5</span>
+
+    <span class="c1"># issue with x_point structure?</span>
+    <span class="k">if</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">2000.</span>
+        <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;boundary&#39;</span><span class="p">][</span><span class="s1">&#39;x_point&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">0.</span>
+
+    <span class="n">ods2</span><span class="o">=</span><span class="n">omas</span><span class="p">()</span>
+    <span class="n">ods2</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">printd</span><span class="p">(</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;global_quantities&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">location</span><span class="p">,</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+    <span class="n">printd</span><span class="p">(</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;global_quantities&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">location</span><span class="p">,</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.1.time&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">2000.</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.1.global_quantities.ip&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">2.</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[2].time&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">3000.</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[2].global_quantities.ip&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">3.</span>
+
+    <span class="c1">#check different ways of addressing data</span>
+    <span class="n">printd</span><span class="p">(</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice&#39;</span><span class="p">][</span><span class="s1">&#39;1.global_quantities.ip&#39;</span><span class="p">],</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+    <span class="n">printd</span><span class="p">(</span><span class="n">ods</span><span class="p">[[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">,</span><span class="s1">&#39;time_slice&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;global_quantities&#39;</span><span class="p">,</span><span class="s1">&#39;ip&#39;</span><span class="p">]],</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+    <span class="n">printd</span><span class="p">(</span><span class="n">ods</span><span class="p">[(</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">,</span><span class="s1">&#39;time_slice&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;global_quantities&#39;</span><span class="p">,</span><span class="s1">&#39;ip&#39;</span><span class="p">)],</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+    <span class="n">printd</span><span class="p">(</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.1.global_quantities.ip&#39;</span><span class="p">],</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+    <span class="n">printd</span><span class="p">(</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[1].global_quantities.ip&#39;</span><span class="p">],</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.0.profiles_1d.psi&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="c1">#pprint(ods.paths())</span>
+    <span class="c1">#pprint(ods2.paths())</span>
+
+    <span class="c1">#check data slicing is working</span>
+    <span class="n">printd</span><span class="p">(</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[:].global_quantities.ip&#39;</span><span class="p">],</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+
+    <span class="n">tmp</span><span class="o">=</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][:]</span><span class="c1">#[&#39;global_quantities.ip&#39;]</span>
+
+    <span class="n">ckBKP</span><span class="o">=</span><span class="n">ods</span><span class="o">.</span><span class="n">consistency_check</span>
+    <span class="n">tmp</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">ods</span><span class="p">)</span>
+    <span class="n">ods</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ods</span><span class="o">.</span><span class="n">consistency_check</span><span class="o">!=</span><span class="n">ckBKP</span><span class="p">:</span>
+        <span class="k">raise</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;consistency_check attribute changed&#39;</span><span class="p">))</span>
+
+    <span class="n">save_omas_pkl</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span><span class="s1">&#39;test.pkl&#39;</span><span class="p">)</span>
+    <span class="n">ods</span><span class="o">=</span><span class="n">load_omas_pkl</span><span class="p">(</span><span class="s1">&#39;test.pkl&#39;</span><span class="p">)</span>
+
+    <span class="n">tmp</span><span class="o">=</span><span class="n">ods</span><span class="o">.</span><span class="n">flat</span><span class="p">()</span>
+    <span class="c1">#pprint(tmp)</span>
+
+    <span class="k">return</span> <span class="n">ods</span></div>
+
+<div class="viewcode-block" id="different_ods"><a class="viewcode-back" href="../../code.html#omas.omas_core.different_ods">[docs]</a><span class="k">def</span> <span class="nf">different_ods</span><span class="p">(</span><span class="n">ods1</span><span class="p">,</span> <span class="n">ods2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Checks if two ODSs have any difference and returns the string with the cause of the different</span>
+
+<span class="sd">    :param ods1: first ods to check</span>
+
+<span class="sd">    :param ods2: second ods to check</span>
+
+<span class="sd">    :return: string with reason for difference, or False otherwise</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">ods1</span><span class="o">=</span><span class="n">ods1</span><span class="o">.</span><span class="n">flat</span><span class="p">()</span>
+    <span class="n">ods2</span><span class="o">=</span><span class="n">ods2</span><span class="o">.</span><span class="n">flat</span><span class="p">()</span>
+
+    <span class="n">k1</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">ods1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">k2</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">ods2</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k1</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">k2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;DIFF: key `</span><span class="si">%s</span><span class="s1">` missing in 2nd ods&#39;</span><span class="o">%</span><span class="n">k</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k2</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">k1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;DIFF: key `</span><span class="si">%s</span><span class="s1">` missing in 1st ods&#39;</span><span class="o">%</span><span class="n">k</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">k2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ods1</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">!=</span><span class="nb">type</span><span class="p">(</span><span class="n">ods2</span><span class="p">[</span><span class="n">k</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="s1">&#39;DIFF: `</span><span class="si">%s</span><span class="s1">` differ in type (</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">ods1</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span><span class="nb">type</span><span class="p">(</span><span class="n">ods2</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ods1</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">basestring</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ods1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">!=</span><span class="n">ods2</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s1">&#39;DIFF: `</span><span class="si">%s</span><span class="s1">` differ in value&#39;</span><span class="o">%</span><span class="n">k</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ods1</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">ods2</span><span class="p">[</span><span class="n">k</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="s1">&#39;DIFF: `</span><span class="si">%s</span><span class="s1">` differ in value&#39;</span><span class="o">%</span><span class="n">k</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+<span class="n">_tests</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pkl&#39;</span><span class="p">,</span><span class="s1">&#39;json&#39;</span><span class="p">,</span><span class="s1">&#39;nc&#39;</span><span class="p">,</span><span class="s1">&#39;s3&#39;</span><span class="p">,</span><span class="s1">&#39;imas&#39;</span><span class="p">]</span>
+<div class="viewcode-block" id="test_omas_suite"><a class="viewcode-back" href="../../code.html#omas.omas_core.test_omas_suite">[docs]</a><span class="k">def</span> <span class="nf">test_omas_suite</span><span class="p">(</span><span class="n">test_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    :param test_type: None tests all suite, otherwise choose among %s</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">ods</span><span class="o">=</span><span class="n">ods_sample</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">test_type</span> <span class="ow">in</span> <span class="n">_tests</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;OMAS_DEBUG_TOPIC&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">test_type</span>
+        <span class="n">ods1</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;test_omas_&#39;</span><span class="o">+</span><span class="n">test_type</span><span class="p">](</span><span class="n">ods</span><span class="p">)</span>
+        <span class="n">check</span><span class="o">=</span><span class="n">different_ods</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span> <span class="n">ods1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">check</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;OMAS data got saved and loaded correctly&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;OMAS_DEBUG_TOPIC&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;*&#39;</span>
+
+        <span class="n">results</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">_tests</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">_tests</span><span class="p">)))</span>
+
+        <span class="k">for</span> <span class="n">k1</span><span class="p">,</span><span class="n">t1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_tests</span><span class="p">):</span>
+            <span class="n">failed1</span><span class="o">=</span><span class="kc">False</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ods1</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;test_omas_&#39;</span><span class="o">+</span><span class="n">t1</span><span class="p">](</span><span class="n">ods</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">_excp</span><span class="p">:</span>
+                <span class="n">failed1</span><span class="o">=</span><span class="kc">True</span>
+            <span class="k">for</span> <span class="n">k2</span><span class="p">,</span><span class="n">t2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_tests</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">failed1</span><span class="p">:</span>
+                        <span class="k">raise</span>
+                    <span class="n">ods2</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;test_omas_&#39;</span><span class="o">+</span><span class="n">t2</span><span class="p">](</span><span class="n">ods1</span><span class="p">)</span>
+
+                    <span class="n">different</span><span class="o">=</span><span class="n">different_ods</span><span class="p">(</span><span class="n">ods1</span><span class="p">,</span><span class="n">ods2</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">different</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;FROM </span><span class="si">%s</span><span class="s1"> TO </span><span class="si">%s</span><span class="s1"> : OK&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="n">t2</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
+                        <span class="n">results</span><span class="p">[</span><span class="n">k1</span><span class="p">,</span><span class="n">k2</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;FROM </span><span class="si">%s</span><span class="s1"> TO </span><span class="si">%s</span><span class="s1"> : NO --&gt; </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="n">t2</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="n">different</span><span class="p">))</span>
+                        <span class="n">results</span><span class="p">[</span><span class="n">k1</span><span class="p">,</span><span class="n">k2</span><span class="p">]</span><span class="o">=-</span><span class="mf">1.0</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">_excp</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;FROM </span><span class="si">%s</span><span class="s1"> TO </span><span class="si">%s</span><span class="s1"> : NO --&gt; </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="n">t2</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="nb">repr</span><span class="p">(</span><span class="n">_excp</span><span class="p">)))</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span></div>
+<span class="n">test_omas_suite</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">=</span><span class="n">test_omas_suite</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">%</span><span class="n">_tests</span>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># save and load OMAS with default saving method</span>
+<span class="c1">#--------------------------------------------</span>
+<div class="viewcode-block" id="save_omas"><a class="viewcode-back" href="../../code.html#omas.omas_core.save_omas">[docs]</a><span class="k">def</span> <span class="nf">save_omas</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Save omas data to filename. The file extension defines format to use.</span>
+
+<span class="sd">    :param ods: OMAS data set</span>
+
+<span class="sd">    :param filename: filename to save to</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;.json&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">save_omas_json</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;.nc&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">save_omas_nc</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">save_omas_pkl</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="load_omas"><a class="viewcode-back" href="../../code.html#omas.omas_core.load_omas">[docs]</a><span class="k">def</span> <span class="nf">load_omas</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Load omas data from filename. The file extension defines format to use.</span>
+
+<span class="sd">    :param filename: filename to load from</span>
+
+<span class="sd">    :returns: ods OMAS data set</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;.json&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load_omas_json</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;.nc&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load_omas_nc</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load_omas_pkl</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># import other omas tools and methods in this namespace</span>
+<span class="c1">#--------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">.omas_imas</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.omas_s3</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.omas_nc</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.omas_json</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.omas_structure</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">test_omas_suite</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

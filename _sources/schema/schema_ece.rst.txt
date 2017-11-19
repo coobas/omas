@@ -1,0 +1,48 @@
+
+ece
+^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>ece.channel[:]</p></td><td><p><map object at 0x111c0f898></p></td><td><p></p></td><td><p>Set of channels (frequency)</p></td></tr>
+   <tr><td><p>ece.channel[:].frequency</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>FLT_0D</p></td><td><p>Frequency of the channel {static} [Hz]</p></td></tr>
+   <tr><td><p>ece.channel[:].harmonic</p></td><td><p><map object at 0x111c0f898></p></td><td><p></p></td><td><p>Harmonic detected by the channel</p></td></tr>
+   <tr><td><p>ece.channel[:].harmonic.data</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>INT_1D</p></td><td><p>Harmonic detected by the channel {dynamic}</p></td></tr>
+   <tr><td><p>ece.channel[:].harmonic.time</p></td><td><p><map object at 0x111c0f898></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>ece.channel[:].identifier</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>STR_0D</p></td><td><p>ID of the channel {static}</p></td></tr>
+   <tr><td><p>ece.channel[:].name</p></td><td><p><map object at 0x111c0f898></p></td><td><p>STR_0D</p></td><td><p>Name of the channel {static}</p></td></tr>
+   <tr><td><p>ece.channel[:].position</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p></p></td><td><p>Position of the measurements</p></td></tr>
+   <tr><td><p>ece.channel[:].position.phi</p></td><td><p><map object at 0x111c0f898></p></td><td><p></p></td><td><p>Toroidal angle</p></td></tr>
+   <tr><td><p>ece.channel[:].position.phi.data</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>FLT_1D</p></td><td><p>Toroidal angle {dynamic} [rad]</p></td></tr>
+   <tr><td><p>ece.channel[:].position.phi.time</p></td><td><p><map object at 0x111c0f898></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>ece.channel[:].position.r</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p></p></td><td><p>Major radius</p></td></tr>
+   <tr><td><p>ece.channel[:].position.r.data</p></td><td><p><map object at 0x111c0f898></p></td><td><p>FLT_1D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+   <tr><td><p>ece.channel[:].position.r.time</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>ece.channel[:].position.z</p></td><td><p><map object at 0x111c0f898></p></td><td><p></p></td><td><p>Height</p></td></tr>
+   <tr><td><p>ece.channel[:].position.z.data</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>FLT_1D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+   <tr><td><p>ece.channel[:].position.z.time</p></td><td><p><map object at 0x111c0f898></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>ece.channel[:].t_e</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p></p></td><td><p>Electron temperature</p></td></tr>
+   <tr><td><p>ece.channel[:].t_e.data</p></td><td><p><map object at 0x111c0f898></p></td><td><p>FLT_1D</p></td><td><p>Electron temperature {dynamic} [eV]</p></td></tr>
+   <tr><td><p>ece.channel[:].t_e.time</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>ece.code</p></td><td><p><map object at 0x111c0f898></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>ece.code.name</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>ece.code.output_flag</p></td><td><p><map object at 0x111c0f898></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>ece.code.parameters</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>ece.code.version</p></td><td><p><map object at 0x111c0f898></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>ece.ids_properties</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>ece.ids_properties.comment</p></td><td><p><map object at 0x111c0f898></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>ece.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>ece.line_of_sight</p></td><td><p><map object at 0x111c0f898></p></td><td><p></p></td><td><p>Description of the line of sight of the diagnostic (valid for all channels), defined by two points</p></td></tr>
+   <tr><td><p>ece.line_of_sight.first_point</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p></p></td><td><p>Position of the first point</p></td></tr>
+   <tr><td><p>ece.line_of_sight.first_point.phi</p></td><td><p><map object at 0x111c0f898></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>ece.line_of_sight.first_point.r</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>ece.line_of_sight.first_point.z</p></td><td><p><map object at 0x111c0f898></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>ece.line_of_sight.second_point</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p></p></td><td><p>Position of the second point</p></td></tr>
+   <tr><td><p>ece.line_of_sight.second_point.phi</p></td><td><p><map object at 0x111c0f898></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>ece.line_of_sight.second_point.r</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>ece.line_of_sight.second_point.z</p></td><td><p><map object at 0x111c0f898></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>ece.time</p></td><td><p><map object at 0x111c0f5c0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

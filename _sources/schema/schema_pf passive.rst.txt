@@ -1,0 +1,41 @@
+
+pf passive
+^^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>pf_passive.code</p></td><td><p><map object at 0x111e3db38></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>pf_passive.code.name</p></td><td><p><map object at 0x111e3d668></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>pf_passive.code.output_flag</p></td><td><p><map object at 0x111e3db38></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>pf_passive.code.parameters</p></td><td><p><map object at 0x111e3d668></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>pf_passive.code.version</p></td><td><p><map object at 0x111e3db38></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>pf_passive.ids_properties</p></td><td><p><map object at 0x111e3d668></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>pf_passive.ids_properties.comment</p></td><td><p><map object at 0x111e3db38></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>pf_passive.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111e3d668></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>pf_passive.loop[:]</p></td><td><p><map object at 0x111e3db38></p></td><td><p></p></td><td><p>Passive axisymmetric conductor description in the form of non-connected loops; any connected loops are expressed as active coil circuits with no power supply attached.</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].area</p></td><td><p><map object at 0x111e3d668></p></td><td><p>FLT_0D</p></td><td><p>Surface area of the passive loop {static} [m^2]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].current</p></td><td><p><map object at 0x111e3db38></p></td><td><p>FLT_1D</p></td><td><p>Passive loop current {dynamic} [A]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry</p></td><td><p><map object at 0x111e3d668></p></td><td><p></p></td><td><p>Shape of the passive loop</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.geometry_type</p></td><td><p><map object at 0x111e3db38></p></td><td><p>INT_0D</p></td><td><p>Type used to describe the element shape (1:'outline', 2:'rectangle', 3:'oblique') {static}</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.oblique</p></td><td><p><map object at 0x111e3d668></p></td><td><p></p></td><td><p>Trapezoidal description of the element</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.oblique.alpha</p></td><td><p><map object at 0x111e3db38></p></td><td><p>FLT_0D</p></td><td><p>Inclination of first angle TBD {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.oblique.beta</p></td><td><p><map object at 0x111e3d668></p></td><td><p>FLT_0D</p></td><td><p>Inclination of second angle TBD {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.oblique.length</p></td><td><p><map object at 0x111e3db38></p></td><td><p>FLT_0D</p></td><td><p>Length {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.oblique.r</p></td><td><p><map object at 0x111e3d668></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre R {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.oblique.thickness</p></td><td><p><map object at 0x111e3db38></p></td><td><p>FLT_0D</p></td><td><p>Thickness {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.oblique.z</p></td><td><p><map object at 0x111e3d668></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre Z {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.outline</p></td><td><p><map object at 0x111e3db38></p></td><td><p></p></td><td><p>Irregular outline of the element</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.outline.r</p></td><td><p><map object at 0x111e3d668></p></td><td><p>FLT_1D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.outline.z</p></td><td><p><map object at 0x111e3db38></p></td><td><p>FLT_1D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.rectangle</p></td><td><p><map object at 0x111e3d668></p></td><td><p></p></td><td><p>Rectangular description of the element</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.rectangle.height</p></td><td><p><map object at 0x111e3db38></p></td><td><p>FLT_0D</p></td><td><p>Vertical full height {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.rectangle.r</p></td><td><p><map object at 0x111e3d668></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre R {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.rectangle.width</p></td><td><p><map object at 0x111e3db38></p></td><td><p>FLT_0D</p></td><td><p>Horizontal full width {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].geometry.rectangle.z</p></td><td><p><map object at 0x111e3d668></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre Z {static} [m]</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].name</p></td><td><p><map object at 0x111e3db38></p></td><td><p>STR_0D</p></td><td><p>Name of the loop {static}</p></td></tr>
+   <tr><td><p>pf_passive.loop[:].resistance</p></td><td><p><map object at 0x111e3d668></p></td><td><p>FLT_0D</p></td><td><p>Passive loop resistance {static} [Ohm]</p></td></tr>
+   <tr><td><p>pf_passive.time</p></td><td><p><map object at 0x111e3db38></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

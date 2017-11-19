@@ -1,0 +1,1048 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>OMAS API &#8212; OMAS</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img height=40, src="_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="how.html">Concept</a></li>
+                <li><a href="usage.html">Examples</a></li>
+                <li><a href="install.html">Installation</a></li>
+                <li><a href="schema.html">Data schema</a></li>
+                <li><a href="#">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">OMAS API</a><ul>
+<li><a class="reference internal" href="#module-omas.omas_s3">omas_s3</a></li>
+<li><a class="reference internal" href="#module-omas.omas_nc">omas_nc</a></li>
+<li><a class="reference internal" href="#module-omas.omas_imas">omas_imas</a></li>
+<li><a class="reference internal" href="#module-omas.omas_core">omas_core</a></li>
+<li><a class="reference internal" href="#module-omas.omas_structure">omas_structure</a></li>
+<li><a class="reference internal" href="#module-omas.omas_utils">omas_utils</a></li>
+<li><a class="reference internal" href="#module-omas.omas_json">omas_json</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="omas-api">
+<h1>OMAS API<a class="headerlink" href="#omas-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-omas.omas_s3">
+<span id="omas-s3"></span><h2>omas_s3<a class="headerlink" href="#module-omas.omas_s3" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="omas.omas_s3.load_omas_s3">
+<code class="descclassname">omas.omas_s3.</code><code class="descname">load_omas_s3</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_s3.html#load_omas_s3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_s3.load_omas_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download an OMAS data set from S3 and read it as pickle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – filename to load from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">OMAS data set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_s3.save_omas_s3">
+<code class="descclassname">omas.omas_s3.</code><code class="descname">save_omas_s3</code><span class="sig-paren">(</span><em>ods</em>, <em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_s3.html#save_omas_s3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_s3.save_omas_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an OMAS data set to pickle and upload it to S3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>filename</strong> – filename to save to</li>
+<li><strong>kw</strong> – arguments passed to the save_omas_pkl function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_s3.test_omas_s3">
+<code class="descclassname">omas.omas_s3.</code><code class="descname">test_omas_s3</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_s3.html#test_omas_s3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_s3.test_omas_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load S3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-omas.omas_nc">
+<span id="omas-nc"></span><h2>omas_nc<a class="headerlink" href="#module-omas.omas_nc" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="omas.omas_nc.load_omas_nc">
+<code class="descclassname">omas.omas_nc.</code><code class="descname">load_omas_nc</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_nc.html#load_omas_nc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_nc.load_omas_nc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an OMAS data set from Amazon S3 server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – filename to load from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">OMAS data set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_nc.save_omas_nc">
+<code class="descclassname">omas.omas_nc.</code><code class="descname">save_omas_nc</code><span class="sig-paren">(</span><em>ods</em>, <em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_nc.html#save_omas_nc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_nc.save_omas_nc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an OMAS data set to on Amazon S3 server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>filename</strong> – filename to save to</li>
+<li><strong>kw</strong> – arguments passed to the netCDF4 Dataset function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_nc.test_omas_nc">
+<code class="descclassname">omas.omas_nc.</code><code class="descname">test_omas_nc</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_nc.html#test_omas_nc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_nc.test_omas_nc" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load NetCDF</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-omas.omas_imas">
+<span id="omas-imas"></span><h2>omas_imas<a class="headerlink" href="#module-omas.omas_imas" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="omas.omas_imas.imas_get">
+<code class="descclassname">omas.omas_imas.</code><code class="descname">imas_get</code><span class="sig-paren">(</span><em>ids</em>, <em>path</em>, <em>skipMissingNodes=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#imas_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_imas.imas_get" title="Permalink to this definition">¶</a></dt>
+<dd><p>read the value of a path in an open IMAS ids</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ids</strong> – open IMAS ids to read from</li>
+<li><strong>path</strong> – ODS path</li>
+<li><strong>skipMissingNodes</strong> – if the IMAS path does not exists:
+<cite>False</cite> raise an error
+<cite>True</cite> does not raise error
+<cite>None</cite> prints a warning message</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the value that was read if successful or None otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_imas.imas_open">
+<code class="descclassname">omas.omas_imas.</code><code class="descname">imas_open</code><span class="sig-paren">(</span><em>user</em>, <em>tokamak</em>, <em>imas_version</em>, <em>shot</em>, <em>run</em>, <em>new=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#imas_open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_imas.imas_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to open an IMAS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user</strong> – IMAS username</li>
+<li><strong>tokamak</strong> – IMAS tokamak</li>
+<li><strong>imas_version</strong> – IMAS version</li>
+<li><strong>shot</strong> – IMAS shot</li>
+<li><strong>run</strong> – IMAS run id</li>
+<li><strong>new</strong> – whether the open should create a new IMAS tree</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">IMAS ids</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_imas.imas_set">
+<code class="descclassname">omas.omas_imas.</code><code class="descname">imas_set</code><span class="sig-paren">(</span><em>ids</em>, <em>path</em>, <em>value</em>, <em>skipMissingNodes=False</em>, <em>allocate=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#imas_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_imas.imas_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>assign a value to a path of an open IMAS ids</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ids</strong> – open IMAS ids to write to</li>
+<li><strong>path</strong> – ODS path</li>
+<li><strong>value</strong> – value to assign</li>
+<li><strong>skipMissingNodes</strong> – if the IMAS path does not exists:
+<cite>False</cite> raise an error
+<cite>True</cite> does not raise error
+<cite>None</cite> prints a warning message</li>
+<li><strong>allocate</strong> – whether to perform only IMAS memory allocation (ids.resize)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">path if set was done, otherwise None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_imas.load_omas_imas">
+<code class="descclassname">omas.omas_imas.</code><code class="descname">load_omas_imas</code><span class="sig-paren">(</span><em>user</em>, <em>tokamak</em>, <em>imas_version</em>, <em>shot</em>, <em>run</em>, <em>paths</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#load_omas_imas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_imas.load_omas_imas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_imas.save_omas_imas">
+<code class="descclassname">omas.omas_imas.</code><code class="descname">save_omas_imas</code><span class="sig-paren">(</span><em>ods</em>, <em>user=None</em>, <em>tokamak=None</em>, <em>imas_version=None</em>, <em>shot=None</em>, <em>run=None</em>, <em>new=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#save_omas_imas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_imas.save_omas_imas" title="Permalink to this definition">¶</a></dt>
+<dd><p>save OMAS data set to IMAS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>user</strong> – IMAS username (reads ods[‘info.user’] if user is None)</li>
+<li><strong>tokamak</strong> – IMAS tokamak (reads ods[‘info.tokamak’] if tokamak is None)</li>
+<li><strong>imas_version</strong> – IMAS version (reads ods[‘info.imas_version’] if imas_version is None)</li>
+<li><strong>shot</strong> – IMAS shot (reads ods[‘info.shot’] if shot is None)</li>
+<li><strong>run</strong> – IMAS run (reads ods[‘info.run’] if run is None)</li>
+<li><strong>new</strong> – whether the open should create a new IMAS tree</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">paths that have been written to IMAS</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_imas.test_omas_imas">
+<code class="descclassname">omas.omas_imas.</code><code class="descname">test_omas_imas</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#test_omas_imas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_imas.test_omas_imas" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load OMAS IMAS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-omas.omas_core">
+<span id="omas-core"></span><h2>omas_core<a class="headerlink" href="#module-omas.omas_core" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="omas.omas_core.omas">
+<em class="property">class </em><code class="descclassname">omas.omas_core.</code><code class="descname">omas</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#omas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.omas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dict</span></code></p>
+<p>OMAS class</p>
+<dl class="attribute">
+<dt id="omas.omas_core.omas.consistency_check">
+<code class="descname">consistency_check</code><a class="headerlink" href="#omas.omas_core.omas.consistency_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>property that sets whether consistency with IMAS schema is enabled or not</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True/False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="omas.omas_core.omas.flat">
+<code class="descname">flat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#omas.flat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.omas.flat" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">flat dictionary representation of the data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="omas.omas_core.omas.location">
+<code class="descname">location</code><a class="headerlink" href="#omas.omas_core.omas.location" title="Permalink to this definition">¶</a></dt>
+<dd><p>property that returns the path in the IMAS schema</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string with location of current object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="omas.omas_core.omas.paths">
+<code class="descname">paths</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#omas.paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.omas.paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traverse the ods and return paths that have data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of paths that have data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.ods_sample">
+<code class="descclassname">omas.omas_core.</code><code class="descname">ods_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#ods_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.ods_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>create sample ODS data
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.different_ods">
+<code class="descclassname">omas.omas_core.</code><code class="descname">different_ods</code><span class="sig-paren">(</span><em>ods1</em>, <em>ods2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#different_ods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.different_ods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if two ODSs have any difference and returns the string with the cause of the different</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods1</strong> – first ods to check</li>
+<li><strong>ods2</strong> – second ods to check</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">string with reason for difference, or False otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.save_omas">
+<code class="descclassname">omas.omas_core.</code><code class="descname">save_omas</code><span class="sig-paren">(</span><em>ods</em>, <em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#save_omas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.save_omas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save omas data to filename. The file extension defines format to use.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>filename</strong> – filename to save to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.load_omas">
+<code class="descclassname">omas.omas_core.</code><code class="descname">load_omas</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#load_omas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.load_omas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load omas data from filename. The file extension defines format to use.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – filename to load from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods OMAS data set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.test_omas_suite">
+<code class="descclassname">omas.omas_core.</code><code class="descname">test_omas_suite</code><span class="sig-paren">(</span><em>test_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#test_omas_suite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.test_omas_suite" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>test_type</strong> – None tests all suite, otherwise choose among [u’pkl’, u’json’, u’nc’, u’s3’, u’imas’]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.save_omas_pkl">
+<code class="descclassname">omas.omas_core.</code><code class="descname">save_omas_pkl</code><span class="sig-paren">(</span><em>ods</em>, <em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#save_omas_pkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.save_omas_pkl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save OMAS data set to Python pickle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>filename</strong> – filename to save to</li>
+<li><strong>kw</strong> – keywords passed to pickle.dump function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.load_omas_pkl">
+<code class="descclassname">omas.omas_core.</code><code class="descname">load_omas_pkl</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#load_omas_pkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.load_omas_pkl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load OMAS data set from Python pickle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – filename to save to</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods OMAS data set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.test_omas_pkl">
+<code class="descclassname">omas.omas_core.</code><code class="descname">test_omas_pkl</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_core.html#test_omas_pkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.test_omas_pkl" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load Python pickle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.save_omas_json">
+<code class="descclassname">omas.omas_core.</code><code class="descname">save_omas_json</code><span class="sig-paren">(</span><em>ods</em>, <em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_json.html#save_omas_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.save_omas_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an OMAS data set to Json</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>filename</strong> – filename to save to</li>
+<li><strong>kw</strong> – arguments passed to the json.dumps method</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.load_omas_json">
+<code class="descclassname">omas.omas_core.</code><code class="descname">load_omas_json</code><span class="sig-paren">(</span><em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_json.html#load_omas_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.load_omas_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an OMAS data set from Json</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> – filename to load from</li>
+<li><strong>kw</strong> – arguments passed to the json.loads mehtod</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OMAS data set</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.test_omas_json">
+<code class="descclassname">omas.omas_core.</code><code class="descname">test_omas_json</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_json.html#test_omas_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.test_omas_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load OMAS Json</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.save_omas_nc">
+<code class="descclassname">omas.omas_core.</code><code class="descname">save_omas_nc</code><span class="sig-paren">(</span><em>ods</em>, <em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_nc.html#save_omas_nc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.save_omas_nc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an OMAS data set to on Amazon S3 server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>filename</strong> – filename to save to</li>
+<li><strong>kw</strong> – arguments passed to the netCDF4 Dataset function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.load_omas_nc">
+<code class="descclassname">omas.omas_core.</code><code class="descname">load_omas_nc</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_nc.html#load_omas_nc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.load_omas_nc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an OMAS data set from Amazon S3 server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – filename to load from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">OMAS data set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.test_omas_nc">
+<code class="descclassname">omas.omas_core.</code><code class="descname">test_omas_nc</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_nc.html#test_omas_nc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.test_omas_nc" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load NetCDF</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.save_omas_imas">
+<code class="descclassname">omas.omas_core.</code><code class="descname">save_omas_imas</code><span class="sig-paren">(</span><em>ods</em>, <em>user=None</em>, <em>tokamak=None</em>, <em>imas_version=None</em>, <em>shot=None</em>, <em>run=None</em>, <em>new=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#save_omas_imas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.save_omas_imas" title="Permalink to this definition">¶</a></dt>
+<dd><p>save OMAS data set to IMAS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>user</strong> – IMAS username (reads ods[‘info.user’] if user is None)</li>
+<li><strong>tokamak</strong> – IMAS tokamak (reads ods[‘info.tokamak’] if tokamak is None)</li>
+<li><strong>imas_version</strong> – IMAS version (reads ods[‘info.imas_version’] if imas_version is None)</li>
+<li><strong>shot</strong> – IMAS shot (reads ods[‘info.shot’] if shot is None)</li>
+<li><strong>run</strong> – IMAS run (reads ods[‘info.run’] if run is None)</li>
+<li><strong>new</strong> – whether the open should create a new IMAS tree</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">paths that have been written to IMAS</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.load_omas_imas">
+<code class="descclassname">omas.omas_core.</code><code class="descname">load_omas_imas</code><span class="sig-paren">(</span><em>user</em>, <em>tokamak</em>, <em>imas_version</em>, <em>shot</em>, <em>run</em>, <em>paths</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#load_omas_imas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.load_omas_imas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.test_omas_imas">
+<code class="descclassname">omas.omas_core.</code><code class="descname">test_omas_imas</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_imas.html#test_omas_imas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.test_omas_imas" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load OMAS IMAS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.save_omas_s3">
+<code class="descclassname">omas.omas_core.</code><code class="descname">save_omas_s3</code><span class="sig-paren">(</span><em>ods</em>, <em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_s3.html#save_omas_s3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.save_omas_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an OMAS data set to pickle and upload it to S3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>filename</strong> – filename to save to</li>
+<li><strong>kw</strong> – arguments passed to the save_omas_pkl function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.load_omas_s3">
+<code class="descclassname">omas.omas_core.</code><code class="descname">load_omas_s3</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_s3.html#load_omas_s3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.load_omas_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download an OMAS data set from S3 and read it as pickle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – filename to load from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">OMAS data set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.test_omas_s3">
+<code class="descclassname">omas.omas_core.</code><code class="descname">test_omas_s3</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_s3.html#test_omas_s3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.test_omas_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load S3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.aggregate_imas_html_docs">
+<code class="descclassname">omas.omas_core.</code><code class="descname">aggregate_imas_html_docs</code><span class="sig-paren">(</span><em>imas_html_dir=u'/Users/meneghini/tmp/imas'</em>, <em>imas_version=u'3.10.1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_structure.html#aggregate_imas_html_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.aggregate_imas_html_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>this function aggregates all of the IMAS html documentation pages
+into a single clean.html page that is stored under the imas_structures folder.</p>
+<blockquote>
+<div>omas/imas_structures/&lt;imas_version&gt;/clean.html</div></blockquote>
+<p>This clean.html page is then –MANUALLY–:
+1. opened in EXCEL
+2. in EXCEL all cells are un-merged
+3. the EXCEL document is finally saved as clean.xls</p>
+<blockquote>
+<div>omas/imas_structures/&lt;imas_version&gt;/clean.xls</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>imas_html_dir</strong> – directory where the IMAS html documentation is stored</li>
+<li><strong>imas_version</strong> – IMAS version</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.create_json_structure">
+<code class="descclassname">omas.omas_core.</code><code class="descname">create_json_structure</code><span class="sig-paren">(</span><em>imas_version=u'3.10.1'</em>, <em>data_structures=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_structure.html#create_json_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.create_json_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates the OMAS structures .json files
+after the clean.xml file is been manually generated.</p>
+<blockquote>
+<div>omas/imas_structures/&lt;imas_version&gt;/clean.html</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>imas_version</strong> – IMAS version</li>
+<li><strong>data_structures</strong> – list of data_structures to generate.
+All data structures are generated if <cite>data_structures==[]</cite></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_core.create_html_documentation">
+<code class="descclassname">omas.omas_core.</code><code class="descname">create_html_documentation</code><span class="sig-paren">(</span><em>imas_version=u'3.10.1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_structure.html#create_html_documentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_core.create_html_documentation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-omas.omas_structure">
+<span id="omas-structure"></span><h2>omas_structure<a class="headerlink" href="#module-omas.omas_structure" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="omas.omas_structure.aggregate_imas_html_docs">
+<code class="descclassname">omas.omas_structure.</code><code class="descname">aggregate_imas_html_docs</code><span class="sig-paren">(</span><em>imas_html_dir=u'/Users/meneghini/tmp/imas'</em>, <em>imas_version=u'3.10.1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_structure.html#aggregate_imas_html_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_structure.aggregate_imas_html_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>this function aggregates all of the IMAS html documentation pages
+into a single clean.html page that is stored under the imas_structures folder.</p>
+<blockquote>
+<div>omas/imas_structures/&lt;imas_version&gt;/clean.html</div></blockquote>
+<p>This clean.html page is then –MANUALLY–:
+1. opened in EXCEL
+2. in EXCEL all cells are un-merged
+3. the EXCEL document is finally saved as clean.xls</p>
+<blockquote>
+<div>omas/imas_structures/&lt;imas_version&gt;/clean.xls</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>imas_html_dir</strong> – directory where the IMAS html documentation is stored</li>
+<li><strong>imas_version</strong> – IMAS version</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_structure.create_html_documentation">
+<code class="descclassname">omas.omas_structure.</code><code class="descname">create_html_documentation</code><span class="sig-paren">(</span><em>imas_version=u'3.10.1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_structure.html#create_html_documentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_structure.create_html_documentation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_structure.create_json_structure">
+<code class="descclassname">omas.omas_structure.</code><code class="descname">create_json_structure</code><span class="sig-paren">(</span><em>imas_version=u'3.10.1'</em>, <em>data_structures=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_structure.html#create_json_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_structure.create_json_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates the OMAS structures .json files
+after the clean.xml file is been manually generated.</p>
+<blockquote>
+<div>omas/imas_structures/&lt;imas_version&gt;/clean.html</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>imas_version</strong> – IMAS version</li>
+<li><strong>data_structures</strong> – list of data_structures to generate.
+All data structures are generated if <cite>data_structures==[]</cite></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-omas.omas_utils">
+<span id="omas-utils"></span><h2>omas_utils<a class="headerlink" href="#module-omas.omas_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="omas.omas_utils.json_dumper">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">json_dumper</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_utils.html#json_dumper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.json_dumper" title="Permalink to this definition">¶</a></dt>
+<dd><p>function used to dump objects to json format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> – input ojbect</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">json-compatible [dict/list] object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.json_loader">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">json_loader</code><span class="sig-paren">(</span><em>object_pairs</em>, <em>cls=&lt;type 'dict'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_utils.html#json_loader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.json_loader" title="Permalink to this definition">¶</a></dt>
+<dd><p>function used to load json-objects generated by the json_dumper function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> – json-compatible [dict/list] object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ojbect</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.list_structures">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">list_structures</code><span class="sig-paren">(</span><em>imas_version=u'3.10.1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_utils.html#list_structures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.list_structures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.load_structure">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">load_structure</code><span class="sig-paren">(</span><em>file</em>, <em>imas_version=u'3.10.1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_utils.html#load_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.load_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>load omas json structure file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple with structure, hashing mapper, and ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.o2i">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">o2i</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_utils.html#o2i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.o2i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a ODS path format into a IMAS path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – ODS path format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">IMAS path format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.printd">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">printd</code><span class="sig-paren">(</span><em>*objects</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_utils.html#printd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.printd" title="Permalink to this definition">¶</a></dt>
+<dd><p>debug print
+environmental variable OMAS_DEBUG_TOPIC sets the topic to be printed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.printe">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">printe</code><span class="sig-paren">(</span><em>*objects</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_utils.html#printe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.printe" title="Permalink to this definition">¶</a></dt>
+<dd><p>print to stderr</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_utils.remote_uri">
+<code class="descclassname">omas.omas_utils.</code><code class="descname">remote_uri</code><span class="sig-paren">(</span><em>uri</em>, <em>filename</em>, <em>up_down</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_utils.html#remote_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_utils.remote_uri" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uri</strong> – </li>
+<li><strong>filename</strong> – </li>
+<li><strong>up_down</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-omas.omas_json">
+<span id="omas-json"></span><h2>omas_json<a class="headerlink" href="#module-omas.omas_json" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="omas.omas_json.load_omas_json">
+<code class="descclassname">omas.omas_json.</code><code class="descname">load_omas_json</code><span class="sig-paren">(</span><em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_json.html#load_omas_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_json.load_omas_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an OMAS data set from Json</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> – filename to load from</li>
+<li><strong>kw</strong> – arguments passed to the json.loads mehtod</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OMAS data set</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_json.save_omas_json">
+<code class="descclassname">omas.omas_json.</code><code class="descname">save_omas_json</code><span class="sig-paren">(</span><em>ods</em>, <em>filename</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_json.html#save_omas_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_json.save_omas_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an OMAS data set to Json</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ods</strong> – OMAS data set</li>
+<li><strong>filename</strong> – filename to save to</li>
+<li><strong>kw</strong> – arguments passed to the json.dumps method</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="omas.omas_json.test_omas_json">
+<code class="descclassname">omas.omas_json.</code><code class="descname">test_omas_json</code><span class="sig-paren">(</span><em>ods</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/omas/omas_json.html#test_omas_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#omas.omas_json.test_omas_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>test save and load OMAS Json</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ods</strong> – ods</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ods</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

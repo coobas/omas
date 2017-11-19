@@ -1,0 +1,71 @@
+
+ntms
+^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>ntms.code</p></td><td><p><map object at 0x1118133c8></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>ntms.code.name</p></td><td><p><map object at 0x111813208></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>ntms.code.output_flag</p></td><td><p><map object at 0x1118133c8></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>ntms.code.parameters</p></td><td><p><map object at 0x111813208></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>ntms.code.version</p></td><td><p><map object at 0x1118133c8></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>ntms.ids_properties</p></td><td><p><map object at 0x111813208></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>ntms.ids_properties.comment</p></td><td><p><map object at 0x1118133c8></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>ntms.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111813208></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>ntms.time</p></td><td><p><map object at 0x1118133c8></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:]</p></td><td><p><map object at 0x111813208></p></td><td><p></p></td><td><p>Description of neoclassical tearing modes for various time slices {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:]</p></td><td><p><map object at 0x1118133c8></p></td><td><p></p></td><td><p>List of the various NTM modes appearing during the simulation. If a mode appears several times, use several indices in this array of structure with the same m,n values.</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].calculation_method</p></td><td><p><map object at 0x111813208></p></td><td><p>STR_0D</p></td><td><p>Description of how the mode evolution is calculated {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].delta_diff</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_1D</p></td><td><p>Extra diffusion coefficient for the transport equations of Te, ne, Ti {dynamic} [m^2.s^-1]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].deltaw[:]</p></td><td><p><map object at 0x111813208></p></td><td><p></p></td><td><p>deltaw contributions to the Rutherford equation</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].deltaw[:].name</p></td><td><p><map object at 0x1118133c8></p></td><td><p>STR_0D</p></td><td><p>Name of the contribution {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].deltaw[:].value</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_0D</p></td><td><p>Value of the contribution {dynamic} [m^-1]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution</p></td><td><p><map object at 0x1118133c8></p></td><td><p></p></td><td><p>Detailed NTM evolution on a finer timebase than the time_slice array of structure</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.calculation_method</p></td><td><p><map object at 0x111813208></p></td><td><p>STR_0D</p></td><td><p>Description of how the mode evolution is calculated {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.delta_diff</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_2D</p></td><td><p>Extra diffusion coefficient for the transport equations of Te, ne, Ti {dynamic} [m^2.s^-1]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.deltaw[:]</p></td><td><p><map object at 0x111813208></p></td><td><p></p></td><td><p>deltaw contributions to the Rutherford equation</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.deltaw[:].name</p></td><td><p><map object at 0x1118133c8></p></td><td><p>STR_0D</p></td><td><p>Name of the contribution {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.deltaw[:].value</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_1D</p></td><td><p>Value of the contribution {dynamic} [m^-1]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.dfrequency_dt</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_1D</p></td><td><p>Time derivative of the frequency of the mode {dynamic} [s^-2]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.dphase_dt</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_1D</p></td><td><p>Time derivative of the phase of the mode {dynamic} [rad/s]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.dwidth_dt</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_1D</p></td><td><p>Time derivative of the full width of the mode {dynamic} [m/s]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.frequency</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_1D</p></td><td><p>Frequency of the mode {dynamic} [Hz]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.m_pol</p></td><td><p><map object at 0x1118133c8></p></td><td><p>INT_0D</p></td><td><p>Poloidal mode number {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.n_tor</p></td><td><p><map object at 0x111813208></p></td><td><p>INT_0D</p></td><td><p>Toroidal mode number {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.phase</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_1D</p></td><td><p>Phase of the mode {dynamic} [rad]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.rho_tor</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_1D</p></td><td><p>Flux coordinate on which the mode is centred {dynamic} [m]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.rho_tor_norm</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_1D</p></td><td><p>Normalised flux coordinate on which the mode is centred {dynamic} [-]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.time_detailed</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_1D</p></td><td><p>Time array used to describe the detailed evolution of the NTM {dynamic} [s]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.torque[:]</p></td><td><p><map object at 0x1118133c8></p></td><td><p></p></td><td><p>torque contributions to the Rutherford equation</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.torque[:].name</p></td><td><p><map object at 0x111813208></p></td><td><p>STR_0D</p></td><td><p>Name of the contribution {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.torque[:].value</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_1D</p></td><td><p>Value of the contribution {dynamic} [kg.m^2.s^-2]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].detailed_evolution.width</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_1D</p></td><td><p>Full width of the mode {dynamic} [m]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].dfrequency_dt</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_0D</p></td><td><p>Time derivative of the frequency of the mode {dynamic} [s^-2]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].dphase_dt</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_0D</p></td><td><p>Time derivative of the phase of the mode {dynamic} [rad/s]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].dwidth_dt</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_0D</p></td><td><p>Time derivative of the full width of the mode {dynamic} [m/s]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].frequency</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_0D</p></td><td><p>Frequency of the mode {dynamic} [Hz]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].m_pol</p></td><td><p><map object at 0x1118133c8></p></td><td><p>INT_0D</p></td><td><p>Poloidal mode number {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].n_tor</p></td><td><p><map object at 0x111813208></p></td><td><p>INT_0D</p></td><td><p>Toroidal mode number {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].onset</p></td><td><p><map object at 0x1118133c8></p></td><td><p></p></td><td><p>NTM onset characteristics</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].onset.cause</p></td><td><p><map object at 0x111813208></p></td><td><p>STR_0D</p></td><td><p>Cause of the mode onset {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].onset.m_pol</p></td><td><p><map object at 0x1118133c8></p></td><td><p>INT_0D</p></td><td><p>Poloidal mode number {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].onset.n_tor</p></td><td><p><map object at 0x111813208></p></td><td><p>INT_0D</p></td><td><p>Toroidal mode number {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].onset.phase</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_0D</p></td><td><p>Phase of the mode at onset {dynamic} [rad]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].onset.time_offset</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_0D</p></td><td><p>Offset time (when a mode disappears). If the mode reappears later in the simulation, use another index of the mode array of structure {dynamic} [s]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].onset.time_onset</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_0D</p></td><td><p>Onset time {dynamic} [s]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].onset.width</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_0D</p></td><td><p>Seed island full width at onset time {dynamic} [m]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].phase</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_0D</p></td><td><p>Phase of the mode {dynamic} [rad]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].rho_tor</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_0D</p></td><td><p>Flux coordinate on which the mode is centred {dynamic} [m]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].rho_tor_norm</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_0D</p></td><td><p>Normalised flux coordinate on which the mode is centred {dynamic} [-]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].torque[:]</p></td><td><p><map object at 0x111813208></p></td><td><p></p></td><td><p>torque contributions to the Rutherford equation</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].torque[:].name</p></td><td><p><map object at 0x1118133c8></p></td><td><p>STR_0D</p></td><td><p>Name of the contribution {dynamic}</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].torque[:].value</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_0D</p></td><td><p>Value of the contribution {dynamic} [kg.m^2.s^-2]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].mode[:].width</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_0D</p></td><td><p>Full width of the mode {dynamic} [m]</p></td></tr>
+   <tr><td><p>ntms.time_slice[:].time</p></td><td><p><map object at 0x111813208></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+   <tr><td><p>ntms.vacuum_toroidal_field</p></td><td><p><map object at 0x1118133c8></p></td><td><p></p></td><td><p>Characteristics of the vacuum toroidal field (used in rho_tor definition)</p></td></tr>
+   <tr><td><p>ntms.vacuum_toroidal_field.b0</p></td><td><p><map object at 0x111813208></p></td><td><p>FLT_1D</p></td><td><p>Vacuum toroidal field at R0 [T]; Positive sign means anti-clockwise when viewed from above. The product R0B0 must be consistent with the b_tor_vacuum_r field of the tf IDS. {dynamic} [T]</p></td></tr>
+   <tr><td><p>ntms.vacuum_toroidal_field.r0</p></td><td><p><map object at 0x1118133c8></p></td><td><p>FLT_0D</p></td><td><p>Reference major radius where the vacuum toroidal magnetic field is given (usually a fixed position such as the middle of the vessel at the equatorial midplane) {constant} [m]</p></td></tr>
+   </table>
+   </table><p></p>

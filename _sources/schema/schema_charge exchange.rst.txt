@@ -1,0 +1,46 @@
+
+charge exchange
+^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>charge_exchange.channel[:]</p></td><td><p><map object at 0x10f3d0748></p></td><td><p></p></td><td><p>Set of channels (lines-of-sight)</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].a</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>FLT_1D</p></td><td><p>Mass of atom of the emmitting impurity. Varies according to channels since they are spanning different lines of sight {constant} [Atomic Mass Unit]</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].channel_names</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].identifier</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>STR_0D</p></td><td><p>ID of the channel {static}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].label</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>STR_1D</p></td><td><p>String identifying the emmitting impurity (e.g. H+, D+, T+, He+2, C+6, ...) {constant}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].name</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>STR_0D</p></td><td><p>Name of the channel {static}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position</p></td><td><p><map object at 0x10f3d0748></p></td><td><p></p></td><td><p>Position of the measurements</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.phi</p></td><td><p><map object at 0x10f3d0908></p></td><td><p></p></td><td><p>Toroidal angle</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.phi.data</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>FLT_1D</p></td><td><p>Toroidal angle {dynamic} [rad]</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.phi.time</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.r</p></td><td><p><map object at 0x10f3d0748></p></td><td><p></p></td><td><p>Major radius</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.r.data</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>FLT_1D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.r.time</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.z</p></td><td><p><map object at 0x10f3d0908></p></td><td><p></p></td><td><p>Height</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.z.data</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>FLT_1D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].position.z.time</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].temperature</p></td><td><p><map object at 0x10f3d0748></p></td><td><p></p></td><td><p>Ion temperature (of the emmitting impurity)</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].temperature.data</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>FLT_1D</p></td><td><p>Ion temperature (of the emmitting impurity) {dynamic} [eV]</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].temperature.time</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].velocity_pol</p></td><td><p><map object at 0x10f3d0908></p></td><td><p></p></td><td><p>Poloidal velocity (of the emmitting impurity)</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].velocity_pol.data</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>FLT_1D</p></td><td><p>Poloidal velocity (of the emmitting impurity) {dynamic} [eV]</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].velocity_pol.time</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].velocity_tor</p></td><td><p><map object at 0x10f3d0748></p></td><td><p></p></td><td><p>Toroidal velocity (of the emmitting impurity)</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].velocity_tor.data</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>FLT_1D</p></td><td><p>Toroidal velocity (of the emmitting impurity) {dynamic} [eV]</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].velocity_tor.time</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].z_ion</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>FLT_1D</p></td><td><p>Ion charge of the emmitting impurity. Varies according to channels since they are spanning different lines of sight {constant} [Elementary Charge Unit]</p></td></tr>
+   <tr><td><p>charge_exchange.channel[:].z_n</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>FLT_1D</p></td><td><p>Nuclear charge of the emmitting impurity. Varies according to channels since they are spanning different lines of sight {constant} [Elementary Charge Unit]</p></td></tr>
+   <tr><td><p>charge_exchange.code</p></td><td><p><map object at 0x10f3d0908></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>charge_exchange.code.name</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>charge_exchange.code.output_flag</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>charge_exchange.code.parameters</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>charge_exchange.code.version</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>charge_exchange.ids_properties</p></td><td><p><map object at 0x10f3d0748></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>charge_exchange.ids_properties.comment</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>charge_exchange.ids_properties.homogeneous_time</p></td><td><p><map object at 0x10f3d0748></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>charge_exchange.time</p></td><td><p><map object at 0x10f3d0908></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

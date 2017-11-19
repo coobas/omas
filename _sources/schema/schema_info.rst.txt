@@ -1,0 +1,15 @@
+
+info
+^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>info.imas_version</p></td><td><p><map object at 0x1114ac940></p></td><td><p>STR_0D</p></td><td><p>imas version</p></td></tr>
+   <tr><td><p>info.run</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>run number</p></td></tr>
+   <tr><td><p>info.shot</p></td><td><p><map object at 0x1114ac940></p></td><td><p>INT_0D</p></td><td><p>shot number</p></td></tr>
+   <tr><td><p>info.tokamak</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>tokamak name</p></td></tr>
+   <tr><td><p>info.user</p></td><td><p><map object at 0x1114ac940></p></td><td><p>STR_0D</p></td><td><p>user name</p></td></tr>
+   </table>
+   </table><p></p>

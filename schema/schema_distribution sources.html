@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>distribution sources &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../usage.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">distribution sources</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="distribution-sources">
+<h1>distribution sources<a class="headerlink" href="#distribution-sources" title="Permalink to this headline">¶</a></h1>
+<table border=1, width='100%'>
+<tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+<tr><td><p>distribution_sources.code</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+<tr><td><p>distribution_sources.code.name</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+<tr><td><p>distribution_sources.code.output_flag</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.code.parameters</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+<tr><td><p>distribution_sources.code.version</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+<tr><td><p>distribution_sources.ids_properties</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+<tr><td><p>distribution_sources.ids_properties.comment</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+<tr><td><p>distribution_sources.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+<tr><td><p>distribution_sources.magnetic_axis</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Magnetic axis position (used to define a poloidal angle for the 2D profiles)</p></td></tr>
+<tr><td><p>distribution_sources.magnetic_axis.r</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_1D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+<tr><td><p>distribution_sources.magnetic_axis.z</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_1D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+<tr><td><p>distribution_sources.source[:]</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Set of source/sink terms. A source/sink term corresponds to the particle source due to an NBI injection unit, a nuclear reaction or any combination of them (described in "identifier")</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Source terms in phase space (real space, velocity space, spin state), represented using the ggd, for various time slices {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].discrete</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_1D</p></td><td><p>List of indices of grid spaces (refers to ../grid/space) for which the source is discretely distributed. For example consider a source of 3.5 MeV alpha particles provided on a grid with two coordinates (spaces); rho_tor and energy. To specify that the source is given at energies exactly equal to 3.5 MeV, let discret have length 1 and set discrete(1)=2 since energy is dimension number 2. The source is then proportional to delta( 1 - energy / 3.5MeV ), where delta is the direct delta distribution. Discrete dimensions can only be used when the grid is rectangular. {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Grid description</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:]</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Grid subsets</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].base[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Set of bases for the grid subset. For each base, the structure describes the projection of the base vectors on the canonical frame of the grid.</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].base[:].jacobian</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_1D</p></td><td><p>Metric Jacobian {dynamic} [mixed]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].base[:].tensor_contravariant</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_3D</p></td><td><p>Contravariant metric tensor, given on each element of the subgrid (first dimension) {dynamic} [mixed]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].base[:].tensor_covariant</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_3D</p></td><td><p>Covariant metric tensor, given on each element of the subgrid (first dimension) {dynamic} [mixed]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].dimension</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Space dimension of the grid subset elements. This must be equal to the sum of the dimensions of the individual objects forming the element. {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].element[:]</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Set of elements defining the grid subset. An element is defined by a combination of objects from potentially all spaces</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].element[:].object[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Set of objects defining the element</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].element[:].object[:].dimension</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Dimension of the object {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].element[:].object[:].index</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Object index {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].element[:].object[:].space</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Index of the space from which that object is taken {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].identifier</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Grid subset identifier</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].identifier.description</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Verbose description {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].identifier.index</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].identifier.name</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].metric</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Metric of the canonical frame onto Cartesian coordinates</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].metric.jacobian</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_1D</p></td><td><p>Metric Jacobian {dynamic} [mixed]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].metric.tensor_contravariant</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_3D</p></td><td><p>Contravariant metric tensor, given on each element of the subgrid (first dimension) {dynamic} [mixed]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.grid_subset[:].metric.tensor_covariant</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_3D</p></td><td><p>Covariant metric tensor, given on each element of the subgrid (first dimension) {dynamic} [mixed]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.identifier</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Grid identifier</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.identifier.description</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Verbose description {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.identifier.index</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.identifier.name</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Set of grid spaces</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].coordinates_type</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_1D</p></td><td><p>Type of coordinates describing the physical space, for every coordinate of the space. The size of this node therfore defines the dimension of the space. The meaning of these predefined integer constants can be found in the documentation of the grid service library {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].geometry_type</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Type of space geometry (0: standard, 1:Fourier)</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].geometry_type.description</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Verbose description {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].geometry_type.index</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].geometry_type.name</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].objects_per_dimension[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Definition of the space objects for every dimension (from one to the dimension of the highest-dimensional objects). The index correspond to 1=nodes, 2=edges, 3=faces, 4=cells/volumes, .... For every index, a collection of objects of that dimension is described.</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:]</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Set of objects for a given dimension</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].boundary[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Set of (n-1)-dimensional objects defining the boundary of this n-dimensional object</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].boundary[:].index</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Index of this (n-1)-dimensional boundary object {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].boundary[:].neighbours</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_1D</p></td><td><p>List of indices of the n-dimensional objects adjacent to the given n-dimensional object. An object can possibly have multiple neighbours on a boundary {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].geometry</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_1D</p></td><td><p>Geometry data associated with the object. Its dimension depends on the type of object, geometry and coordinate considered. {dynamic} [mixed]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].measure</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Measure of the space object, i.e. physical size (length for 1d, area for 2d, volume for 3d objects,...) {dynamic} [m^dimension]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].nodes</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_1D</p></td><td><p>List of nodes forming this object (indices to objects_per_dimension(1)%object(:) in Fortran notation) {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].particles[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Source density of particles in phase space, for various grid subsets [(m.s^-1)^-3.m^-3.s^-1]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].particles[:].coefficients</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].particles[:].grid_index</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].particles[:].grid_subset_index</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].particles[:].values</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].ggd[:].time</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].global_quantities[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Global quantities for various time slices {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].global_quantities[:].particles</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_0D</p></td><td><p>Particle source rate {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].global_quantities[:].power</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Total power of the source {dynamic} [W]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].global_quantities[:].time</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].global_quantities[:].torque_tor</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Total toroidal torque of the source {dynamic} [N.m]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].gyro_type</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Defines how to interpret the spatial coordinates: 1 = given at the actual particle birth point; 2 =given at the gyro centre of the birth point {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].markers[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Source given as a group of markers (test particles) born per second, for various time slices {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].markers[:].coordinate_identifier[:]</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Set of coordinate identifiers, coordinates on which the markers are represented [W.m^-3]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].markers[:].coordinate_identifier[:].description</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Verbose description {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].markers[:].coordinate_identifier[:].index</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].markers[:].coordinate_identifier[:].name</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].markers[:].positions</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_2D</p></td><td><p>Position of the markers in the set of coordinates. The first dimension corresponds to the number of markers, the second dimension to the set of coordinates {dynamic} [mixed]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].markers[:].time</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].markers[:].weights</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_1D</p></td><td><p>Weight of the markers, i.e. number of real particles represented by each marker. The dimension of the vector correspond to the number of markers {dynamic} [-]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Set of processes (NBI units, fusion reactions, ...) that provide the source.</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].nbi_beamlets_group</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Index of the NBI beamlets group considered. Refers to the "unit/beamlets_group" array of the NBI IDS. 0 means sum over all beamlets groups. {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].nbi_energy</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>For NBI source, energy of the accelerated species considered. index = 0 for a sum over all energies; index = 1 for full energiy; index = 2 for half energy; index = 3 for third energy</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].nbi_energy.description</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Verbose description {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].nbi_energy.index</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].nbi_energy.name</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].nbi_unit</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Index of the NBI unit considered. Refers to the "unit" array of the NBI IDS. 0 means sum over all NBI units. {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].reactant_energy</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>For nuclear reaction source, energy of the reactants. index = 0 for a sum over all energies; index = 1 for thermal-thermal; index = 2 for beam-beam; index = 3 for beam-thermal</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].reactant_energy.description</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Verbose description {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].reactant_energy.index</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].reactant_energy.name</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].type</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Process type. index=1 for NBI; index=2 for nuclear reaction (reaction unspecified); index=3 for nuclear reaction: T(d,n)4He [D+T->He4+n]; index=4 for nuclear reaction: He3(d,p)4He [He3+D->He4+p]; index=5 for nuclear reaction: D(d,p)T [D+D->T+p]; index=6 for nuclear reaction: D(d,n)3He [D+D->He3+n]; index=7 for runaway processes</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].type.description</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Verbose description {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].type.index</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].process[:].type.name</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:]</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Source radial profiles (flux surface averaged quantities) for various time slices {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].energy</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_1D</p></td><td><p>Source term for the energy transport equation {dynamic} [W.m^-3]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].grid</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Radial grid</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].grid.area</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_1D</p></td><td><p>Cross-sectional area of the flux surface {dynamic} [m^2]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].grid.psi</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_1D</p></td><td><p>Poloidal magnetic flux {dynamic} [Wb]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].grid.rho_tor</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_1D</p></td><td><p>Toroidal flux coordinate. rho_tor = sqrt(b_flux_tor/(pi*b0)) ~ sqrt(pi*r^2*b0/(pi*b0)) ~ r [m]. The toroidal field used in its definition is indicated under vacuum_toroidal_field/b0 {dynamic} [m]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].grid.rho_tor_norm</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_1D</p></td><td><p>Normalised toroidal flux coordinate. The normalizing value for rho_tor_norm, is the toroidal flux coordinate at the equilibrium boundary (LCFS or 99.x % of the LCFS in case of a fixed boundary equilibium calculation, see time_slice/boundary/b_flux_pol_norm in the equilibrium IDS) {dynamic} [-]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].grid.volume</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_1D</p></td><td><p>Volume enclosed inside the magnetic surface {dynamic} [m^3]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].momentum_tor</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_1D</p></td><td><p>Source term for the toroidal momentum equation {dynamic} [N.m^-2]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].particles</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_1D</p></td><td><p>Source term for the density transport equation {dynamic} [s^-1.m^-3]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].profiles_1d[:].time</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Species injected or consumed by this source/sink</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Description of the ion or neutral species, used if type/index = 2 or 3</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.element[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>List of elements forming the atom or molecule</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.element[:].a</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_0D</p></td><td><p>Mass of atom {constant} [Atomic Mass Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.element[:].multiplicity</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Multiplicity of the atom {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.element[:].z_n</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_0D</p></td><td><p>Nuclear charge {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.label</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>String identifying ion (e.g. H+, D+, T+, He+2, C+, ...) {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.state</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Quantities related to the different states of the species (ionisation, energy, excitation, ...)</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.state.electron_configuration</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Configuration of atomic orbitals of this state, e.g. 1s2-2s1 {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.state.label</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>String identifying ion state (e.g. C+, C+2 , C+3, C+4, C+5, C+6, ...) {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.state.vibrational_level</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Vibrational level (can be bundled) {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.state.vibrational_mode</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Vibrational mode of this state, e.g. "A_g". Need to define, or adopt a standard nomenclature. {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.state.z_max</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Maximum Z of the charge state bundle (equal to z_min if no bundle) {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.state.z_min</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_0D</p></td><td><p>Minimum Z of the charge state bundle (z_min = z_max = 0 for a neutral) {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.ion.z_ion</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Ion charge (of the dominant ionisation state; lumped ions are allowed) {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Description of the neutral species, used if type/index = 4 or 5</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.element[:]</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>List of elements forming the atom or molecule</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.element[:].a</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_0D</p></td><td><p>Mass of atom {constant} [Atomic Mass Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.element[:].multiplicity</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Multiplicity of the atom {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.element[:].z_n</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_0D</p></td><td><p>Nuclear charge {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.label</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>String identifying neutral (e.g. H, D, T, He, C, ...) {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>State of the species (energy, excitation, ...)</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state.electron_configuration</p></td><td><p><map object at 0x111d35c88></p></td><td><p>STR_0D</p></td><td><p>Configuration of atomic orbitals of this state, e.g. 1s2-2s1 {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state.label</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>String identifying neutral state {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state.neutral_type</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Neutral type, in terms of energy. ID =1: cold; 2: thermal; 3: fast; 4: NBI</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state.neutral_type.description</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Verbose description {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state.neutral_type.index</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state.neutral_type.name</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state.vibrational_level</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_0D</p></td><td><p>Vibrational level (can be bundled) {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.neutral.state.vibrational_mode</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Vibrational mode of this state, e.g. "A_g". Need to define, or adopt a standard nomenclature. {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.type</p></td><td><p><map object at 0x111d35c88></p></td><td><p></p></td><td><p>Species type. index=1 for electron; index=2 for ion species in a single/average state (refer to ion structure); index=3 for ion species in a particular state (refer to ion/state structure); index=4 for neutral species in a single/average state (refer to neutral structure); index=5 for neutral species in a particular state (refer to neutral/state structure); index=6 for neutron; index=7 for photon</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.type.description</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Verbose description {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.type.index</p></td><td><p><map object at 0x111d35c88></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {constant}</p></td></tr>
+<tr><td><p>distribution_sources.source[:].species.type.name</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {constant}</p></td></tr>
+<tr><td><p>distribution_sources.time</p></td><td><p><map object at 0x111d35c88></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>distribution_sources.vacuum_toroidal_field</p></td><td><p><map object at 0x111d35ac8></p></td><td><p></p></td><td><p>Characteristics of the vacuum toroidal field (used in rho_tor definition)</p></td></tr>
+<tr><td><p>distribution_sources.vacuum_toroidal_field.b0</p></td><td><p><map object at 0x111d35c88></p></td><td><p>FLT_1D</p></td><td><p>Vacuum toroidal field at R0 [T]; Positive sign means anti-clockwise when viewed from above. The product R0B0 must be consistent with the b_tor_vacuum_r field of the tf IDS. {dynamic} [T]</p></td></tr>
+<tr><td><p>distribution_sources.vacuum_toroidal_field.r0</p></td><td><p><map object at 0x111d35ac8></p></td><td><p>FLT_0D</p></td><td><p>Reference major radius where the vacuum toroidal magnetic field is given (usually a fixed position such as the middle of the vessel at the equatorial midplane) {constant} [m]</p></td></tr>
+</table>
+</table><p></p></div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

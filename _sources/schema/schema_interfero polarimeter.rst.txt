@@ -1,0 +1,56 @@
+
+interfero polarimeter
+^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>interfero_polarimeter.channel[:]</p></td><td><p><map object at 0x11149bc50></p></td><td><p></p></td><td><p>Set of channels (lines-of-sight)</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].ellipticity</p></td><td><p><map object at 0x11149bba8></p></td><td><p></p></td><td><p>Ellipticity</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].ellipticity.data</p></td><td><p><map object at 0x11149bc50></p></td><td><p>FLT_1D</p></td><td><p>Ellipticity {dynamic} [-]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].ellipticity.time</p></td><td><p><map object at 0x11149bba8></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].ellipticity_initial</p></td><td><p><map object at 0x11149bc50></p></td><td><p>FLT_0D</p></td><td><p>Initial ellipticity before entering the plasma {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].faraday_angle</p></td><td><p><map object at 0x11149bba8></p></td><td><p></p></td><td><p>Faraday angle (variation of the Faraday angle induced by crossing the plasma)</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].faraday_angle.data</p></td><td><p><map object at 0x11149bc50></p></td><td><p>FLT_1D</p></td><td><p>Faraday angle (variation of the Faraday angle induced by crossing the plasma) {dynamic} [rad]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].faraday_angle.time</p></td><td><p><map object at 0x11149bba8></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].identifier</p></td><td><p><map object at 0x11149bc50></p></td><td><p>STR_0D</p></td><td><p>ID of the channel {static}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight</p></td><td><p><map object at 0x11149bba8></p></td><td><p></p></td><td><p>Description of the line of sight of the channel, defined by two points when the beam is not reflected, a third point is added to define the reflected beam path</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.first_point</p></td><td><p><map object at 0x11149bc50></p></td><td><p></p></td><td><p>Position of the first point</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.first_point.phi</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.first_point.r</p></td><td><p><map object at 0x11149bc50></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.first_point.z</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.second_point</p></td><td><p><map object at 0x11149bc50></p></td><td><p></p></td><td><p>Position of the second point</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.second_point.phi</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.second_point.r</p></td><td><p><map object at 0x11149bc50></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.second_point.z</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.third_point</p></td><td><p><map object at 0x11149bc50></p></td><td><p></p></td><td><p>Position of the third point</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.third_point.phi</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.third_point.r</p></td><td><p><map object at 0x11149bc50></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].line_of_sight.third_point.z</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].n_e_line</p></td><td><p><map object at 0x11149bc50></p></td><td><p></p></td><td><p>Line integrated density, possibly obtained by a combination of multiple interferometry wavelengths</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].n_e_line.data</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_1D</p></td><td><p>Line integrated density, possibly obtained by a combination of multiple interferometry wavelengths {dynamic} [m^-2]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].n_e_line.time</p></td><td><p><map object at 0x11149bc50></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].name</p></td><td><p><map object at 0x11149bba8></p></td><td><p>STR_0D</p></td><td><p>Name of the channel {static}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].polarisation_initial</p></td><td><p><map object at 0x11149bc50></p></td><td><p>FLT_0D</p></td><td><p>Initial polarisation vector before entering the plasma {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].validity</p></td><td><p><map object at 0x11149bba8></p></td><td><p>INT_0D</p></td><td><p>Indicator of the validity of the channel for the whole acquisition period (0 means valid, negative values mean non-valid) {static}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].validity_timed</p></td><td><p><map object at 0x11149bc50></p></td><td><p></p></td><td><p>Indicator of the validity of the channel as a function of time (0 means valid, negative values mean non-valid)</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].validity_timed.data</p></td><td><p><map object at 0x11149bba8></p></td><td><p>INT_1D</p></td><td><p>Indicator of the validity of the channel as a function of time (0 means valid, negative values mean non-valid) {dynamic}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].validity_timed.time</p></td><td><p><map object at 0x11149bc50></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].wavelength_interferometry[:]</p></td><td><p><map object at 0x11149bba8></p></td><td><p></p></td><td><p>Set of wavelengths used for interferometry</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].wavelength_interferometry[:].n_e_line</p></td><td><p><map object at 0x11149bc50></p></td><td><p></p></td><td><p>Line integrated density estimated from this wavelength</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].wavelength_interferometry[:].n_e_line.data</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_1D</p></td><td><p>Line integrated density estimated from this wavelength {dynamic} [m^-2]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].wavelength_interferometry[:].n_e_line.time</p></td><td><p><map object at 0x11149bc50></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].wavelength_interferometry[:].value</p></td><td><p><map object at 0x11149bba8></p></td><td><p>FLT_0D</p></td><td><p>Wavelength value {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.channel[:].wavelength_polarimetry</p></td><td><p><map object at 0x11149bc50></p></td><td><p>FLT_0D</p></td><td><p>Wavelength used for polarimetry {static} [m]</p></td></tr>
+   <tr><td><p>interfero_polarimeter.code</p></td><td><p><map object at 0x11149bba8></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>interfero_polarimeter.code.name</p></td><td><p><map object at 0x11149bc50></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.code.output_flag</p></td><td><p><map object at 0x11149bba8></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.code.parameters</p></td><td><p><map object at 0x11149bc50></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.code.version</p></td><td><p><map object at 0x11149bba8></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.ids_properties</p></td><td><p><map object at 0x11149bc50></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>interfero_polarimeter.ids_properties.comment</p></td><td><p><map object at 0x11149bba8></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.ids_properties.homogeneous_time</p></td><td><p><map object at 0x11149bc50></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>interfero_polarimeter.time</p></td><td><p><map object at 0x11149bba8></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>equilibrium &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../usage.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">equilibrium</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="equilibrium">
+<h1>equilibrium<a class="headerlink" href="#equilibrium" title="Permalink to this headline">¶</a></h1>
+<table border=1, width='100%'>
+<tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+<tr><td><p>equilibrium.code</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+<tr><td><p>equilibrium.code.name</p></td><td><p><map object at 0x1114ac668></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+<tr><td><p>equilibrium.code.output_flag</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.code.parameters</p></td><td><p><map object at 0x1114ac668></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+<tr><td><p>equilibrium.code.version</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+<tr><td><p>equilibrium.ids_properties</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+<tr><td><p>equilibrium.ids_properties.comment</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+<tr><td><p>equilibrium.ids_properties.homogeneous_time</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+<tr><td><p>equilibrium.time</p></td><td><p><map object at 0x1114ac828></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Set of equilibria at various time slices {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Description of the plasma boundary</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.active_limiter_point</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>RZ position of the active limiter point (point of the plasma boundary in contact with the limiter)</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.active_limiter_point.r</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.active_limiter_point.z</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.b_flux_pol_norm</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Value of the normalised poloidal flux at which the boundary is taken {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.elongation</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Elongation of the plasma boundary {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.elongation_lower</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Elongation (lower half w.r.t. geometric axis) of the plasma boundary {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.elongation_upper</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Elongation (upper half w.r.t. geometric axis) of the plasma boundary {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.geometric_axis</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>RZ position of the geometric axis (defined as (Rmin+Rmax) / 2 and (Zmin+Zmax) / 2 of the boundary)</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.geometric_axis.r</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.geometric_axis.z</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.minor_radius</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Minor radius of the plasma boundary (defined as (Rmax-Rmin) / 2 of the boundary) {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.outline</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>RZ outline of the plasma boundary</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.outline.r</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.outline.z</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.strike_point[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Array of strike points, for each of them the RZ position is given</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.strike_point[:].r</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.strike_point[:].z</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.triangularity</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Triangularity of the plasma boundary {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.triangularity_lower</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Lower triangularity of the plasma boundary {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.triangularity_upper</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Upper triangularity of the plasma boundary {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.type</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>0 (limiter) or 1 (diverted) {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.x_point[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Array of X-points, for each of them the RZ position is given</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.x_point[:].r</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].boundary.x_point[:].z</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Flux surface coordinate system on a square grid of flux and poloidal angle</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.grid</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Definition of the 2D grid</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.grid.dim1</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>First dimension values {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.grid.dim2</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Second dimension values {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.grid.volume_element</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Elementary plasma volume of plasma enclosed in the cell formed by the nodes [dim1(i) dim2(j)], [dim1(i+1) dim2(j)], [dim1(i) dim2(j+1)] and [dim1(i+1) dim2(j+1)] {dynamic} [m^3]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.grid_type</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Type of coordinate system</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.grid_type.description</p></td><td><p><map object at 0x1114ac668></p></td><td><p>STR_0D</p></td><td><p>Verbose description {constant}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.grid_type.index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {constant}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.grid_type.name</p></td><td><p><map object at 0x1114ac668></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {constant}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.jacobian</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Jacobian of the coordinate system {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.r</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Values of the major radius on the grid {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.tensor_contravariant</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_4D</p></td><td><p>Contravariant metric tensor on every point of the grid described by grid_type {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.tensor_covariant</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_4D</p></td><td><p>Covariant metric tensor on every point of the grid described by grid_type {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].coordinate_system.z</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Values of the Height on the grid {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Equilibrium representation using the generic grid description. Multiple GGD representations of the equilibrium can be stored here.</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_r[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>R component of the poloidal magnetic field, given on various grid subsets [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_r[:].coefficients</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_r[:].grid_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_r[:].grid_subset_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_r[:].values</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_tor[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Toroidal component of the magnetic field, given on various grid subsets [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_tor[:].coefficients</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_tor[:].grid_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_tor[:].grid_subset_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_tor[:].values</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_z[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Z component of the poloidal magnetic field, given on various grid subsets [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_z[:].coefficients</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_z[:].grid_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_z[:].grid_subset_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].b_field_z[:].values</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Grid description</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Grid subsets</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].base[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Set of bases for the grid subset. For each base, the structure describes the projection of the base vectors on the canonical frame of the grid.</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].base[:].jacobian</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Metric Jacobian {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].base[:].tensor_contravariant</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_3D</p></td><td><p>Contravariant metric tensor, given on each element of the subgrid (first dimension) {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].base[:].tensor_covariant</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_3D</p></td><td><p>Covariant metric tensor, given on each element of the subgrid (first dimension) {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].dimension</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Space dimension of the grid subset elements. This must be equal to the sum of the dimensions of the individual objects forming the element. {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].element[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Set of elements defining the grid subset. An element is defined by a combination of objects from potentially all spaces</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].element[:].object[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Set of objects defining the element</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].element[:].object[:].dimension</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Dimension of the object {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].element[:].object[:].index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Object index {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].element[:].object[:].space</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the space from which that object is taken {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].identifier</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Grid subset identifier</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].identifier.description</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Verbose description {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].identifier.index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].identifier.name</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].metric</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Metric of the canonical frame onto Cartesian coordinates</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].metric.jacobian</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Metric Jacobian {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].metric.tensor_contravariant</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_3D</p></td><td><p>Contravariant metric tensor, given on each element of the subgrid (first dimension) {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.grid_subset[:].metric.tensor_covariant</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_3D</p></td><td><p>Covariant metric tensor, given on each element of the subgrid (first dimension) {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.identifier</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Grid identifier</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.identifier.description</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Verbose description {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.identifier.index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.identifier.name</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Set of grid spaces</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].coordinates_type</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_1D</p></td><td><p>Type of coordinates describing the physical space, for every coordinate of the space. The size of this node therfore defines the dimension of the space. The meaning of these predefined integer constants can be found in the documentation of the grid service library {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].geometry_type</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Type of space geometry (0: standard, 1:Fourier)</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].geometry_type.description</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Verbose description {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].geometry_type.index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].geometry_type.name</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].objects_per_dimension[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Definition of the space objects for every dimension (from one to the dimension of the highest-dimensional objects). The index correspond to 1=nodes, 2=edges, 3=faces, 4=cells/volumes, .... For every index, a collection of objects of that dimension is described.</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Set of objects for a given dimension</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].boundary[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Set of (n-1)-dimensional objects defining the boundary of this n-dimensional object</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].boundary[:].index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of this (n-1)-dimensional boundary object {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].boundary[:].neighbours</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_1D</p></td><td><p>List of indices of the n-dimensional objects adjacent to the given n-dimensional object. An object can possibly have multiple neighbours on a boundary {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].geometry</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Geometry data associated with the object. Its dimension depends on the type of object, geometry and coordinate considered. {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].measure</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Measure of the space object, i.e. physical size (length for 1d, area for 2d, volume for 3d objects,...) {dynamic} [m^dimension]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].grid.space[:].objects_per_dimension[:].object[:].nodes</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_1D</p></td><td><p>List of nodes forming this object (indices to objects_per_dimension(1)%object(:) in Fortran notation) {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_parallel[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Parallel (to magnetic field) plasma current density, given on various grid subsets [A.m^-2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_parallel[:].coefficients</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_parallel[:].grid_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_parallel[:].grid_subset_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_parallel[:].values</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_tor[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Toroidal plasma current density, given on various grid subsets [A.m^-2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_tor[:].coefficients</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_tor[:].grid_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_tor[:].grid_subset_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].j_tor[:].values</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].phi[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Values of the toroidal flux, given on various grid subsets [Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].phi[:].coefficients</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].phi[:].grid_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].phi[:].grid_subset_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].phi[:].values</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].psi[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Values of the poloidal flux, given on various grid subsets [Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].psi[:].coefficients</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].psi[:].grid_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].psi[:].grid_subset_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].psi[:].values</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].r[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Values of the major radius on various grid subsets [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].r[:].coefficients</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].r[:].grid_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].r[:].grid_subset_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].r[:].values</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].theta[:]</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Values of the poloidal angle, given on various grid subsets [rad]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].theta[:].coefficients</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].theta[:].grid_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].theta[:].grid_subset_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].theta[:].values</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].z[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Values of the Height on various grid subsets [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].z[:].coefficients</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Interpolation coefficients, to be used for a high precision evaluation of the physical quantity with finite elements, provided per element in the grid subset (first dimension). {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].z[:].grid_index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Index of the grid used to represent this quantity {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].z[:].grid_subset_index</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Index of the grid subset the data is provided on {dynamic}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].ggd[:].z[:].values</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>One scalar value is provided per element in the grid subset. {dynamic} [as_parent]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>0D parameters of the equilibrium</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.area</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Area of the LCFS poloidal cross section {dynamic} [m^2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.beta_normal</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Normalised toroidal beta, defined as 100 * beta_tor * a[m] * B0 [T] / ip [MA] {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.beta_pol</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Poloidal beta. Defined as betap = 4 int(p dV) / [R_0 * mu_0 * Ip^2] {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.beta_tor</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Toroidal beta, defined as the volume-averaged total perpendicular pressure divided by (B0^2/(2*mu0)), i.e. beta_toroidal = 2 mu0 int(p dV) / V / B0^2 {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.ip</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Plasma current. Positive sign means anti-clockwise when viewed from above. {dynamic} [A]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.length_pol</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Poloidal length of the magnetic surface {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.li_3</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Internal inductance {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.magnetic_axis</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Magnetic axis position and toroidal field</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.magnetic_axis.b_field_tor</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Total toroidal magnetic field at the magnetic axis {dynamic} [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.magnetic_axis.r</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Major radius of the magnetic axis {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.magnetic_axis.z</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Height of the magnetic axis {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.psi_axis</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Poloidal flux at the magnetic axis {dynamic} [Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.psi_boundary</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Poloidal flux at the selected plasma boundary {dynamic} [Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.q_95</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>q at the 95% poloidal flux surface {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.q_axis</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>q at the magnetic axis {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.q_min</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Minimum q value and position</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.q_min.rho_tor_norm</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Minimum q position in normalised toroidal flux coordinate {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.q_min.value</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Minimum q value {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.surface</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Surface area of the toroidal flux surface {dynamic} [m^2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.volume</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_0D</p></td><td><p>Total plasma volume {dynamic} [m^3]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].global_quantities.w_mhd</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Plasma energy content = 3/2 * int(p,dV) with p being the total pressure (thermal + fast particles) [J]. Time-dependent; Scalar {dynamic} [J]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d</p></td><td><p><map object at 0x1114ac828></p></td><td><p></p></td><td><p>Equilibrium profiles (1D radial grid) as a function of the poloidal flux</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.area</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Cross-sectional area of the flux surface {dynamic} [m^2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.b_field_average</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged B {dynamic} [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.b_field_max</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Maximum(B) on the flux surface {dynamic} [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.b_field_min</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Minimum(B) on the flux surface {dynamic} [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.darea_dpsi</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Radial derivative of the cross-sectional area of the flux surface with respect to psi {dynamic} [m^2.Wb^-1]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.darea_drho_tor</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Radial derivative of the cross-sectional area of the flux surface with respect to rho_tor {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.dpressure_dpsi</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Derivative of pressure w.r.t. psi {dynamic} [Pa.Wb^-1]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.dpsi_drho_tor</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Derivative of Psi with respect to Rho_Tor {dynamic} [Wb/m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.dvolume_dpsi</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Radial derivative of the volume enclosed in the flux surface with respect to Psi {dynamic} [m^3.Wb^-1]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.dvolume_drho_tor</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Radial derivative of the volume enclosed in the flux surface with respect to Rho_Tor {dynamic} [m^2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.elongation</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Elongation {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.f</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Diamagnetic function (F=R B_Phi) {dynamic} [T.m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.f_df_dpsi</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Derivative of F w.r.t. Psi, multiplied with F {dynamic} [T^2.m^2/Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm1</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged 1/R^2 {dynamic} [m^-2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm2</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged grad_rho^2/R^2 {dynamic} [m^-2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm3</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged grad_rho^2 {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm4</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged 1/B^2 {dynamic} [T^-2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm5</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged B^2 {dynamic} [T^2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm6</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged grad_rho^2/B^2 {dynamic} [T^-2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm7</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged grad_rho {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm8</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged R {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.gm9</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged 1/R {dynamic} [m^-1]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.j_parallel</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged parallel current density = average(j.B) / B0, where B0 = Equilibrium/Global/Toroidal_Field/B0 {dynamic} [A/m^2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.j_tor</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Flux surface averaged toroidal current density = average(j_tor/R) / average(1/R) {dynamic} [A/m^2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.magnetic_shear</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Magnetic shear, defined as rho_tor/q . dq/drho_tor {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.phi</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Toroidal flux {dynamic} [Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.pressure</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Pressure {dynamic} [Pa]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.psi</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Poloidal flux {dynamic} [Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.q</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Safety factor {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.r_inboard</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Radial coordinate (major radius) on the inboard side of the magnetic axis {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.r_outboard</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Radial coordinate (major radius) on the outboard side of the magnetic axis {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.rho_tor</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Toroidal flux coordinate. The toroidal field used in its definition is indicated under vacuum_toroidal_field/b0 {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.rho_tor_norm</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Normalised toroidal flux coordinate. The normalizing value for rho_tor_norm, is the toroidal flux coordinate at the equilibrium boundary (LCFS or 99.x % of the LCFS in case of a fixed boundary equilibium calculation) {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.surface</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Surface area of the toroidal flux surface {dynamic} [m^2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.trapped_fraction</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Trapped particle fraction {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.triangularity_lower</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Lower triangularity w.r.t. magnetic axis {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.triangularity_upper</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Upper triangularity w.r.t. magnetic axis {dynamic} [-]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_1d.volume</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Volume enclosed in the flux surface {dynamic} [m^3]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:]</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Equilibrium 2D profiles in the poloidal plane. Multiple 2D representations of the equilibrium can be stored here.</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].b_field_r</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>R component of the poloidal magnetic field {dynamic} [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].b_field_tor</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Toroidal component of the magnetic field {dynamic} [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].b_field_z</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Z component of the poloidal magnetic field {dynamic} [T]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].grid</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Definition of the 2D grid</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].grid.dim1</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>First dimension values {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].grid.dim2</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_1D</p></td><td><p>Second dimension values {dynamic} [mixed]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].grid.volume_element</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Elementary plasma volume of plasma enclosed in the cell formed by the nodes [dim1(i) dim2(j)], [dim1(i+1) dim2(j)], [dim1(i) dim2(j+1)] and [dim1(i+1) dim2(j+1)] {dynamic} [m^3]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].grid_type</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Selection of one of a set of grid types. 1-rectangular (R,Z) grid, in this case the position arrays should not be filled since they are redundant with grid/dim1 and dim2.</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].grid_type.description</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Verbose description {constant}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].grid_type.index</p></td><td><p><map object at 0x1114ac668></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {constant}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].grid_type.name</p></td><td><p><map object at 0x1114ac828></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {constant}</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].j_parallel</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Parallel (to magnetic field) plasma current density {dynamic} [A.m^-2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].j_tor</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Toroidal plasma current density {dynamic} [A.m^-2]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].phi</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Toroidal flux {dynamic} [Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].psi</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Values of the poloidal flux at the grid in the poloidal plane {dynamic} [Wb]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].r</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Values of the major radius on the grid {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].theta</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_2D</p></td><td><p>Values of the poloidal angle on the grid {dynamic} [rad]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].profiles_2d[:].z</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_2D</p></td><td><p>Values of the Height on the grid {dynamic} [m]</p></td></tr>
+<tr><td><p>equilibrium.time_slice[:].time</p></td><td><p><map object at 0x1114ac828></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+<tr><td><p>equilibrium.vacuum_toroidal_field</p></td><td><p><map object at 0x1114ac668></p></td><td><p></p></td><td><p>Characteristics of the vacuum toroidal field (used in rho_tor definition and in the normalization of current densities)</p></td></tr>
+<tr><td><p>equilibrium.vacuum_toroidal_field.b0</p></td><td><p><map object at 0x1114ac828></p></td><td><p>FLT_1D</p></td><td><p>Vacuum toroidal field at R0 [T]; Positive sign means anti-clockwise when viewed from above. The product R0B0 must be consistent with the b_tor_vacuum_r field of the tf IDS. {dynamic} [T]</p></td></tr>
+<tr><td><p>equilibrium.vacuum_toroidal_field.r0</p></td><td><p><map object at 0x1114ac668></p></td><td><p>FLT_0D</p></td><td><p>Reference major radius where the vacuum toroidal magnetic field is given (usually a fixed position such as the middle of the vessel at the equatorial midplane) {constant} [m]</p></td></tr>
+</table>
+</table><p></p></div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

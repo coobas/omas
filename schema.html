@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>IMAS &amp; OMAS data schema &#8212; OMAS</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img height=40, src="_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="how.html">Concept</a></li>
+                <li><a href="usage.html">Examples</a></li>
+                <li><a href="install.html">Installation</a></li>
+                <li><a href="#">Data schema</a></li>
+                <li><a href="code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">IMAS &amp; OMAS data schema</a><ul>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="imas-omas-data-schema">
+<h1>IMAS &amp; OMAS data schema<a class="headerlink" href="#imas-omas-data-schema" title="Permalink to this headline">¶</a></h1>
+<p>OMAS enforces compliance with the ITER IMAS data schema</p>
+<p>The complete ITER IMAS data schema can be browsed here in a single page:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="schema/whole_schema.html">complete schema</a></li>
+</ul>
+</div>
+<p>Alternatively, each of the 37 individual Interface Data Structure (IDS) can be viewed here:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_actuator.html">actuator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_antennas.html">antennas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_atomic data.html">atomic data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_charge exchange.html">charge exchange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_controllers.html">controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_core instant changes.html">core instant changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_core profiles.html">core profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_core sources.html">core sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_core transport.html">core transport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_dataset description.html">dataset description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_distribution sources.html">distribution sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_distributions.html">distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_ece.html">ece</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_edge profiles.html">edge profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_edge sources.html">edge sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_edge transport.html">edge transport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_em coupling.html">em coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_equilibrium.html">equilibrium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_info.html">info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_interfero polarimeter.html">interfero polarimeter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_iron core.html">iron core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_magnetics.html">magnetics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_mhd linear.html">mhd linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_nbi.html">nbi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_ntms.html">ntms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_pellets.html">pellets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_pf active.html">pf active</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_pf passive.html">pf passive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_sawteeth.html">sawteeth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_schedule.html">schedule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_sdn.html">sdn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_spectrometer visible.html">spectrometer visible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_temporary.html">temporary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_tf.html">tf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_thomson scattering.html">thomson scattering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_transport solver numerics.html">transport solver numerics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_wall.html">wall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema/schema_waves.html">waves</a></li>
+</ul>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

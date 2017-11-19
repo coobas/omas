@@ -1,0 +1,40 @@
+
+em coupling
+^^^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>em_coupling.active_coils</p></td><td><p><map object at 0x111834438></p></td><td><p>STR_1D</p></td><td><p>List of the names of the active PF+CS coils {static}</p></td></tr>
+   <tr><td><p>em_coupling.code</p></td><td><p><map object at 0x111834390></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>em_coupling.code.name</p></td><td><p><map object at 0x111834438></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>em_coupling.code.output_flag</p></td><td><p><map object at 0x111834390></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>em_coupling.code.parameters</p></td><td><p><map object at 0x111834438></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>em_coupling.code.version</p></td><td><p><map object at 0x111834390></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>em_coupling.field_probes_active</p></td><td><p><map object at 0x111834438></p></td><td><p>FLT_2D</p></td><td><p>Poloidal field coupling from active coils to poloidal field probes {static} [T/A]</p></td></tr>
+   <tr><td><p>em_coupling.field_probes_grid</p></td><td><p><map object at 0x111834390></p></td><td><p>FLT_2D</p></td><td><p>Poloidal field coupling from equilibrium grid to poloidal field probes {static} [T/A]</p></td></tr>
+   <tr><td><p>em_coupling.field_probes_passive</p></td><td><p><map object at 0x111834438></p></td><td><p>FLT_2D</p></td><td><p>Poloidal field coupling from passive loops to poloidal field probes {static} [T/A]</p></td></tr>
+   <tr><td><p>em_coupling.flux_loops</p></td><td><p><map object at 0x111834390></p></td><td><p>STR_1D</p></td><td><p>List of the names of the axisymmetric flux loops {static}</p></td></tr>
+   <tr><td><p>em_coupling.grid_points</p></td><td><p><map object at 0x111834438></p></td><td><p>STR_1D</p></td><td><p>List of the names of the plasma region grid points {constant}</p></td></tr>
+   <tr><td><p>em_coupling.ids_properties</p></td><td><p><map object at 0x111834390></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>em_coupling.ids_properties.comment</p></td><td><p><map object at 0x111834438></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>em_coupling.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111834390></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>em_coupling.magnetics.bpol_probe</p></td><td><p><map object at 0x111834438></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>em_coupling.magnetics.flux_loop</p></td><td><p><map object at 0x111834390></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>em_coupling.mutual_active_active</p></td><td><p><map object at 0x111834438></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance coupling from active coils to active coils {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.mutual_grid_active</p></td><td><p><map object at 0x111834390></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance coupling from active coils to equilibrium grid {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.mutual_grid_grid</p></td><td><p><map object at 0x111834438></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance from equilibrium grid to itself {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.mutual_grid_passive</p></td><td><p><map object at 0x111834390></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance coupling from passive loops to equilibrium grid {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.mutual_loops_active</p></td><td><p><map object at 0x111834438></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance coupling from active coils to poloidal flux loops {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.mutual_loops_grid</p></td><td><p><map object at 0x111834390></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance from equilibrium grid to poloidal flux loops {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.mutual_loops_passive</p></td><td><p><map object at 0x111834438></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance coupling from passive loops to poloidal flux loops {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.mutual_passive_active</p></td><td><p><map object at 0x111834390></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance coupling from active coils to passive loops {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.mutual_passive_passive</p></td><td><p><map object at 0x111834438></p></td><td><p>FLT_2D</p></td><td><p>Mutual inductance coupling from passive loops to passive loops {static} [H]</p></td></tr>
+   <tr><td><p>em_coupling.passive_loops</p></td><td><p><map object at 0x111834390></p></td><td><p>STR_1D</p></td><td><p>List of the names of the passive loops {static}</p></td></tr>
+   <tr><td><p>em_coupling.pf_active.coil</p></td><td><p><map object at 0x111834438></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>em_coupling.pf_passive.loop</p></td><td><p><map object at 0x111834390></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>em_coupling.poloidal_probes</p></td><td><p><map object at 0x111834438></p></td><td><p>STR_1D</p></td><td><p>List of the names of poloidal field probes {static}</p></td></tr>
+   <tr><td><p>em_coupling.time</p></td><td><p><map object at 0x111834390></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

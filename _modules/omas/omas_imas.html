@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>omas.omas_imas &#8212; OMAS</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img height=40, src="../../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../how.html">Concept</a></li>
+                <li><a href="../../usage.html">Examples</a></li>
+                <li><a href="../../install.html">Installation</a></li>
+                <li><a href="../../schema.html">Data schema</a></li>
+                <li><a href="../../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for omas.omas_imas</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">.omas_utils</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.omas_core</span> <span class="k">import</span> <span class="n">omas</span><span class="p">,</span> <span class="n">save_omas_pkl</span><span class="p">,</span> <span class="n">load_omas_pkl</span>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># IMAS convenience functions</span>
+<span class="c1">#--------------------------------------------</span>
+<div class="viewcode-block" id="imas_open"><a class="viewcode-back" href="../../code.html#omas.omas_imas.imas_open">[docs]</a><span class="k">def</span> <span class="nf">imas_open</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">tokamak</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">,</span> <span class="n">shot</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    function to open an IMAS</span>
+
+<span class="sd">    :param user: IMAS username</span>
+
+<span class="sd">    :param tokamak: IMAS tokamak</span>
+
+<span class="sd">    :param imas_version: IMAS version</span>
+
+<span class="sd">    :param shot: IMAS shot</span>
+
+<span class="sd">    :param run: IMAS run id</span>
+
+<span class="sd">    :param new: whether the open should create a new IMAS tree</span>
+
+<span class="sd">    :return: IMAS ids</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">imas</span>
+    <span class="n">ids</span><span class="o">=</span><span class="n">imas</span><span class="o">.</span><span class="n">ids</span><span class="p">()</span>
+    <span class="n">ids</span><span class="o">.</span><span class="n">setShot</span><span class="p">(</span><span class="n">shot</span><span class="p">)</span>
+    <span class="n">ids</span><span class="o">.</span><span class="n">setRun</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new</span><span class="p">:</span>
+        <span class="n">ids</span><span class="o">.</span><span class="n">create_env</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">tokamak</span><span class="p">,</span><span class="n">imas_version</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ids</span><span class="o">.</span><span class="n">open_env</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">tokamak</span><span class="p">,</span><span class="n">imas_version</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ids</span><span class="o">.</span><span class="n">isConnected</span><span class="p">():</span>
+        <span class="k">raise</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Failed to establish connection to IMAS database (user:</span><span class="si">%s</span><span class="s1"> tokamak:</span><span class="si">%s</span><span class="s1"> imas_version:</span><span class="si">%s</span><span class="s1"> shot:</span><span class="si">%s</span><span class="s1"> run:</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">tokamak</span><span class="p">,</span><span class="n">imas_version</span><span class="p">,</span><span class="n">shot</span><span class="p">,</span><span class="n">run</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">ids</span></div>
+
+<div class="viewcode-block" id="imas_set"><a class="viewcode-back" href="../../code.html#omas.omas_imas.imas_set">[docs]</a><span class="k">def</span> <span class="nf">imas_set</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">skipMissingNodes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allocate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    assign a value to a path of an open IMAS ids</span>
+
+<span class="sd">    :param ids: open IMAS ids to write to</span>
+
+<span class="sd">    :param path: ODS path</span>
+
+<span class="sd">    :param value: value to assign</span>
+
+<span class="sd">    :param skipMissingNodes:  if the IMAS path does not exists:</span>
+<span class="sd">                             `False` raise an error</span>
+<span class="sd">                             `True` does not raise error</span>
+<span class="sd">                             `None` prints a warning message</span>
+
+<span class="sd">    :param allocate: whether to perform only IMAS memory allocation (ids.resize)</span>
+
+<span class="sd">    :return: path if set was done, otherwise None</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;setting: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="nb">repr</span><span class="p">(</span><span class="n">path</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;imas&#39;</span><span class="p">)</span>
+    <span class="n">ds</span><span class="o">=</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">if</span> <span class="n">ds</span><span class="o">==</span><span class="s1">&#39;info&#39;</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span><span class="n">ds</span><span class="p">):</span>
+        <span class="n">m</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span><span class="n">ds</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">skipMissingNodes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">skipMissingNodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">printe</span><span class="p">(</span><span class="s1">&#39;WARNING: </span><span class="si">%s</span><span class="s1"> is not part of IMAS structure&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">return</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not part of IMAS structure&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">)))</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">setExpIdx</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">out</span><span class="o">=</span><span class="n">m</span>
+    <span class="k">for</span> <span class="n">kp</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">basestring</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">kp</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="n">out</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">skipMissingNodes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">skipMissingNodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">printe</span><span class="p">(</span><span class="s1">&#39;WARNING: </span><span class="si">%s</span><span class="s1"> is not part of IMAS structure&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not part of IMAS structure&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">allocate</span><span class="p">:</span>
+                    <span class="k">raise</span><span class="p">(</span><span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> structure array exceed allocation&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">)))</span>
+                <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;resizing: </span><span class="si">%d</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;imas&#39;</span><span class="p">)</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">allocate</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,(</span><span class="n">basestring</span><span class="p">,</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">printe</span><span class="p">(</span><span class="s1">&#39;Error setting: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="nb">repr</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">raise</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span></div>
+
+<div class="viewcode-block" id="imas_get"><a class="viewcode-back" href="../../code.html#omas.omas_imas.imas_get">[docs]</a><span class="k">def</span> <span class="nf">imas_get</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">skipMissingNodes</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    read the value of a path in an open IMAS ids</span>
+
+<span class="sd">    :param ids: open IMAS ids to read from</span>
+
+<span class="sd">    :param path: ODS path</span>
+
+<span class="sd">    :param skipMissingNodes:  if the IMAS path does not exists:</span>
+<span class="sd">                             `False` raise an error</span>
+<span class="sd">                             `True` does not raise error</span>
+<span class="sd">                             `None` prints a warning message</span>
+
+<span class="sd">    :return: the value that was read if successful or None otherwise</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;fetching: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="nb">repr</span><span class="p">(</span><span class="n">path</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;imas&#39;</span><span class="p">)</span>
+    <span class="n">ds</span><span class="o">=</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span><span class="n">ds</span><span class="p">):</span>
+        <span class="n">m</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span><span class="n">ds</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">skipMissingNodes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">skipMissingNodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">printe</span><span class="p">(</span><span class="s1">&#39;WARNING: </span><span class="si">%s</span><span class="s1"> is not part of IMAS structure&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not part of IMAS structure&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">)))</span>
+
+    <span class="n">m</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+    <span class="n">out</span><span class="o">=</span><span class="n">m</span>
+    <span class="k">for</span> <span class="n">kp</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">basestring</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+                <span class="n">out</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">skipMissingNodes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">skipMissingNodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">printe</span><span class="p">(</span><span class="s1">&#39;WARNING: </span><span class="si">%s</span><span class="s1"> is not part of IMAS structure&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">[:</span><span class="n">kp</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
+                    <span class="n">printe</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not part of IMAS structure&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">([</span><span class="n">ds</span><span class="p">]</span><span class="o">+</span><span class="n">path</span><span class="p">[:</span><span class="n">kp</span><span class="o">+</span><span class="mi">1</span><span class="p">])))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+
+    <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;data: &#39;</span><span class="o">+</span><span class="nb">repr</span><span class="p">(</span><span class="n">out</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;imas&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># save and load OMAS to IMAS</span>
+<span class="c1">#--------------------------------------------</span>
+<div class="viewcode-block" id="save_omas_imas"><a class="viewcode-back" href="../../code.html#omas.omas_imas.save_omas_imas">[docs]</a><span class="k">def</span> <span class="nf">save_omas_imas</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tokamak</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">imas_version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    save OMAS data set to IMAS</span>
+
+<span class="sd">    :param ods: OMAS data set</span>
+
+<span class="sd">    :param user: IMAS username (reads ods[&#39;info.user&#39;] if user is None)</span>
+
+<span class="sd">    :param tokamak: IMAS tokamak (reads ods[&#39;info.tokamak&#39;] if tokamak is None)</span>
+
+<span class="sd">    :param imas_version: IMAS version (reads ods[&#39;info.imas_version&#39;] if imas_version is None)</span>
+
+<span class="sd">    :param shot: IMAS shot (reads ods[&#39;info.shot&#39;] if shot is None)</span>
+
+<span class="sd">    :param run: IMAS run (reads ods[&#39;info.run&#39;] if run is None)</span>
+
+<span class="sd">    :param new: whether the open should create a new IMAS tree</span>
+
+<span class="sd">    :return: paths that have been written to IMAS</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">user</span><span class="o">=</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.user&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">tokamak</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">tokamak</span><span class="o">=</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.tokamak&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">imas_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">imas_version</span><span class="o">=</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.imas_version&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">shot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">shot</span><span class="o">=</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.shot&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">run</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">run</span><span class="o">=</span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.run&#39;</span><span class="p">]</span>
+
+    <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;Saving to IMAS: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">tokamak</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">,</span> <span class="n">shot</span><span class="p">,</span> <span class="n">run</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;imas&#39;</span><span class="p">)</span>
+
+    <span class="n">paths</span><span class="o">=</span><span class="n">ods</span><span class="o">.</span><span class="n">paths</span><span class="p">()</span>
+
+    <span class="n">ids</span><span class="o">=</span><span class="n">imas_open</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">tokamak</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">,</span> <span class="n">shot</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+
+    <span class="n">set_paths</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+        <span class="n">set_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">imas_set</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">ods</span><span class="p">[</span><span class="n">path</span><span class="p">],</span><span class="kc">None</span><span class="p">,</span><span class="n">allocate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">set_paths</span><span class="o">=</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="n">set_paths</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">set_paths</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;time&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">!=</span><span class="s1">&#39;time&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;writing </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="n">imas_set</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">ods</span><span class="p">[</span><span class="n">path</span><span class="p">],</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">set_paths</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;time&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;time&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;writing </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">o2i</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="n">imas_set</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">ods</span><span class="p">[</span><span class="n">path</span><span class="p">],</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">set_paths</span></div>
+
+<div class="viewcode-block" id="load_omas_imas"><a class="viewcode-back" href="../../code.html#omas.omas_imas.load_omas_imas">[docs]</a><span class="k">def</span> <span class="nf">load_omas_imas</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">tokamak</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">,</span> <span class="n">shot</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">paths</span><span class="p">):</span>
+    <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;Loading from IMAS: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">tokamak</span><span class="p">,</span> <span class="n">imas_version</span><span class="p">,</span> <span class="n">shot</span><span class="p">,</span> <span class="n">run</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;imas&#39;</span><span class="p">)</span>
+
+    <span class="n">ids</span><span class="o">=</span><span class="n">imas_open</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">tokamak</span><span class="p">,</span><span class="n">imas_version</span><span class="p">,</span><span class="n">shot</span><span class="p">,</span><span class="n">run</span><span class="p">)</span>
+
+    <span class="n">ods</span><span class="o">=</span><span class="n">omas</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">imas_get</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">h</span><span class="o">=</span><span class="n">ods</span>
+        <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">[</span><span class="n">step</span><span class="p">]</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">=</span><span class="n">data</span>
+
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.shot&#39;</span><span class="p">]</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">shot</span><span class="p">)</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.run&#39;</span><span class="p">]</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.imas_version&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">unicode</span><span class="p">(</span><span class="n">imas_version</span><span class="p">)</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.tokamak&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">unicode</span><span class="p">(</span><span class="n">tokamak</span><span class="p">)</span>
+    <span class="n">ods</span><span class="p">[</span><span class="s1">&#39;info.user&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">unicode</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ods</span></div>
+
+<div class="viewcode-block" id="test_omas_imas"><a class="viewcode-back" href="../../code.html#omas.omas_imas.test_omas_imas">[docs]</a><span class="k">def</span> <span class="nf">test_omas_imas</span><span class="p">(</span><span class="n">ods</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    test save and load OMAS IMAS</span>
+
+<span class="sd">    :param ods: ods</span>
+
+<span class="sd">    :return: ods</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">user</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;USER&#39;</span><span class="p">]</span>
+    <span class="n">tokamak</span><span class="o">=</span><span class="s1">&#39;ITER&#39;</span>
+    <span class="n">imas_version</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;IMAS_VERSION&#39;</span><span class="p">,</span><span class="s1">&#39;3.10.1&#39;</span><span class="p">)</span>
+    <span class="n">shot</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">run</span><span class="o">=</span><span class="mi">0</span>
+
+    <span class="n">paths</span><span class="o">=</span><span class="n">ods</span><span class="o">.</span><span class="n">paths</span><span class="p">()</span>
+    <span class="n">paths</span><span class="o">=</span><span class="n">save_omas_imas</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span><span class="n">user</span><span class="p">,</span><span class="n">tokamak</span><span class="p">,</span><span class="n">imas_version</span><span class="p">,</span><span class="n">shot</span><span class="p">,</span><span class="n">run</span><span class="p">)</span><span class="c1">#,True)</span>
+    <span class="n">ods1</span><span class="o">=</span><span class="n">load_omas_imas</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">tokamak</span><span class="p">,</span><span class="n">imas_version</span><span class="p">,</span><span class="n">shot</span><span class="p">,</span><span class="n">run</span><span class="p">,</span><span class="n">paths</span><span class="p">)</span>
+<span class="c1">#    equal_ods(ods,ods1)</span>
+    <span class="k">return</span> <span class="n">ods1</span></div>
+
+<span class="c1">#--------------------------------------------</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="kn">from</span> <span class="nn">omas_core</span> <span class="k">import</span> <span class="n">ods_sample</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;OMAS_DEBUG_TOPIC&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;imas&#39;</span>
+    <span class="c1">#ods=ods_sample()</span>
+
+    <span class="c1">#ods=test_omas_imas(ods)</span>
+
+    <span class="n">ods</span><span class="o">=</span><span class="n">load_omas_pkl</span><span class="p">(</span><span class="s1">&#39;test.pkl&#39;</span><span class="p">)</span>
+
+    <span class="n">user</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;USER&#39;</span><span class="p">]</span>
+    <span class="n">tokamak</span><span class="o">=</span><span class="s1">&#39;ITER&#39;</span>
+    <span class="n">imas_version</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;IMAS_VERSION&#39;</span><span class="p">,</span><span class="s1">&#39;3.10.1&#39;</span><span class="p">)</span>
+    <span class="n">shot</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">run</span><span class="o">=</span><span class="mi">0</span>
+
+    <span class="n">save_omas_imas</span><span class="p">(</span><span class="n">ods</span><span class="p">,</span><span class="n">user</span><span class="p">,</span><span class="n">tokamak</span><span class="p">,</span><span class="n">imas_version</span><span class="p">,</span><span class="n">shot</span><span class="p">,</span><span class="n">run</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

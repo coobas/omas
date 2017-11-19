@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sawteeth &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../usage.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">sawteeth</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="sawteeth">
+<h1>sawteeth<a class="headerlink" href="#sawteeth" title="Permalink to this headline">¶</a></h1>
+<table border=1, width='100%'>
+<tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+<tr><td><p>sawteeth.code</p></td><td><p><map object at 0x111e160f0></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+<tr><td><p>sawteeth.code.name</p></td><td><p><map object at 0x111e16048></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+<tr><td><p>sawteeth.code.output_flag</p></td><td><p><map object at 0x111e160f0></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+<tr><td><p>sawteeth.code.parameters</p></td><td><p><map object at 0x111e16048></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+<tr><td><p>sawteeth.code.version</p></td><td><p><map object at 0x111e160f0></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+<tr><td><p>sawteeth.diagnostics</p></td><td><p><map object at 0x111e16048></p></td><td><p></p></td><td><p>Detailed information about the sawtooth characteristics</p></td></tr>
+<tr><td><p>sawteeth.diagnostics.magnetic_shear_q1</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Magnetic shear at surface q = 1, defined as rho_tor/q . dq/drho_tor {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.diagnostics.rho_tor_norm_inversion</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Normalised toroidal flux coordinate at inversion radius {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.diagnostics.rho_tor_norm_mixing</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Normalised toroidal flux coordinate at mixing radius {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.diagnostics.rho_tor_norm_q1</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Normalised toroidal flux coordinate at surface q = 1 {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.ids_properties</p></td><td><p><map object at 0x111e160f0></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+<tr><td><p>sawteeth.ids_properties.comment</p></td><td><p><map object at 0x111e16048></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+<tr><td><p>sawteeth.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111e160f0></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:]</p></td><td><p><map object at 0x111e16048></p></td><td><p></p></td><td><p>Core profiles after sawtooth crash for various time slices {dynamic}</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].conductivity_parallel</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Parallel conductivity {dynamic} [ohm^-1.m^-1]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].e_field_parallel</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Parallel electric field = average(E.B) / B0, where Core_Profiles/Vacuum_Toroidal_Field/ B0 {dynamic} [V.m^-1]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].grid</p></td><td><p><map object at 0x111e160f0></p></td><td><p></p></td><td><p>Radial grid</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].grid.area</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Cross-sectional area of the flux surface {dynamic} [m^2]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].grid.psi</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Poloidal magnetic flux {dynamic} [Wb]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].grid.rho_tor</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Toroidal flux coordinate. rho_tor = sqrt(b_flux_tor/(pi*b0)) ~ sqrt(pi*r^2*b0/(pi*b0)) ~ r [m]. The toroidal field used in its definition is indicated under vacuum_toroidal_field/b0 {dynamic} [m]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].grid.rho_tor_norm</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Normalised toroidal flux coordinate. The normalizing value for rho_tor_norm, is the toroidal flux coordinate at the equilibrium boundary (LCFS or 99.x % of the LCFS in case of a fixed boundary equilibium calculation, see time_slice/boundary/b_flux_pol_norm in the equilibrium IDS) {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].grid.volume</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Volume enclosed inside the magnetic surface {dynamic} [m^3]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].j_bootstrap</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Bootstrap current density = average(J_Bootstrap.B) / B0, where B0 = Core_Profiles/Vacuum_Toroidal_Field/ B0 {dynamic} [A/m^2]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].j_non_inductive</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Non-inductive (includes bootstrap) parallel current density = average(jni.B) / B0, where B0 = Core_Profiles/Vacuum_Toroidal_Field/ B0 {dynamic} [A/m^2]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].j_ohmic</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Ohmic parallel current density = average(J_Ohmic.B) / B0, where B0 = Core_Profiles/Vacuum_Toroidal_Field/ B0 {dynamic} [A/m^2]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].j_tor</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Total toroidal current density = average(J_Tor/R) / average(1/R) {dynamic} [A/m^2]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].j_total</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Total parallel current density = average(jtot.B) / B0, where B0 = Core_Profiles/Vacuum_Toroidal_Field/ B0 {dynamic} [A/m^2]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].magnetic_shear</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Magnetic shear, defined as rho_tor/q . dq/drho_tor {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].momentum_tor</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Total plasma toroidal momentum, summed over ion species and electrons {dynamic} [kg.m/s]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].n_e</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Electron density (thermal+non-thermal) {dynamic} [m^-3]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].n_e_fast</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Density of fast (non-thermal) electrons {dynamic} [m^-3]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].n_i_total_over_n_e</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Ratio of total ion density (sum over species and charge states) over electron density. (thermal+non-thermal) {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].p_e</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Electron pressure {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].p_e_fast_parallel</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Fast (non-thermal) electron parallel pressure {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].p_e_fast_perpendicular</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Fast (non-thermal) electron perpendicular pressure {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].p_i_total</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Total ion pressure (sum over the ion species) {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].p_i_total_fast_parallel</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Fast (non-thermal) total ion (sum over the ion species) parallel pressure {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].p_i_total_fast_perpendicular</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Fast (non-thermal) total ion (sum over the ion species) perpendicular pressure {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].phi</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Toroidal flux {dynamic} [Wb]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].pressure_parallel</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Total parallel pressure (electrons+ions, thermal+non-thermal) {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].pressure_perpendicular</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Total perpendicular pressure (electrons+ions, thermal+non-thermal) {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].pressure_thermal</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Thermal pressure (electrons+ions) {dynamic} [Pa]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].psi_star_post_crash</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Psi* = psi - phi, after the sawtooth crash {dynamic} [Wb]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].psi_star_pre_crash</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Psi* = psi - phi, just before the sawtooth crash {dynamic} [Wb]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].q</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Safety factor {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].t_e</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Electron temperature {dynamic} [eV]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].t_i_average</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Ion temperature (averaged on charge states and ion species) {dynamic} [eV]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].time</p></td><td><p><map object at 0x111e16048></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+<tr><td><p>sawteeth.profiles_1d[:].zeff</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_1D</p></td><td><p>Effective charge {dynamic} [-]</p></td></tr>
+<tr><td><p>sawteeth.time</p></td><td><p><map object at 0x111e16048></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>sawteeth.vacuum_toroidal_field</p></td><td><p><map object at 0x111e160f0></p></td><td><p></p></td><td><p>Characteristics of the vacuum toroidal field (used in rho_tor definition)</p></td></tr>
+<tr><td><p>sawteeth.vacuum_toroidal_field.b0</p></td><td><p><map object at 0x111e16048></p></td><td><p>FLT_1D</p></td><td><p>Vacuum toroidal field at R0 [T]; Positive sign means anti-clockwise when viewed from above. The product R0B0 must be consistent with the b_tor_vacuum_r field of the tf IDS. {dynamic} [T]</p></td></tr>
+<tr><td><p>sawteeth.vacuum_toroidal_field.r0</p></td><td><p><map object at 0x111e160f0></p></td><td><p>FLT_0D</p></td><td><p>Reference major radius where the vacuum toroidal magnetic field is given (usually a fixed position such as the middle of the vessel at the equatorial midplane) {constant} [m]</p></td></tr>
+</table>
+</table><p></p></div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

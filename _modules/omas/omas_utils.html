@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>omas.omas_utils &#8212; OMAS</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img height=40, src="../../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../how.html">Concept</a></li>
+                <li><a href="../../usage.html">Examples</a></li>
+                <li><a href="../../install.html">Installation</a></li>
+                <li><a href="../../schema.html">Data schema</a></li>
+                <li><a href="../../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for omas.omas_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">.omas_setup</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="c1">#--------------------------</span>
+<span class="c1"># general utility functions</span>
+<span class="c1">#--------------------------</span>
+<div class="viewcode-block" id="printd"><a class="viewcode-back" href="../../code.html#omas.omas_utils.printd">[docs]</a><span class="k">def</span> <span class="nf">printd</span><span class="p">(</span><span class="o">*</span><span class="n">objects</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    debug print</span>
+<span class="sd">    environmental variable OMAS_DEBUG_TOPIC sets the topic to be printed</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">topic</span><span class="o">=</span><span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;topic&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span><span class="n">basestring</span><span class="p">):</span>
+        <span class="n">topic</span><span class="o">=</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span>
+    <span class="n">topic</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span><span class="n">topic</span><span class="p">))</span>
+    <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DEBUG:&#39;</span><span class="p">]</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OMAS_DEBUG_TOPIC&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;*&#39;</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OMAS_DEBUG_TOPIC&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">topic</span><span class="p">:</span>
+        <span class="n">printe</span><span class="p">(</span><span class="o">*</span><span class="n">objects</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="printe"><a class="viewcode-back" href="../../code.html#omas.omas_utils.printe">[docs]</a><span class="k">def</span> <span class="nf">printe</span><span class="p">(</span><span class="o">*</span><span class="n">objects</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    print to stderr</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">__stderr__</span>
+    <span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">objects</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="json_dumper"><a class="viewcode-back" href="../../code.html#omas.omas_utils.json_dumper">[docs]</a><span class="k">def</span> <span class="nf">json_dumper</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    function used to dump objects to json format</span>
+
+<span class="sd">    :param obj: input ojbect</span>
+
+<span class="sd">    :return: json-compatible [dict/list] object</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;complex&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">__ndarray_tolist_real__</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+                        <span class="n">__ndarray_tolist_imag__</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">imag</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+                        <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                        <span class="n">shape</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">__ndarray_tolist__</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+                        <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                        <span class="n">shape</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">generic</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asscalar</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">complex</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="fm">__complex__</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">real</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">real</span><span class="p">,</span><span class="n">imag</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">toJSON</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span></div>
+
+<div class="viewcode-block" id="json_loader"><a class="viewcode-back" href="../../code.html#omas.omas_utils.json_loader">[docs]</a><span class="k">def</span> <span class="nf">json_loader</span><span class="p">(</span><span class="n">object_pairs</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    function used to load json-objects generated by the json_dumper function</span>
+
+<span class="sd">    :param obj: json-compatible [dict/list] object</span>
+
+<span class="sd">    :return: ojbect</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">object_pairs</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">o</span><span class="p">:(</span><span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">o</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">object_pairs</span><span class="p">)</span>
+    <span class="n">dct</span><span class="o">=</span><span class="bp">cls</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">object_pairs</span><span class="p">:</span>
+        <span class="n">dct</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">=</span><span class="n">y</span>
+    <span class="k">if</span> <span class="s1">&#39;__ndarray_tolist__&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;__ndarray_tolist__&#39;</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="s1">&#39;__ndarray_tolist_real__&#39;</span> <span class="ow">in</span> <span class="n">dct</span> <span class="ow">and</span>
+          <span class="s1">&#39;__ndarray_tolist_imag__&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">):</span>
+          <span class="k">return</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;__ndarray_tolist_real__&#39;</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">])</span><span class="o">+</span>
+                  <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;__ndarray_tolist_imag__&#39;</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">])</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s1">&#39;__ndarray__&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;__ndarray__&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="s1">&#39;__complex__&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">complex</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;real&#39;</span><span class="p">],</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;imag&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">dct</span></div>
+
+<span class="k">def</span> <span class="nf">_credentials</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="n">c</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">c</span><span class="p">[</span><span class="s1">&#39;s3&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">c</span><span class="p">[</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;region_name&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;us-east-1&#39;</span>
+    <span class="n">c</span><span class="p">[</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;aws_access_key_id&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;AKIAIDWE2IM2V73OGOPA&#39;</span>
+    <span class="n">c</span><span class="p">[</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;aws_secret_access_key&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;LD02KFio+5ymKTIjZkAJQUJd+bc+FtREyiFGypQd&#39;</span>
+    <span class="k">return</span> <span class="n">c</span><span class="p">[</span><span class="n">system</span><span class="p">]</span>
+
+<div class="viewcode-block" id="remote_uri"><a class="viewcode-back" href="../../code.html#omas.omas_utils.remote_uri">[docs]</a><span class="k">def</span> <span class="nf">remote_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">up_down</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">    :param uri:</span>
+<span class="sd">    :param filename:</span>
+<span class="sd">    :param up_down:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;\w+://\w+.*&#39;</span><span class="p">,</span><span class="n">uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">uri</span>
+
+    <span class="n">tmp</span><span class="o">=</span><span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;://&#39;</span><span class="p">)</span>
+    <span class="n">system</span><span class="o">=</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">location</span><span class="o">=</span><span class="s1">&#39;://&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="k">if</span> <span class="n">up_down</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;down&#39;</span><span class="p">,</span><span class="s1">&#39;up&#39;</span><span class="p">]:</span>
+        <span class="k">raise</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;remote_uri up_down attribute must be set to either `up` or `down`&#39;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">system</span><span class="o">==</span><span class="s1">&#39;s3&#39;</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">boto3</span>
+        <span class="n">s3bucket</span><span class="o">=</span><span class="n">location</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s3connection</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">,</span><span class="o">**</span><span class="n">_credentials</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">))</span>
+        <span class="n">s3filename</span><span class="o">=</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="k">if</span> <span class="n">up_down</span><span class="o">==</span><span class="s1">&#39;down&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">filename</span><span class="o">=</span><span class="n">s3filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;Downloading </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span><span class="n">filename</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">=</span><span class="n">s3connection</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="n">s3bucket</span><span class="p">,</span> <span class="n">s3filename</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">elif</span> <span class="n">up_down</span><span class="o">==</span><span class="s1">&#39;up&#39;</span><span class="p">:</span>
+            <span class="n">printd</span><span class="p">(</span><span class="s1">&#39;Uploading </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">uri</span><span class="p">),</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+            <span class="kn">from</span> <span class="nn">botocore.exceptions</span> <span class="k">import</span> <span class="n">ClientError</span>
+            <span class="k">if</span> <span class="n">s3filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+                <span class="n">s3filename</span><span class="o">+=</span><span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">s3connection</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">head_bucket</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">s3bucket</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">ClientError</span> <span class="k">as</span> <span class="n">_excp</span><span class="p">:</span>
+                <span class="c1"># If a client error is thrown, then check that it was a 404 error.</span>
+                <span class="c1"># If it was a 404 error, then the bucket does not exist.</span>
+                <span class="n">error_code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_excp</span><span class="o">.</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Error&#39;</span><span class="p">][</span><span class="s1">&#39;Code&#39;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">error_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="n">s3connection</span><span class="o">.</span><span class="n">create_bucket</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">s3bucket</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span>
+            <span class="n">bucket</span> <span class="o">=</span> <span class="n">s3connection</span><span class="o">.</span><span class="n">Bucket</span><span class="p">(</span><span class="n">s3bucket</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+            <span class="n">bucket</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span><span class="n">Key</span><span class="o">=</span><span class="n">s3filename</span><span class="p">,</span> <span class="n">Body</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="c1">#, Metadata=meta)</span></div>
+
+<span class="c1">#----------------------------------------------</span>
+<span class="c1"># handling of OMAS json structures</span>
+<span class="c1">#----------------------------------------------</span>
+<span class="n">_structures</span><span class="o">=</span><span class="p">{}</span>
+
+<div class="viewcode-block" id="list_structures"><a class="viewcode-back" href="../../code.html#omas.omas_utils.list_structures">[docs]</a><span class="k">def</span> <span class="nf">list_structures</span><span class="p">(</span><span class="n">imas_version</span><span class="o">=</span><span class="n">default_imas_version</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">],</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">imas_json_dir</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\.&#39;</span><span class="p">,</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="n">imas_version</span><span class="p">)</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="o">+</span><span class="s1">&#39;.json&#39;</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="load_structure"><a class="viewcode-back" href="../../code.html#omas.omas_utils.load_structure">[docs]</a><span class="k">def</span> <span class="nf">load_structure</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">imas_version</span><span class="o">=</span><span class="n">default_imas_version</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    load omas json structure file</span>
+
+<span class="sd">    :param file:</span>
+
+<span class="sd">    :return: tuple with structure, hashing mapper, and ods</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">imas_json_dir</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\.&#39;</span><span class="p">,</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="n">imas_version</span><span class="p">)</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">file</span><span class="o">+</span><span class="s1">&#39;.json&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;`</span><span class="si">%s</span><span class="s1">` is not a valid IMAS structure&#39;</span><span class="o">%</span><span class="n">file</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">file</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_structures</span><span class="p">:</span>
+        <span class="n">_structures</span><span class="p">[</span><span class="n">file</span><span class="p">]</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span><span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">json_loader</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_structures</span><span class="p">[</span><span class="n">file</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="o2i"><a class="viewcode-back" href="../../code.html#omas.omas_utils.o2i">[docs]</a><span class="k">def</span> <span class="nf">o2i</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Formats a ODS path format into a IMAS path</span>
+
+<span class="sd">    :param path: ODS path format</span>
+
+<span class="sd">    :return: IMAS path format</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">ipath</span><span class="o">=</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+            <span class="n">ipath</span><span class="o">+=</span><span class="s2">&quot;[</span><span class="si">%d</span><span class="s2">]&quot;</span><span class="o">%</span><span class="n">step</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ipath</span><span class="o">+=</span><span class="s1">&#39;.</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">step</span>
+    <span class="k">return</span> <span class="n">ipath</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

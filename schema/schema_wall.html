@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>wall &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../usage.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">wall</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="wall">
+<h1>wall<a class="headerlink" href="#wall" title="Permalink to this headline">¶</a></h1>
+<table border=1, width='100%'>
+<tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+<tr><td><p>wall.code</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+<tr><td><p>wall.code.name</p></td><td><p><map object at 0x111f7c710></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+<tr><td><p>wall.code.output_flag</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+<tr><td><p>wall.code.parameters</p></td><td><p><map object at 0x111f7c710></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+<tr><td><p>wall.code.version</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+<tr><td><p>wall.description_2d[:]</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Set of 2D wall descriptions, for each type of possible physics or engineering configurations necessary (gas tight vs wall with ports and holes, coarse vs fine representation, single contour limiter, disjoint gapped plasma facing components, ...).</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Description of the immobile limiting surface(s) or plasma facing components for defining the Last Closed Flux Surface.</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.type</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Type of the limiter description. index = 0 for the official single contour limiter and 1 for the official disjoint PFC structure like first wall. Additional representations needed on a code-by-code basis follow same incremental pair tagging starting on flag=2</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.type.description</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>STR_0D</p></td><td><p>Verbose description {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.type.index</p></td><td><p><map object at 0x111f7c710></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.type.name</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.unit[:]</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Set of limiter units</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.unit[:].closed</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>INT_0D</p></td><td><p>Flag identifying whether the contour is closed (1) or open (0) {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.unit[:].name</p></td><td><p><map object at 0x111f7c710></p></td><td><p>STR_0D</p></td><td><p>Name of the limiter unit {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.unit[:].outline</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Irregular outline of the limiting surface. Do NOT repeat the first point for closed contours</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.unit[:].outline.r</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_1D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.unit[:].outline.z</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Height {static} [m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].limiter.unit[:].resistivity</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_0D</p></td><td><p>Resistivity of the limiter unit {static} [ohm.m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].type</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Type of the description. index = 0 for equilibrium codes (single closed limiter and vessel); 1 for gas-tight walls (disjoint PFCs with inner vessel as last limiter_unit; no vessel structure); 2 for free boundary codes (disjoint PFCs and vessel)</p></td></tr>
+<tr><td><p>wall.description_2d[:].type.description</p></td><td><p><map object at 0x111f7c710></p></td><td><p>STR_0D</p></td><td><p>Verbose description {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].type.index</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].type.name</p></td><td><p><map object at 0x111f7c710></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Mechanical structure of the vacuum vessel. The vessel is described as a set of nested layers with given physics properties; Two representations are admitted for each vessel unit : annular (two contours) or block elements.</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.type</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Type of the vessel description. index = 0 for the official single/multiple annular vessel and 1 for the official block element representation for each vessel unit. Additional representations needed on a code-by-code basis follow same incremental pair tagging starting on flag=2</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.type.description</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>STR_0D</p></td><td><p>Verbose description {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.type.index</p></td><td><p><map object at 0x111f7c710></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.type.name</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:]</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Set of vessel units</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].annular</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Annular representation of a vessel layer by two contours, inner and outer</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].annular.outline_inner</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Inner vessel outline. Do NOT repeat the first point for closed contours</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].annular.outline_inner.r</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].annular.outline_inner.z</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_1D</p></td><td><p>Height {static} [m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].annular.outline_outer</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Outer vessel outline. Do NOT repeat the first point for closed contours</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].annular.outline_outer.r</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_1D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].annular.outline_outer.z</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Height {static} [m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].annular.resistivity</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_0D</p></td><td><p>Resistivity of the vessel unit {static} [ohm.m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:]</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Set of block elements</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].j_tor</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Toroidal current induced in this block element</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].j_tor.data</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Toroidal current induced in this block element {dynamic} [A]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].j_tor.time</p></td><td><p><map object at 0x111f7c710></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].name</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>STR_0D</p></td><td><p>Name of the block element {static}</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].outline</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Outline of the block element. Do NOT repeat the first point for closed contours</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].outline.r</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].outline.z</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_1D</p></td><td><p>Height {static} [m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].resistance</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_0D</p></td><td><p>Resistivity of the block element {static} [Ohm]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].element[:].resistivity</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_0D</p></td><td><p>Resistivity of the block element {static} [ohm.m]</p></td></tr>
+<tr><td><p>wall.description_2d[:].vessel.unit[:].name</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>STR_0D</p></td><td><p>Name of the vessel unit {static}</p></td></tr>
+<tr><td><p>wall.global_quantities</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Simple 0D description of plasma-wall interaction</p></td></tr>
+<tr><td><p>wall.global_quantities.electrons</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>Quantities related to electrons</p></td></tr>
+<tr><td><p>wall.global_quantities.electrons.gas_puff</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_1D</p></td><td><p>Gas puff rate (in equivalent electrons) {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>wall.global_quantities.electrons.particle_flux_from_plasma</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Particle flux from the plasma (in equivalent electrons) {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>wall.global_quantities.electrons.particle_flux_from_wall</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_2D</p></td><td><p>Particle flux from the wall corresponding to the conversion into various neutral types (first dimension: 1: cold; 2: thermal; 3: fast), in equivalent electrons {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>wall.global_quantities.electrons.pumping_speed</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Pumped particle flux (in equivalent electrons) {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:]</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Quantities related to the various neutral species</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].element[:]</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p></p></td><td><p>List of elements forming the atom or molecule</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].element[:].a</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_0D</p></td><td><p>Mass of atom {constant} [Atomic Mass Unit]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].element[:].multiplicity</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_0D</p></td><td><p>Multiplicity of the atom {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].element[:].z_n</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_0D</p></td><td><p>Nuclear charge {constant} [Elementary Charge Unit]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].gas_puff</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Gas puff rate for that species {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].label</p></td><td><p><map object at 0x111f7c710></p></td><td><p>STR_0D</p></td><td><p>String identifying the species (e.g. H, D, CD4, ...) {constant}</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].particle_flux_from_plasma</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Particle flux from the plasma for that species {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].particle_flux_from_wall</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_2D</p></td><td><p>Particle flux from the wall corresponding to the conversion into various neutral types (first dimension: 1: cold; 2: thermal; 3: fast) {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].pumping_speed</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Pumped particle flux for that species {dynamic} [s^-1]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].recycling_energy_coefficient</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_2D</p></td><td><p>Energy recycling coefficient corresponding to the conversion into various neutral types (first dimension: 1: cold; 2: thermal; 3: fast) {dynamic} [-]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].recycling_particles_coefficient</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_2D</p></td><td><p>Particle recycling coefficient corresponding to the conversion into various neutral types (first dimension: 1: cold; 2: thermal; 3: fast) {dynamic} [-]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].sputtering_chemical_coefficient</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_2D</p></td><td><p>Effective coefficient of chemical sputtering for various neutral types (first dimension: 1: cold; 2: thermal; 3: fast) {dynamic} [-]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].sputtering_physical_coefficient</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_2D</p></td><td><p>Effective coefficient of physical sputtering for various neutral types (first dimension: 1: cold; 2: thermal; 3: fast) {dynamic} [-]</p></td></tr>
+<tr><td><p>wall.global_quantities.neutral[:].wall_inventory</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_1D</p></td><td><p>Wall inventory, i.e. cumulated exchange of neutral species between plasma and wall from t = 0, positive if a species has gone to the wall, for that species {dynamic} [-]</p></td></tr>
+<tr><td><p>wall.global_quantities.power_from_plasma</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Power flowing from the plasma to the wall {dynamic} [W]</p></td></tr>
+<tr><td><p>wall.global_quantities.power_to_cooling</p></td><td><p><map object at 0x111f7c710></p></td><td><p>FLT_1D</p></td><td><p>Power to cooling systems {dynamic} [W]</p></td></tr>
+<tr><td><p>wall.global_quantities.temperature</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>FLT_1D</p></td><td><p>Wall temperature {dynamic} [K]</p></td></tr>
+<tr><td><p>wall.ids_properties</p></td><td><p><map object at 0x111f7c710></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+<tr><td><p>wall.ids_properties.comment</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+<tr><td><p>wall.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111f7c710></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+<tr><td><p>wall.time</p></td><td><p><map object at 0x111f7c7b8></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+</table>
+</table><p></p></div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

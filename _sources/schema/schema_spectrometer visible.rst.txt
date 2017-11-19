@@ -1,0 +1,71 @@
+
+spectrometer visible
+^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>spectrometer_visible.channel[:]</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Set of channels (lines-of-sight)</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter</p></td><td><p><map object at 0x111ff64e0></p></td><td><p></p></td><td><p>Quantities measured by the channel if connected to a filter spectrometer</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.calibrated_line_integrals</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Calibrated line gross areas integrals</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.calibrated_line_integrals.data</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_2D</p></td><td><p>Calibrated line gross areas integrals {dynamic} [m^-2.s^-1.sr^-1]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.calibrated_line_integrals.time</p></td><td><p><map object at 0x111ff6588></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.calibrated_lines</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_1D</p></td><td><p>Central wavelength of the calibrated lines {constant} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.exposure_time</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_0D</p></td><td><p>Exposure time {constant} [s]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.line_intensities</p></td><td><p><map object at 0x111ff64e0></p></td><td><p></p></td><td><p>Line gross integral intensities</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.line_intensities.data</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_2D</p></td><td><p>Line gross integral intensities {dynamic} [m^-2.s^-1.sr^-1]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.line_intensities.time</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.line_radiances</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Calibrated, background subtracted line integrals</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.line_radiances.data</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_2D</p></td><td><p>Calibrated, background subtracted line integrals {dynamic} [m^-2.s^-1.sr^-1]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.line_radiances.time</p></td><td><p><map object at 0x111ff6588></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.processed_lines</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_1D</p></td><td><p>Central wavelength of the processed lines {constant} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.radiance_calibration</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_0D</p></td><td><p>Radiance calibration {static} [m^-2.sr^-1]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.radiance_calibration_date</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>STR_0D</p></td><td><p>Date of the radiance calibration (yyyy_mm_dd) {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].filter.raw_lines</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_1D</p></td><td><p>Central wavelength of the raw lines {constant} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating</p></td><td><p><map object at 0x111ff64e0></p></td><td><p></p></td><td><p>Quantities measured by the channel if connected to a grating spectrometer</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.exposure_time</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_0D</p></td><td><p>Exposure time {constant} [s]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.intensity_spectra</p></td><td><p><map object at 0x111ff64e0></p></td><td><p></p></td><td><p>Intensity spectra (not calibrated)</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.intensity_spectra.data</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_2D</p></td><td><p>Intensity spectra (not calibrated) {dynamic} [s^-1]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.intensity_spectra.time</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.line_radiances</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Calibrated, background subtracted line integrals</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.line_radiances.data</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_2D</p></td><td><p>Calibrated, background subtracted line integrals {dynamic} [m^-2.s^-1.sr^-1]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.line_radiances.time</p></td><td><p><map object at 0x111ff6588></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.processed_lines</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_1D</p></td><td><p>Central wavelength of the processed lines {constant} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.radiance_calibration</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_1D</p></td><td><p>Radiance calibration {static} [m^-2.sr^-1]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.radiance_calibration_date</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>STR_0D</p></td><td><p>Date of the radiance calibration (yyyy_mm_dd) {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.radiance_spectra</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Calibrated spectra</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.radiance_spectra.data</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_2D</p></td><td><p>Calibrated spectra {dynamic} [m^-2.s^-1.sr^-1]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.radiance_spectra.time</p></td><td><p><map object at 0x111ff6588></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.wavelength_calibration_date</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>STR_0D</p></td><td><p>Date of the wavelength calibration (yyyy_mm_dd) {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].grating.wavelengths</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_1D</p></td><td><p>Measured wavelengths {constant} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight</p></td><td><p><map object at 0x111ff64e0></p></td><td><p></p></td><td><p>Description of the line of sight of the channel, given by 2 points</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight.first_point</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Position of the first point</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight.first_point.phi</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight.first_point.r</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight.first_point.z</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight.second_point</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Position of the second point</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight.second_point.phi</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight.second_point.r</p></td><td><p><map object at 0x111ff6588></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].line_of_sight.second_point.z</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].name</p></td><td><p><map object at 0x111ff6588></p></td><td><p>STR_0D</p></td><td><p>Name of the channel {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].spot_diameter</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>FLT_0D</p></td><td><p>Spot diameter {static} [m]</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].type</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Type of spectrometer the channel is connected to (index=1: grating, 2: filter) {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].type.description</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>STR_0D</p></td><td><p>Verbose description {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].type.index</p></td><td><p><map object at 0x111ff6588></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].type.name</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].validity</p></td><td><p><map object at 0x111ff6588></p></td><td><p>INT_0D</p></td><td><p>Indicator of the validity of the channel for the whole acquisition period (0 means valid, negative values mean non-valid) {static}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].validity_timed</p></td><td><p><map object at 0x111ff64e0></p></td><td><p></p></td><td><p>Indicator of the validity of the channel as a function of time (0 means valid, negative values mean non-valid)</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].validity_timed.data</p></td><td><p><map object at 0x111ff6588></p></td><td><p>INT_1D</p></td><td><p>Indicator of the validity of the channel as a function of time (0 means valid, negative values mean non-valid) {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.channel[:].validity_timed.time</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.code</p></td><td><p><map object at 0x111ff6588></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>spectrometer_visible.code.name</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>spectrometer_visible.code.output_flag</p></td><td><p><map object at 0x111ff6588></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>spectrometer_visible.code.parameters</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>spectrometer_visible.code.version</p></td><td><p><map object at 0x111ff6588></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>spectrometer_visible.ids_properties</p></td><td><p><map object at 0x111ff64e0></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>spectrometer_visible.ids_properties.comment</p></td><td><p><map object at 0x111ff6588></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>spectrometer_visible.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111ff64e0></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>spectrometer_visible.time</p></td><td><p><map object at 0x111ff6588></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

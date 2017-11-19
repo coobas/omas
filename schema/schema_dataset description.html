@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dataset description &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../usage.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">dataset description</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="dataset-description">
+<h1>dataset description<a class="headerlink" href="#dataset-description" title="Permalink to this headline">¶</a></h1>
+<table border=1, width='100%'>
+<tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+<tr><td><p>dataset_description.data_entry</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p></p></td><td><p>Definition of this data entry</p></td></tr>
+<tr><td><p>dataset_description.data_entry.machine</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>STR_0D</p></td><td><p>Name of the experimental device to which this data is related {constant}</p></td></tr>
+<tr><td><p>dataset_description.data_entry.pulse</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>INT_0D</p></td><td><p>Pulse number {constant}</p></td></tr>
+<tr><td><p>dataset_description.data_entry.pulse_type</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>STR_0D</p></td><td><p>Type of the data entry, e.g. "pulse", "simulation", ... {constant}</p></td></tr>
+<tr><td><p>dataset_description.data_entry.run</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>INT_0D</p></td><td><p>Run number {constant}</p></td></tr>
+<tr><td><p>dataset_description.data_entry.user</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>STR_0D</p></td><td><p>Username {constant}</p></td></tr>
+<tr><td><p>dataset_description.dd_version</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>STR_0D</p></td><td><p>Version of the physics data dictionary of this dataset {constant}</p></td></tr>
+<tr><td><p>dataset_description.ids_properties</p></td><td><p><map object at 0x111b2cc88></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+<tr><td><p>dataset_description.ids_properties.comment</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+<tr><td><p>dataset_description.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+<tr><td><p>dataset_description.imas_version</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>STR_0D</p></td><td><p>Version of the IMAS infrastructure used to produce this data entry. Refers to the global IMAS repository which links to versions of every infrastructure tools {constant}</p></td></tr>
+<tr><td><p>dataset_description.parent_entry</p></td><td><p><map object at 0x111b2cc88></p></td><td><p></p></td><td><p>Definition of the parent data entry, if the present data entry has been generated by applying a given workflow to a unique parent entry</p></td></tr>
+<tr><td><p>dataset_description.parent_entry.machine</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>STR_0D</p></td><td><p>Name of the experimental device to which this data is related {constant}</p></td></tr>
+<tr><td><p>dataset_description.parent_entry.pulse</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>INT_0D</p></td><td><p>Pulse number {constant}</p></td></tr>
+<tr><td><p>dataset_description.parent_entry.pulse_type</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>STR_0D</p></td><td><p>Type of the data entry, e.g. "pulse", "simulation", ... {constant}</p></td></tr>
+<tr><td><p>dataset_description.parent_entry.run</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>INT_0D</p></td><td><p>Run number {constant}</p></td></tr>
+<tr><td><p>dataset_description.parent_entry.user</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>STR_0D</p></td><td><p>Username {constant}</p></td></tr>
+<tr><td><p>dataset_description.simulation</p></td><td><p><map object at 0x111b2cc88></p></td><td><p></p></td><td><p>Description of the general simulation characteristics, if this data entry has been produced by a simulation. Several nodes describe typical time-dependent simulation with a time evolution as the main loop</p></td></tr>
+<tr><td><p>dataset_description.simulation.comment_after</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>STR_0D</p></td><td><p>Comment made at the end of a simulation {constant}</p></td></tr>
+<tr><td><p>dataset_description.simulation.comment_before</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>STR_0D</p></td><td><p>Comment made when launching a simulation {constant}</p></td></tr>
+<tr><td><p>dataset_description.simulation.time_begin</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>FLT_0D</p></td><td><p>Start time {constant} [s]</p></td></tr>
+<tr><td><p>dataset_description.simulation.time_begun</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>STR_0D</p></td><td><p>Actual wall-clock time simulation started {constant} [UTC]</p></td></tr>
+<tr><td><p>dataset_description.simulation.time_current</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>FLT_0D</p></td><td><p>Current time of the simulation {constant} [s]</p></td></tr>
+<tr><td><p>dataset_description.simulation.time_end</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>FLT_0D</p></td><td><p>Stop time {constant} [s]</p></td></tr>
+<tr><td><p>dataset_description.simulation.time_ended</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>STR_0D</p></td><td><p>Actual wall-clock time simulation finished {constant} [UTC]</p></td></tr>
+<tr><td><p>dataset_description.simulation.time_restart</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>FLT_0D</p></td><td><p>Time of the last restart done during the simulation {constant} [s]</p></td></tr>
+<tr><td><p>dataset_description.simulation.time_step</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>FLT_0D</p></td><td><p>Time interval between main steps, e.g. storage step (if relevant and constant) {constant} [s]</p></td></tr>
+<tr><td><p>dataset_description.simulation.workflow</p></td><td><p><map object at 0x111b2cc88></p></td><td><p>STR_0D</p></td><td><p>Description of the workflow which has been used to produce this data entry (e.g. copy of the Kepler MOML if using Kepler) {constant}</p></td></tr>
+<tr><td><p>dataset_description.time</p></td><td><p><map object at 0x111b2c9b0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+</table>
+</table><p></p></div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

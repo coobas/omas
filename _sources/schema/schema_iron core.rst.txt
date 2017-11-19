@@ -1,0 +1,47 @@
+
+iron core
+^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>iron_core.code</p></td><td><p><map object at 0x11149ff28></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>iron_core.code.name</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>iron_core.code.output_flag</p></td><td><p><map object at 0x11149ff28></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>iron_core.code.parameters</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>iron_core.code.version</p></td><td><p><map object at 0x11149ff28></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>iron_core.ids_properties</p></td><td><p><map object at 0x11149fcc0></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>iron_core.ids_properties.comment</p></td><td><p><map object at 0x11149ff28></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>iron_core.ids_properties.homogeneous_time</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>iron_core.segment[:]</p></td><td><p><map object at 0x11149ff28></p></td><td><p></p></td><td><p>The iron core is describred as a set of segments</p></td></tr>
+   <tr><td><p>iron_core.segment[:].b_field</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_1D</p></td><td><p>Array of magnetic field values, for each of which the relative permeability is given {static} [T]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry</p></td><td><p><map object at 0x11149ff28></p></td><td><p></p></td><td><p>Cross-sectional shape of the segment</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.geometry_type</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>INT_0D</p></td><td><p>Type used to describe the element shape (1:'outline', 2:'rectangle', 3:'oblique') {static}</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.oblique</p></td><td><p><map object at 0x11149ff28></p></td><td><p></p></td><td><p>Trapezoidal description of the element</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.oblique.alpha</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_0D</p></td><td><p>Inclination of first angle TBD {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.oblique.beta</p></td><td><p><map object at 0x11149ff28></p></td><td><p>FLT_0D</p></td><td><p>Inclination of second angle TBD {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.oblique.length</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_0D</p></td><td><p>Length {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.oblique.r</p></td><td><p><map object at 0x11149ff28></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre R {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.oblique.thickness</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_0D</p></td><td><p>Thickness {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.oblique.z</p></td><td><p><map object at 0x11149ff28></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre Z {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.outline</p></td><td><p><map object at 0x11149fcc0></p></td><td><p></p></td><td><p>Irregular outline of the element</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.outline.r</p></td><td><p><map object at 0x11149ff28></p></td><td><p>FLT_1D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.outline.z</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_1D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.rectangle</p></td><td><p><map object at 0x11149ff28></p></td><td><p></p></td><td><p>Rectangular description of the element</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.rectangle.height</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_0D</p></td><td><p>Vertical full height {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.rectangle.r</p></td><td><p><map object at 0x11149ff28></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre R {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.rectangle.width</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_0D</p></td><td><p>Horizontal full width {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].geometry.rectangle.z</p></td><td><p><map object at 0x11149ff28></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre Z {static} [m]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].identifier</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>STR_0D</p></td><td><p>ID of the segment {static}</p></td></tr>
+   <tr><td><p>iron_core.segment[:].magnetisation_r</p></td><td><p><map object at 0x11149ff28></p></td><td><p></p></td><td><p>Magnetisation M of the iron segment along the major radius axis, assumed to be constant inside a given iron segment. Reminder : H = 1/mu0 * B - mur * M;</p></td></tr>
+   <tr><td><p>iron_core.segment[:].magnetisation_r.data</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_1D</p></td><td><p>Magnetisation M of the iron segment along the major radius axis, assumed to be constant inside a given iron segment. Reminder : H = 1/mu0 * B - mur * M; {dynamic} [T]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].magnetisation_r.time</p></td><td><p><map object at 0x11149ff28></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>iron_core.segment[:].magnetisation_z</p></td><td><p><map object at 0x11149fcc0></p></td><td><p></p></td><td><p>Magnetisation M of the iron segment along the vertical axis, assumed to be constant inside a given iron segment. Reminder : H = 1/mu0 * B - mur * M;</p></td></tr>
+   <tr><td><p>iron_core.segment[:].magnetisation_z.data</p></td><td><p><map object at 0x11149ff28></p></td><td><p>FLT_1D</p></td><td><p>Magnetisation M of the iron segment along the vertical axis, assumed to be constant inside a given iron segment. Reminder : H = 1/mu0 * B - mur * M; {dynamic} [T]</p></td></tr>
+   <tr><td><p>iron_core.segment[:].magnetisation_z.time</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>iron_core.segment[:].name</p></td><td><p><map object at 0x11149ff28></p></td><td><p>STR_0D</p></td><td><p>Name of the segment {static}</p></td></tr>
+   <tr><td><p>iron_core.segment[:].permeability_relative</p></td><td><p><map object at 0x11149fcc0></p></td><td><p>FLT_1D</p></td><td><p>Relative permeability of the iron segment {static} [-]</p></td></tr>
+   <tr><td><p>iron_core.time</p></td><td><p><map object at 0x11149ff28></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

@@ -1,0 +1,32 @@
+
+thomson scattering
+^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>thomson_scattering.channel[:]</p></td><td><p><map object at 0x111505160></p></td><td><p></p></td><td><p>Set of channels (lines-of-sight)</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].identifier</p></td><td><p><map object at 0x1115050b8></p></td><td><p>STR_0D</p></td><td><p>ID of the channel {static}</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].n_e</p></td><td><p><map object at 0x111505160></p></td><td><p></p></td><td><p>Electron density</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].n_e.data</p></td><td><p><map object at 0x1115050b8></p></td><td><p>FLT_1D</p></td><td><p>Electron density {dynamic} [m^-3]</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].n_e.time</p></td><td><p><map object at 0x111505160></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].name</p></td><td><p><map object at 0x1115050b8></p></td><td><p>STR_0D</p></td><td><p>Name of the channel {static}</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].position</p></td><td><p><map object at 0x111505160></p></td><td><p></p></td><td><p>Position of the measurements (intersection between laser beam and line of sight)</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].position.phi</p></td><td><p><map object at 0x1115050b8></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].position.r</p></td><td><p><map object at 0x111505160></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].position.z</p></td><td><p><map object at 0x1115050b8></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].t_e</p></td><td><p><map object at 0x111505160></p></td><td><p></p></td><td><p>Electron temperature</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].t_e.data</p></td><td><p><map object at 0x1115050b8></p></td><td><p>FLT_1D</p></td><td><p>Electron temperature {dynamic} [eV]</p></td></tr>
+   <tr><td><p>thomson_scattering.channel[:].t_e.time</p></td><td><p><map object at 0x111505160></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>thomson_scattering.code</p></td><td><p><map object at 0x1115050b8></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>thomson_scattering.code.name</p></td><td><p><map object at 0x111505160></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>thomson_scattering.code.output_flag</p></td><td><p><map object at 0x1115050b8></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>thomson_scattering.code.parameters</p></td><td><p><map object at 0x111505160></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>thomson_scattering.code.version</p></td><td><p><map object at 0x1115050b8></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>thomson_scattering.ids_properties</p></td><td><p><map object at 0x111505160></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>thomson_scattering.ids_properties.comment</p></td><td><p><map object at 0x1115050b8></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>thomson_scattering.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111505160></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>thomson_scattering.time</p></td><td><p><map object at 0x1115050b8></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

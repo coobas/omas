@@ -1,0 +1,77 @@
+
+controllers
+^^^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>controllers.code</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>controllers.code.name</p></td><td><p><map object at 0x111f10978></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>controllers.code.output_flag</p></td><td><p><map object at 0x111f107f0></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>controllers.code.parameters</p></td><td><p><map object at 0x111f10978></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>controllers.code.version</p></td><td><p><map object at 0x111f107f0></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>controllers.ids_properties</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>controllers.ids_properties.comment</p></td><td><p><map object at 0x111f107f0></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>controllers.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111f10978></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:]</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>A linear controller, this is rather conventional</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].controller_class</p></td><td><p><map object at 0x111f10978></p></td><td><p>STR_0D</p></td><td><p>One of a known class of controllers {constant}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].description</p></td><td><p><map object at 0x111f107f0></p></td><td><p>STR_0D</p></td><td><p>Description of this controller {constant}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].input_names</p></td><td><p><map object at 0x111f10978></p></td><td><p>STR_1D</p></td><td><p>Names of the input signals, following the SDN convention {constant}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].inputs</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>Input signals; the timebase is common to inputs and outputs for any particular controller</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].inputs.data</p></td><td><p><map object at 0x111f10978></p></td><td><p>FLT_2D</p></td><td><p>Input signals; the timebase is common to inputs and outputs for any particular controller {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].inputs.time</p></td><td><p><map object at 0x111f107f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].name</p></td><td><p><map object at 0x111f10978></p></td><td><p>STR_0D</p></td><td><p>Name of this controller {constant}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].output_names</p></td><td><p><map object at 0x111f107f0></p></td><td><p>STR_1D</p></td><td><p>Names of the output signals following the SDN convention {constant}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].outputs</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>Output signals; the timebase is common to inputs and outputs for any particular controller</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].outputs.data</p></td><td><p><map object at 0x111f107f0></p></td><td><p>FLT_2D</p></td><td><p>Output signals; the timebase is common to inputs and outputs for any particular controller {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].outputs.time</p></td><td><p><map object at 0x111f10978></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>Filtered PID controller</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.d</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>Derivative term</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.d.data</p></td><td><p><map object at 0x111f107f0></p></td><td><p>FLT_3D</p></td><td><p>Derivative term {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.d.time</p></td><td><p><map object at 0x111f10978></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.i</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>Integral term</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.i.data</p></td><td><p><map object at 0x111f10978></p></td><td><p>FLT_3D</p></td><td><p>Integral term {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.i.time</p></td><td><p><map object at 0x111f107f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.input_names</p></td><td><p><map object at 0x111f10978></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.output_names</p></td><td><p><map object at 0x111f107f0></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.p</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>Proportional term</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.p.data</p></td><td><p><map object at 0x111f107f0></p></td><td><p>FLT_3D</p></td><td><p>Proportional term {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.p.time</p></td><td><p><map object at 0x111f10978></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.tau</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>Filter time-constant for the D-term</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.tau.data</p></td><td><p><map object at 0x111f10978></p></td><td><p>FLT_1D</p></td><td><p>Filter time-constant for the D-term {dynamic} [s]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].pid.tau.time</p></td><td><p><map object at 0x111f107f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>Statespace controller in discrete or continuous time</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.a</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>A matrix</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.a.data</p></td><td><p><map object at 0x111f10978></p></td><td><p>FLT_3D</p></td><td><p>A matrix {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.a.time</p></td><td><p><map object at 0x111f107f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.b</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>B matrix</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.b.data</p></td><td><p><map object at 0x111f107f0></p></td><td><p>FLT_3D</p></td><td><p>B matrix {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.b.time</p></td><td><p><map object at 0x111f10978></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.c</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>C matrix</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.c.data</p></td><td><p><map object at 0x111f10978></p></td><td><p>FLT_3D</p></td><td><p>C matrix {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.c.time</p></td><td><p><map object at 0x111f107f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.d</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>D matrix, normally proper and D=0</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.d.data</p></td><td><p><map object at 0x111f107f0></p></td><td><p>FLT_3D</p></td><td><p>D matrix, normally proper and D=0 {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.d.time</p></td><td><p><map object at 0x111f10978></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.deltat</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>Discrete time sampling interval ; if less than 1e-10, the controller is considered to be expressed in continuous time</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.deltat.data</p></td><td><p><map object at 0x111f10978></p></td><td><p>FLT_1D</p></td><td><p>Discrete time sampling interval ; if less than 1e-10, the controller is considered to be expressed in continuous time {dynamic} [s]</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.deltat.time</p></td><td><p><map object at 0x111f107f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.input_names</p></td><td><p><map object at 0x111f10978></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>controllers.linear_controller[:].statespace.state_names</p></td><td><p><map object at 0x111f107f0></p></td><td><p>STR_1D</p></td><td><p>Names of the states {constant}</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:]</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>A non-linear controller, this is less conventional and will have to be developed</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].controller_class</p></td><td><p><map object at 0x111f107f0></p></td><td><p>STR_0D</p></td><td><p>One of a known class of controllers {constant}</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].description</p></td><td><p><map object at 0x111f10978></p></td><td><p>STR_0D</p></td><td><p>Description of this controller {constant}</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].function</p></td><td><p><map object at 0x111f107f0></p></td><td><p>STR_0D</p></td><td><p>Method to be defined {constant}</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].input_names</p></td><td><p><map object at 0x111f10978></p></td><td><p>STR_1D</p></td><td><p>Names of the input signals, following the SDN convention {constant}</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].inputs</p></td><td><p><map object at 0x111f107f0></p></td><td><p></p></td><td><p>Input signals; the timebase is common to inputs and outputs for any particular controller</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].inputs.data</p></td><td><p><map object at 0x111f10978></p></td><td><p>FLT_2D</p></td><td><p>Input signals; the timebase is common to inputs and outputs for any particular controller {constant} [mixed]</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].inputs.time</p></td><td><p><map object at 0x111f107f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].name</p></td><td><p><map object at 0x111f10978></p></td><td><p>STR_0D</p></td><td><p>Name of this controller {constant}</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].output_names</p></td><td><p><map object at 0x111f107f0></p></td><td><p>STR_1D</p></td><td><p>Output signal names following the SDN convention {constant}</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].outputs</p></td><td><p><map object at 0x111f10978></p></td><td><p></p></td><td><p>Output signals; the timebase is common to inputs and outputs for any particular controller</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].outputs.data</p></td><td><p><map object at 0x111f107f0></p></td><td><p>FLT_2D</p></td><td><p>Output signals; the timebase is common to inputs and outputs for any particular controller {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>controllers.nonlinear_controller[:].outputs.time</p></td><td><p><map object at 0x111f10978></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>controllers.time</p></td><td><p><map object at 0x111f107f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

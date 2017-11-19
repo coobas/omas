@@ -1,0 +1,23 @@
+
+sdn
+^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>sdn.ids_properties</p></td><td><p><map object at 0x111e16828></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>sdn.ids_properties.comment</p></td><td><p><map object at 0x111e167f0></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>sdn.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111e16828></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>sdn.signal[:]</p></td><td><p><map object at 0x111e167f0></p></td><td><p></p></td><td><p>Dictionary of the signal names and definitions which can be allocated to the SDN</p></td></tr>
+   <tr><td><p>sdn.signal[:].allocated_position</p></td><td><p><map object at 0x111e16828></p></td><td><p>INT_0D</p></td><td><p>Allocation of signal to a position in the SDN (1..N); this will be implementation specific {constant}</p></td></tr>
+   <tr><td><p>sdn.signal[:].definition</p></td><td><p><map object at 0x111e167f0></p></td><td><p>STR_0D</p></td><td><p>Definition of the allocatable signal {static}</p></td></tr>
+   <tr><td><p>sdn.signal[:].ip_normalise</p></td><td><p><map object at 0x111e16828></p></td><td><p>INT_0D</p></td><td><p>0 or 1 if this signal is multiplied by Ip to generate a control variable; this usage is specific to magnetic control, but could be extended to other control loops {static}</p></td></tr>
+   <tr><td><p>sdn.signal[:].name</p></td><td><p><map object at 0x111e167f0></p></td><td><p>STR_0D</p></td><td><p>Name of the allocatable signal {static}</p></td></tr>
+   <tr><td><p>sdn.signal[:].value</p></td><td><p><map object at 0x111e16828></p></td><td><p>FLT_1D</p></td><td><p>Signal value {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>sdn.time</p></td><td><p><map object at 0x111e167f0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>sdn.topic_list[:]</p></td><td><p><map object at 0x111e16828></p></td><td><p></p></td><td><p>List of the groups of signals used at different reading and writing points; this is an implementation detail which might change</p></td></tr>
+   <tr><td><p>sdn.topic_list[:].indices</p></td><td><p><map object at 0x111e167f0></p></td><td><p>INT_1D</p></td><td><p>Indices into the current SDN allocated list; it must be updated when the allocated list is changed {static}</p></td></tr>
+   <tr><td><p>sdn.topic_list[:].names</p></td><td><p><map object at 0x111e16828></p></td><td><p>STR_1D</p></td><td><p>Names of the group of SDN signals {static}</p></td></tr>
+   </table>
+   </table><p></p>

@@ -1,0 +1,23 @@
+
+actuator
+^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>actuator.channels</p></td><td><p><map object at 0x1119e3940></p></td><td><p>STR_1D</p></td><td><p>ID of the multiple channels of the actuator: Beam boxes for NBI, EC or IC launcher, ... {static}</p></td></tr>
+   <tr><td><p>actuator.code</p></td><td><p><map object at 0x1119e38d0></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>actuator.code.name</p></td><td><p><map object at 0x1119e3908></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>actuator.code.output_flag</p></td><td><p><map object at 0x1119e38d0></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>actuator.code.parameters</p></td><td><p><map object at 0x1119e3908></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>actuator.code.version</p></td><td><p><map object at 0x1119e38d0></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>actuator.generic_dynamic</p></td><td><p><map object at 0x1119e3908></p></td><td><p>FLT_2D</p></td><td><p>Generic 2D dynamic slot for storing an actuator control parameter (e.g. the angle of an ECRH mirror) {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>actuator.ids_properties</p></td><td><p><map object at 0x1119e38d0></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>actuator.ids_properties.comment</p></td><td><p><map object at 0x1119e3908></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>actuator.ids_properties.homogeneous_time</p></td><td><p><map object at 0x1119e38d0></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>actuator.name</p></td><td><p><map object at 0x1119e3908></p></td><td><p>STR_0D</p></td><td><p>Name of the actuator (IC, EC, NBI, LH) {static} [-]</p></td></tr>
+   <tr><td><p>actuator.power</p></td><td><p><map object at 0x1119e38d0></p></td><td><p>FLT_2D</p></td><td><p>Power delivered at the output of the actuator, in the vessel (NB this is before the coupling / beam blocking / shine through / orbit losses calculations) {dynamic} [W]</p></td></tr>
+   <tr><td><p>actuator.time</p></td><td><p><map object at 0x1119e3908></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

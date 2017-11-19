@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>antennas &#8212; OMAS</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img height=40, src="../_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../how.html">Concept</a></li>
+                <li><a href="../usage.html">Examples</a></li>
+                <li><a href="../install.html">Installation</a></li>
+                <li><a href="../schema.html">Data schema</a></li>
+                <li><a href="../code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">antennas</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="antennas">
+<h1>antennas<a class="headerlink" href="#antennas" title="Permalink to this headline">¶</a></h1>
+<table border=1, width='100%'>
+<tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+<tr><td><p>antennas.code</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+<tr><td><p>antennas.code.name</p></td><td><p><map object at 0x111427080></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+<tr><td><p>antennas.code.output_flag</p></td><td><p><map object at 0x111427320></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+<tr><td><p>antennas.code.parameters</p></td><td><p><map object at 0x111427080></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+<tr><td><p>antennas.code.version</p></td><td><p><map object at 0x111427320></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+<tr><td><p>antennas.ec[:]</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Electron Cyclotron antennas</p></td></tr>
+<tr><td><p>antennas.ec[:].beam</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Beam characteristics</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.phase</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Phase ellipse characteristics</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.phase.angle</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Rotation angle for the phase ellipse</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.phase.angle.data</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_1D</p></td><td><p>Rotation angle for the phase ellipse {dynamic} [rad]</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.phase.angle.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.phase.curvature</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Inverse curvature radii for the phase ellipse, positive/negative for divergent/convergent beams</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.phase.curvature.data</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_2D</p></td><td><p>Inverse curvature radii for the phase ellipse, positive/negative for divergent/convergent beams {dynamic} [m^-1]</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.phase.curvature.time</p></td><td><p><map object at 0x111427080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.spot</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Spot ellipse characteristics</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.spot.angle</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Rotation angle for the spot ellipse</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.spot.angle.data</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_1D</p></td><td><p>Rotation angle for the spot ellipse {dynamic} [rad]</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.spot.angle.time</p></td><td><p><map object at 0x111427080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.spot.size</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Size of the spot ellipse</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.spot.size.data</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_2D</p></td><td><p>Size of the spot ellipse {dynamic} [m]</p></td></tr>
+<tr><td><p>antennas.ec[:].beam.spot.size.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].frequency</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Frequency {static} [Hz]</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_angle_pol</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Poloidal launching angle between the horizontal plane and the poloidal component of the nominal beam centerline. tan(angle_pol)=-k_z/k_R;</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_angle_pol.data</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_1D</p></td><td><p>Poloidal launching angle between the horizontal plane and the poloidal component of the nominal beam centerline. tan(angle_pol)=-k_z/k_R; {dynamic} [rad]</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_angle_pol.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_angle_tor</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Toroidal launching angle between the poloidal plane and the nominal beam centerline. sin(angle_tor)=k_phi</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_angle_tor.data</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_1D</p></td><td><p>Toroidal launching angle between the poloidal plane and the nominal beam centerline. sin(angle_tor)=k_phi {dynamic} [rad]</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_angle_tor.time</p></td><td><p><map object at 0x111427080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Launching position of the beam</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.phi</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Toroidal angle</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.phi.data</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_1D</p></td><td><p>Toroidal angle {dynamic} [rad]</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.phi.time</p></td><td><p><map object at 0x111427080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.r</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Major radius</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.r.data</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_1D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.r.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.z</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Height</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.z.data</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_1D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+<tr><td><p>antennas.ec[:].launching_position.z.time</p></td><td><p><map object at 0x111427080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].mode</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Incoming wave mode (+ or -1 for O/X mode)</p></td></tr>
+<tr><td><p>antennas.ec[:].mode.data</p></td><td><p><map object at 0x111427080></p></td><td><p>INT_1D</p></td><td><p>Incoming wave mode (+ or -1 for O/X mode) {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].mode.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ec[:].name</p></td><td><p><map object at 0x111427080></p></td><td><p>STR_0D</p></td><td><p>Name of the antenna {static}</p></td></tr>
+<tr><td><p>antennas.ec[:].power</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Power</p></td></tr>
+<tr><td><p>antennas.ec[:].power.data</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_1D</p></td><td><p>Power {dynamic} [W]</p></td></tr>
+<tr><td><p>antennas.ec[:].power.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ic[:]</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Ion Cyclotron antennas</p></td></tr>
+<tr><td><p>antennas.ic[:].frequency</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Frequency</p></td></tr>
+<tr><td><p>antennas.ic[:].frequency.data</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_1D</p></td><td><p>Frequency {dynamic} [Hz]</p></td></tr>
+<tr><td><p>antennas.ic[:].frequency.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ic[:].name</p></td><td><p><map object at 0x111427080></p></td><td><p>STR_0D</p></td><td><p>Name of the antenna {static}</p></td></tr>
+<tr><td><p>antennas.ic[:].power</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Power</p></td></tr>
+<tr><td><p>antennas.ic[:].power.data</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_1D</p></td><td><p>Power {dynamic} [W]</p></td></tr>
+<tr><td><p>antennas.ic[:].power.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:]</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Properties of IC antenna straps</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].current</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Root mean square current flowing along the strap</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].current.data</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_1D</p></td><td><p>Root mean square current flowing along the strap {dynamic} [A]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].current.time</p></td><td><p><map object at 0x111427320></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].distance_to_conductor</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Distance to conducting wall or other conductor behind the antenna strap {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Cross-sectional shape of the strap</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.geometry_type</p></td><td><p><map object at 0x111427080></p></td><td><p>INT_0D</p></td><td><p>Type used to describe the element shape (1:'outline', 2:'rectangle', 3:'oblique') {static}</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.oblique</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Trapezoidal description of the element</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.oblique.alpha</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Inclination of first angle TBD {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.oblique.beta</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_0D</p></td><td><p>Inclination of second angle TBD {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.oblique.length</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Length {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.oblique.r</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre R {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.oblique.thickness</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Thickness {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.oblique.z</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre Z {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.outline</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Irregular outline of the element</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.outline.r</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_1D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.outline.z</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_1D</p></td><td><p>Height {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.rectangle</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Rectangular description of the element</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.rectangle.height</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Vertical full height {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.rectangle.r</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre R {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.rectangle.width</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Horizontal full width {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].geometry.rectangle.z</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_0D</p></td><td><p>Geometric centre Z {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].phase</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Phase of the strap current</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].phase.data</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_1D</p></td><td><p>Phase of the strap current {dynamic} [rad]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].phase.time</p></td><td><p><map object at 0x111427080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].position</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>R, Z, Phi position of the strap centre</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].position.phi</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].position.r</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].position.z</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].strap[:].width_tor</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_0D</p></td><td><p>Width of strap in the toroidal direction {static} [m]</p></td></tr>
+<tr><td><p>antennas.ic[:].surface_current[:]</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Description of the IC surface current on the antenna straps and on passive components, for every time slice {dynamic}</p></td></tr>
+<tr><td><p>antennas.ic[:].surface_current[:].m_pol</p></td><td><p><map object at 0x111427320></p></td><td><p>INT_1D</p></td><td><p>Poloidal mode numbers, used to describe the spectrum of the antenna current. The poloidal angle is defined from the reference point; the angle at a point (R,Z) is given by atan((Z-Zref)/(R-Rref)), where Rref=reference_point/r and Zref=reference_point/z {dynamic}</p></td></tr>
+<tr><td><p>antennas.ic[:].surface_current[:].n_pol</p></td><td><p><map object at 0x111427080></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+<tr><td><p>antennas.ic[:].surface_current[:].n_tor</p></td><td><p><map object at 0x111427320></p></td><td><p>INT_1D</p></td><td><p>Toroidal mode numbers, used to describe the spectrum of the antenna current {dynamic}</p></td></tr>
+<tr><td><p>antennas.ic[:].surface_current[:].spectrum</p></td><td><p><map object at 0x111427080></p></td><td><p>INT_1D</p></td><td><p>Spectrum of the total surface current on the antenna strap and passive components expressed in poloidal and toroidal modes {dynamic} [A]</p></td></tr>
+<tr><td><p>antennas.ic[:].surface_current[:].time</p></td><td><p><map object at 0x111427320></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+<tr><td><p>antennas.ids_properties</p></td><td><p><map object at 0x111427080></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+<tr><td><p>antennas.ids_properties.comment</p></td><td><p><map object at 0x111427320></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+<tr><td><p>antennas.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111427080></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+<tr><td><p>antennas.reference_point</p></td><td><p><map object at 0x111427320></p></td><td><p></p></td><td><p>Reference point used to define the poloidal angle, e.g. the geometrical centre of the vacuum vessel. Used to define the poloidal mode numbers under ic/surface_current</p></td></tr>
+<tr><td><p>antennas.reference_point.r</p></td><td><p><map object at 0x111427080></p></td><td><p>FLT_0D</p></td><td><p>Major radius {constant} [m]</p></td></tr>
+<tr><td><p>antennas.reference_point.z</p></td><td><p><map object at 0x111427320></p></td><td><p>FLT_0D</p></td><td><p>Height {constant} [m]</p></td></tr>
+<tr><td><p>antennas.time</p></td><td><p><map object at 0x111427080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+</table>
+</table><p></p></div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

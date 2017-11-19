@@ -1,0 +1,59 @@
+
+pellets
+^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>pellets.code</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>pellets.code.name</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>pellets.code.output_flag</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>pellets.code.parameters</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>pellets.code.version</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>pellets.ids_properties</p></td><td><p><map object at 0x10ebcf940></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>pellets.ids_properties.comment</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>pellets.ids_properties.homogeneous_time</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>pellets.time</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>pellets.time_slice[:]</p></td><td><p><map object at 0x10ebcf940></p></td><td><p></p></td><td><p>Description of the pellets launched at various time slices. The time of this structure corresponds to the full ablation of the pellet inside the plasma. {dynamic}</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:]</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p></p></td><td><p>Set of pellets ablated in the plasma at a given time</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry</p></td><td><p><map object at 0x10ebcf940></p></td><td><p></p></td><td><p>Geometry of the pellet path in the vaccuum chamber</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry.first_point</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p></p></td><td><p>Position of the first point</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry.first_point.phi</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {dynamic} [rad]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry.first_point.r</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_0D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry.first_point.z</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_0D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry.second_point</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p></p></td><td><p>Position of the second point</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry.second_point.phi</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {dynamic} [rad]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry.second_point.r</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_0D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_geometry.second_point.z</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_0D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p></p></td><td><p>1-D profiles of plasma and pellet along the pellet path</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.ablated_particles</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_1D</p></td><td><p>Number of ablated particles (electrons) along the pellet path {dynamic} [-]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.ablation_rate</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_1D</p></td><td><p>Ablation rate (electrons) along the pellet path {dynamic} [s^-1]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.distance</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_1D</p></td><td><p>Distance along the pellet path, with the origin taken at path_geometry/first_point. Used as the main coordinate for the path_profiles structure {dynamic} [m]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.n_e</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_1D</p></td><td><p>Electron density along the pellet path {dynamic} [m^-3]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.position</p></td><td><p><map object at 0x10ebcf940></p></td><td><p></p></td><td><p>Position along the pellet path</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.position.phi</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_1D</p></td><td><p>Toroidal angle {dynamic} [rad]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.position.r</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_1D</p></td><td><p>Major radius {dynamic} [m]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.position.z</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_1D</p></td><td><p>Height {dynamic} [m]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.psi</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_1D</p></td><td><p>Poloidal flux along the pellet path {dynamic} [Wb]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.rho_tor_norm</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_1D</p></td><td><p>Normalised toroidal coordinate along the pellet path {dynamic} [-]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.rho_tor_norm_drift</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_1D</p></td><td><p>Difference to due ExB drifts between the ablation and the final deposition locations, in terms of the normalised toroidal flux coordinate {dynamic} [-]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.t_e</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_1D</p></td><td><p>Electron temperature along the pellet path {dynamic} [eV]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].path_profiles.velocity</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_1D</p></td><td><p>Pellet velocity along the pellet path {dynamic} [m.s^-1]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].shape</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p></p></td><td><p>Initial shape of a pellet at launch</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].shape.size</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_1D</p></td><td><p>Size of the pellet in the various dimensions, depending on the shape type. Spherical pellets: size(1) is the radius of the pellet. Cylindrical pellets: size(1) is the radius and size(2) is the height of the cylinder. Rectangular pellets: size(1) is the height, size(2) is the width and size(3) is the length {dynamic} [m]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].shape.type</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p></p></td><td><p>Identifier structure for the shape type: 1-spherical; 2-cylindrical; 3-rectangular {constant}</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].shape.type.description</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>STR_0D</p></td><td><p>Verbose description {constant}</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].shape.type.index</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>INT_0D</p></td><td><p>Integer identifier (enumeration index within a list) {constant}</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].shape.type.name</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>STR_0D</p></td><td><p>Short string identifier {constant}</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].species[:]</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p></p></td><td><p>Set of species included in the pellet composition</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].species[:].a</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_0D</p></td><td><p>Mass of atom {dynamic} [Atomic Mass Unit]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].species[:].density</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_0D</p></td><td><p>Material density of the species in the pellet {dynamic} [-]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].species[:].fraction</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_0D</p></td><td><p>Fraction of the species atoms in the pellet {dynamic} [-]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].species[:].label</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>STR_0D</p></td><td><p>String identifying the species (e.g. H, D, T, ...) {dynamic}</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].species[:].sublimation_energy</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_0D</p></td><td><p>Sublimation energy per atom {dynamic} [eV]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].species[:].z_n</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>FLT_0D</p></td><td><p>Nuclear charge {dynamic} [Elementary Charge Unit]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].pellet[:].velocity_initial</p></td><td><p><map object at 0x10ebcf940></p></td><td><p>FLT_0D</p></td><td><p>Initial velocity of the pellet as it enters the vaccum chamber {dynamic} [m.s^-1]</p></td></tr>
+   <tr><td><p>pellets.time_slice[:].time</p></td><td><p><map object at 0x10ebcffd0></p></td><td><p>INT_0D</p></td><td><p>Time {dynamic} [s]</p></td></tr>
+   </table>
+   </table><p></p>

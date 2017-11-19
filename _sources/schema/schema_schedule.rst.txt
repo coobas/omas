@@ -1,0 +1,25 @@
+
+schedule
+^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>schedule.code</p></td><td><p><map object at 0x111e16470></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>schedule.code.name</p></td><td><p><map object at 0x111e16358></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>schedule.code.output_flag</p></td><td><p><map object at 0x111e16470></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>schedule.code.parameters</p></td><td><p><map object at 0x111e16358></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>schedule.code.version</p></td><td><p><map object at 0x111e16470></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>schedule.ids_properties</p></td><td><p><map object at 0x111e16358></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>schedule.ids_properties.comment</p></td><td><p><map object at 0x111e16470></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>schedule.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111e16358></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>schedule.time</p></td><td><p><map object at 0x111e16470></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>schedule.waveform[:]</p></td><td><p><map object at 0x111e16358></p></td><td><p></p></td><td><p>Reference waveform to be used to drive feedback or feedforward controllers, or to control the controller switching itself</p></td></tr>
+   <tr><td><p>schedule.waveform[:].name</p></td><td><p><map object at 0x111e16470></p></td><td><p>STR_0D</p></td><td><p>Reference name {constant}</p></td></tr>
+   <tr><td><p>schedule.waveform[:].time</p></td><td><p><map object at 0x111e16358></p></td><td><p>INT_1D</p></td><td><p>imas missing dimension</p></td></tr>
+   <tr><td><p>schedule.waveform[:].value</p></td><td><p><map object at 0x111e16470></p></td><td><p></p></td><td><p>Values of the reference for the timebase</p></td></tr>
+   <tr><td><p>schedule.waveform[:].value.data</p></td><td><p><map object at 0x111e16358></p></td><td><p>FLT_1D</p></td><td><p>Values of the reference for the timebase {dynamic} [mixed]</p></td></tr>
+   <tr><td><p>schedule.waveform[:].value.time</p></td><td><p><map object at 0x111e16470></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>

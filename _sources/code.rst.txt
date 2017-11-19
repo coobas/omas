@@ -1,0 +1,60 @@
+
+========
+OMAS API
+========
+
+omas_s3
+^^^^^^^
+
+.. automodule:: omas.omas_s3
+   :show-inheritance:
+   :members:
+   :undoc-members:
+
+omas_nc
+^^^^^^^
+
+.. automodule:: omas.omas_nc
+   :show-inheritance:
+   :members:
+   :undoc-members:
+
+omas_imas
+^^^^^^^^^
+
+.. automodule:: omas.omas_imas
+   :show-inheritance:
+   :members:
+   :undoc-members:
+
+omas_core
+^^^^^^^^^
+
+.. automodule:: omas.omas_core
+   :show-inheritance:
+   :members:
+   :undoc-members:
+
+omas_structure
+^^^^^^^^^^^^^^
+
+.. automodule:: omas.omas_structure
+   :show-inheritance:
+   :members:
+   :undoc-members:
+
+omas_utils
+^^^^^^^^^^
+
+.. automodule:: omas.omas_utils
+   :show-inheritance:
+   :members:
+   :undoc-members:
+
+omas_json
+^^^^^^^^^
+
+.. automodule:: omas.omas_json
+   :show-inheritance:
+   :members:
+   :undoc-members:

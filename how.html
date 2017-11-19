@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Concept &#8212; OMAS</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/my-styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img height=40, src="_static/OMAS_logo.png">
+          <!-- OMAS-->
+        </a>
+        <!-- <span class="navbar-text navbar-version pull-left"><b></b></span> -->
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="#">Concept</a></li>
+                <li><a href="usage.html">Examples</a></li>
+                <li><a href="install.html">Installation</a></li>
+                <li><a href="schema.html">Data schema</a></li>
+                <li><a href="code.html">API</a></li>
+            
+            
+              
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">In this page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Concept</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+           <!-- 
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="concept">
+<h1>Concept<a class="headerlink" href="#concept" title="Permalink to this headline">¶</a></h1>
+<p>The hierarchical IMAS data model is represented in OMAS as a set of nested <cite>omas</cite> objects.</p>
+<p>Techically speaking <strong>the Python `omas` class is a subclass of the standard Python dictionary class</strong>,
+and it inherits all of the functionalities, with the addition of:</p>
+<ol class="arabic">
+<li><p class="first">on-the-fly check for consistency with IMAS data model</p>
+</li>
+<li><p class="first">graceful error handling with suggestions for navigating the hierarchical data structure</p>
+</li>
+<li><p class="first">dynamic creation of the tree hierarchy as items they are accessed</p>
+</li>
+<li><p class="first">data slicing (not only in time)</p>
+</li>
+<li><p class="first">support read/write/access using multiple formats:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">][</span><span class="s1">&#39;time_slice&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;profiles_2d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;psi&#39;</span><span class="p">]</span>  <span class="c1">#standard Python dictionary format</span>
+<span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice[0].profiles_2d[0].psi&#39;</span><span class="p">]</span>            <span class="c1">#IMAS hierarchical tree format</span>
+<span class="n">ods</span><span class="p">[</span><span class="s1">&#39;equilibrium.time_slice.0.profiles_2d.0.psi&#39;</span><span class="p">]</span>              <span class="c1">#dot separated string format</span>
+<span class="n">ods</span><span class="p">[[</span><span class="s1">&#39;equilibrium&#39;</span><span class="p">,</span><span class="s1">&#39;time_slice&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;profiles_2d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">]]</span>     <span class="c1">#list of nodes format</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">save/load omas objects to/from:</p>
+<table border="1" class="docutils" id="omas-formats">
+<colgroup>
+<col width="11%" />
+<col width="44%" />
+<col width="17%" />
+<col width="12%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">OMAS format</th>
+<th class="head">Description</th>
+<th class="head">Storage type</th>
+<th class="head">Remote storage</th>
+<th class="head">Python Requirements</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>pickle</strong></td>
+<td>Files using native Python serialization tools</td>
+<td>Python binary file</td>
+<td>no</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>Json</strong></td>
+<td>Using Json format for representing hierarchical data</td>
+<td>ASCII files</td>
+<td>no</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>NetCDF</strong></td>
+<td>Files using binary NetCDF format</td>
+<td>Binary files</td>
+<td>no</td>
+<td>netCDF4</td>
+</tr>
+<tr class="row-odd"><td><strong>S3</strong></td>
+<td>Cloud storage using Amazon Simple Storage Service</td>
+<td>Object Store</td>
+<td>yes</td>
+<td>boto3</td>
+</tr>
+<tr class="row-even"><td><strong>IMAS</strong></td>
+<td>ITER data storage system</td>
+<td>IMAS Database</td>
+<td>no</td>
+<td>imas</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Orso Meneghini.<br/>
+      Last updated on Nov 18, 2017.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

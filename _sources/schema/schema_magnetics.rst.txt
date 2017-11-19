@@ -1,0 +1,52 @@
+
+magnetics
+^^^^^^^^^
+
+.. raw:: html
+
+   <table border=1, width='100%'>
+   <tr><th>Path</th><th>Dimensions</th><th>Type</th><th>Description</th></tr>
+   <tr><td><p>magnetics.bpol_probe[:]</p></td><td><p><map object at 0x111457080></p></td><td><p></p></td><td><p>Poloidal field probes</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].area</p></td><td><p><map object at 0x111457080></p></td><td><p>FLT_0D</p></td><td><p>Area of each turn of the coil {static} [m^2]</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].field</p></td><td><p><map object at 0x11145d080></p></td><td><p></p></td><td><p>Measured magnetic field</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].field.data</p></td><td><p><map object at 0x11145d048></p></td><td><p>FLT_1D</p></td><td><p>Measured magnetic field {dynamic} [T]</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].field.time</p></td><td><p><map object at 0x11145d080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].identifier</p></td><td><p><map object at 0x11145d048></p></td><td><p>STR_0D</p></td><td><p>ID of the probe {static}</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].length</p></td><td><p><map object at 0x11145d080></p></td><td><p>FLT_0D</p></td><td><p>Length of the coil {static} [m]</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].name</p></td><td><p><map object at 0x11145d048></p></td><td><p>STR_0D</p></td><td><p>Name of the probe {static}</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].poloidal_angle</p></td><td><p><map object at 0x11145d080></p></td><td><p>FLT_0D</p></td><td><p>Poloidal angle of the coil orientation {static} [rad]</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].position</p></td><td><p><map object at 0x11145d048></p></td><td><p></p></td><td><p>R, Z, Phi position of the coil centre</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].position.phi</p></td><td><p><map object at 0x11145d080></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].position.r</p></td><td><p><map object at 0x11145d048></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].position.z</p></td><td><p><map object at 0x11145d080></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].toroidal_angle</p></td><td><p><map object at 0x11145d048></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle of coil orientation (0 if fully in the poloidal plane) {static} [rad]</p></td></tr>
+   <tr><td><p>magnetics.bpol_probe[:].turns</p></td><td><p><map object at 0x11145d080></p></td><td><p>INT_0D</p></td><td><p>Turns in the coil, including sign {static}</p></td></tr>
+   <tr><td><p>magnetics.code</p></td><td><p><map object at 0x11145d048></p></td><td><p></p></td><td><p>Generic decription of the code specific parameters for the code that has produced this IDS</p></td></tr>
+   <tr><td><p>magnetics.code.name</p></td><td><p><map object at 0x11145d080></p></td><td><p>STR_0D</p></td><td><p>Name of the code {constant}</p></td></tr>
+   <tr><td><p>magnetics.code.output_flag</p></td><td><p><map object at 0x11145d048></p></td><td><p>INT_1D</p></td><td><p>Output flag : 0 means the run is successful, other values mean some difficulty has been encountered, the exact meaning is then code specific. Negative values mean the result shall not be used. {dynamic}</p></td></tr>
+   <tr><td><p>magnetics.code.parameters</p></td><td><p><map object at 0x11145d080></p></td><td><p>STR_0D</p></td><td><p>List of the code specific parameters in XML format {constant}</p></td></tr>
+   <tr><td><p>magnetics.code.version</p></td><td><p><map object at 0x11145d048></p></td><td><p>STR_0D</p></td><td><p>Version of the code {constant}</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:]</p></td><td><p><map object at 0x111464080></p></td><td><p></p></td><td><p>Flux loops; partial flux loops can be described</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].flux</p></td><td><p><map object at 0x111464048></p></td><td><p></p></td><td><p>Measured flux</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].flux.data</p></td><td><p><map object at 0x111464080></p></td><td><p>FLT_1D</p></td><td><p>Measured flux {dynamic} [Wb]</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].flux.time</p></td><td><p><map object at 0x111464048></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].identifier</p></td><td><p><map object at 0x111464080></p></td><td><p>STR_0D</p></td><td><p>ID of the flux loop {static}</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].name</p></td><td><p><map object at 0x111464048></p></td><td><p>STR_0D</p></td><td><p>Name of the flux loop {static}</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].position[:]</p></td><td><p><map object at 0x111464080></p></td><td><p></p></td><td><p>List of (R,Z,phi) points defining the position of the loop (see data structure documentation FLUXLOOPposition.pdf) {static}</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].position[:].phi</p></td><td><p><map object at 0x111464048></p></td><td><p>FLT_0D</p></td><td><p>Toroidal angle {static} [rad]</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].position[:].r</p></td><td><p><map object at 0x111464080></p></td><td><p>FLT_0D</p></td><td><p>Major radius {static} [m]</p></td></tr>
+   <tr><td><p>magnetics.flux_loop[:].position[:].z</p></td><td><p><map object at 0x111464048></p></td><td><p>FLT_0D</p></td><td><p>Height {static} [m]</p></td></tr>
+   <tr><td><p>magnetics.ids_properties</p></td><td><p><map object at 0x111464080></p></td><td><p></p></td><td><p>Interface Data Structure properties. This element identifies the node above as an IDS</p></td></tr>
+   <tr><td><p>magnetics.ids_properties.comment</p></td><td><p><map object at 0x111464048></p></td><td><p>STR_0D</p></td><td><p>Any comment describing the content of this IDS {constant}</p></td></tr>
+   <tr><td><p>magnetics.ids_properties.homogeneous_time</p></td><td><p><map object at 0x111464080></p></td><td><p>INT_0D</p></td><td><p>1 if the time of this IDS is homogeneous. In this case, the time values for this IDS are stored in ../time just below the root of this IDS. Otherwise, the time values are stored in the various time fields at lower levels in the tree. {constant}</p></td></tr>
+   <tr><td><p>magnetics.method[:]</p></td><td><p><map object at 0x111464048></p></td><td><p></p></td><td><p>A method generating processed quantities derived from the magnetic measurements</p></td></tr>
+   <tr><td><p>magnetics.method[:].diamagnetic_flux</p></td><td><p><map object at 0x111464080></p></td><td><p></p></td><td><p>Diamagnetic flux</p></td></tr>
+   <tr><td><p>magnetics.method[:].diamagnetic_flux.data</p></td><td><p><map object at 0x111464048></p></td><td><p>FLT_1D</p></td><td><p>Diamagnetic flux {dynamic} [Wb]</p></td></tr>
+   <tr><td><p>magnetics.method[:].diamagnetic_flux.time</p></td><td><p><map object at 0x111464080></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>magnetics.method[:].ip</p></td><td><p><map object at 0x111464048></p></td><td><p></p></td><td><p>Plasma current. Positive sign means anti-clockwise when viewed from above.</p></td></tr>
+   <tr><td><p>magnetics.method[:].ip.data</p></td><td><p><map object at 0x111453080></p></td><td><p>FLT_1D</p></td><td><p>Plasma current. Positive sign means anti-clockwise when viewed from above. {dynamic} [A]</p></td></tr>
+   <tr><td><p>magnetics.method[:].ip.time</p></td><td><p><map object at 0x111453048></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   <tr><td><p>magnetics.method[:].name</p></td><td><p><map object at 0x111453080></p></td><td><p>STR_0D</p></td><td><p>Name of the data processing method {static}</p></td></tr>
+   <tr><td><p>magnetics.time</p></td><td><p><map object at 0x111453048></p></td><td><p>flt_1d_type</p></td><td><p>Generic time [s] {dynamic}</p></td></tr>
+   </table>
+   </table><p></p>
