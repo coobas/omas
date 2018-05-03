@@ -1,19 +1,21 @@
 from __future__ import print_function, division, unicode_literals
+from collections import MutableMapping
 
 from .omas_utils import *
 
 __version__ = open(os.path.abspath(str(os.path.dirname(__file__)) + os.sep + 'version'), 'r').read().strip()
 
 __all__ = [
-    'omas_rcparams', 'omas', 'ods_sample', 'different_ods', 'save_omas', 'load_omas',
+    'omas_rcparams', 'ODS', 'ods_sample', 'different_ods', 'save_omas', 'load_omas',
     'test_omas_suite', 'save_omas_pkl', 'load_omas_pkl', 'test_omas_pkl',
     'save_omas_json', 'load_omas_json', 'test_omas_json',
+    'save_omas_hdc', 'load_omas_hdc', 'test_omas_hdc',
     'save_omas_nc', 'load_omas_nc', 'test_omas_nc',
     'save_omas_imas', 'load_omas_imas', 'test_omas_imas',
     'save_omas_itm', 'load_omas_itm', 'test_omas_itm',
     'save_omas_s3', 'load_omas_s3', 'test_omas_s3', 'list_omas_s3', 'del_omas_s3', 'omas_scenario_database',
     'generate_xml_schemas', 'create_json_structure', 'create_html_documentation',
-    'imas_json_dir', 'default_imas_version', 'omas_data_mapper',
+    'imas_json_dir', 'default_imas_version', 'ids_cpo_mapper', 'omas_info',
     '__version__'
 ]
 
@@ -31,14 +33,15 @@ def _omas_key_dict_preprocessor(key):
         key = re.sub('\]', '', re.sub('\[', '.', key)).split('.')
     else:
         key = list(map(str, key))
-    try:
-        key[0] = int(key[0])
-    except ValueError:
-        pass
+    for k,item in enumerate(key):
+        try:
+            key[k] = int(item)
+        except ValueError:
+            pass
     return key
 
 
-class omas(MutableMapping):
+class ODS(MutableMapping):
     """
     OMAS class
     """
@@ -77,14 +80,14 @@ class omas(MutableMapping):
         :return: True/False
         """
         if not hasattr(self,'_consistency_check'):
-            self._consistency_check=True
+            self._consistency_check=omas_rcparams['consistency_check']
         return self._consistency_check
 
     @consistency_check.setter
     def consistency_check(self, value):
         self._consistency_check = value
         for item in self.keys():
-            if isinstance(self[item], omas):
+            if isinstance(self[item], ODS):
                 self[item].consistency_check = value
 
     @property
@@ -102,7 +105,7 @@ class omas(MutableMapping):
     def dynamic_path_creation(self, value):
         self._dynamic_path_creation = value
         for item in self.keys():
-            if isinstance(self[item], omas):
+            if isinstance(self[item], ODS):
                 self[item].dynamic_path_creation = value
 
     def _validate(self, value, structure):
@@ -115,7 +118,7 @@ class omas(MutableMapping):
         """
         for key in value.keys():
             structure_key = re.sub('^[0-9:]+$', ':', str(key))
-            if isinstance(value[key], omas) and value[key].consistency_check:
+            if isinstance(value[key], ODS) and value[key].consistency_check:
                 value._validate(value[key], structure[structure_key])
             else:
                 structure[structure_key]
@@ -131,12 +134,12 @@ class omas(MutableMapping):
         # if the user has entered path rather than a single key
         if len(key) > 1:
             pass_on_value = value
-            value = omas(imas_version=self.imas_version,
-                         consistency_check=self.consistency_check,
-                         dynamic_path_creation=self.dynamic_path_creation)
+            value = ODS(imas_version=self.imas_version,
+                        consistency_check=self.consistency_check,
+                        dynamic_path_creation=self.dynamic_path_creation)
 
         # full path where we want to place the data
-        location = '.'.join(filter(None, [self.location, str(key[0])]))
+        location = l2o(filter(None, [self.location, key[0]]))
         location = re.sub('^[0-9:]+$', ':', str(location))
 
         # perform consistency check with IMAS structure
@@ -144,7 +147,7 @@ class omas(MutableMapping):
             structure = {}
             structure_key = list(map(lambda x: re.sub('^[0-9:]+$', ':', str(x)), key))
             try:
-                if isinstance(value, omas):
+                if isinstance(value, ODS):
                     if not self.structure:
                         # load the json structure file
                         structure = load_structure(key[0], imas_version=self.imas_version)[1][key[0]]
@@ -158,36 +161,41 @@ class omas(MutableMapping):
                     self.structure[structure_key[0]]
 
             except (LookupError, TypeError):
-                options = list(self.structure.keys())
-                if len(options) == 1 and options[0] == ':':
-                    options = 'A numerical index is needed with n>=0'
-                else:
-                    options = 'Did you mean: %s' % options
-                spaces = ' '*len('LookupError')+'  '+' ' * (len(self.location) + 2)
-                raise LookupError('`%s` is not a valid IMAS location\n' % location + spaces + '^' * len(
-                    structure_key[0]) + '\n' + '%s' % options)
+                if self.consistency_check=='warn':
+                    printe('`%s` is not a valid IMAS %s location' % (location, self.imas_version))
+                    if isinstance(value,ODS):
+                        value.consistency_check=False
+                elif self.consistency_check:
+                    options = list(self.structure.keys())
+                    if len(options) == 1 and options[0] == ':':
+                        options = 'A numerical index is needed with n>=0'
+                    else:
+                        options = 'Did you mean: %s' % options
+                    spaces = ' '*len('LookupError')+'  '+' ' * (len(self.location) + 2)
+                    raise LookupError('`%s` is not a valid IMAS %s location\n' % (location, self.imas_version) +
+                        spaces + '^' * len(structure_key[0]) + '\n' + '%s' % options)
 
         # check what container type is required and if necessary switch it
         if isinstance(key[0], int) and not isinstance(self.omas_data, list):
             if not self.omas_data or not len(self.omas_data):
                 self.omas_data = []
             else:
-                raise (Exception('Cannot convert from dict to list once omas object has data'))
+                raise (Exception('Cannot convert from dict to list once ODS has data'))
         if not isinstance(key[0], int) and not isinstance(self.omas_data, dict):
             if not self.omas_data or not len(self.omas_data):
                 self.omas_data = {}
             else:
-                raise (Exception('Cannot convert from list to dict once omas object has data'))
+                raise (Exception('Cannot convert from list to dict once ODS has data'))
 
         # now that all checks are completed we can assign the structure information
         if self.consistency_check:
-            if isinstance(value, omas):
+            if isinstance(value, ODS):
                 value.structure = structure
 
-        if isinstance(value, omas):
+        if isinstance(value, ODS):
             value.location = location
 
-        # if the user has entered path rather than a single key
+        # if the user has entered a path rather than a single key
         if len(key) > 1:
             if key[0] not in self.keys():
                 if isinstance(self.omas_data, dict):
@@ -196,7 +204,7 @@ class omas(MutableMapping):
                     self.omas_data.append(value)
                 else:
                     raise (IndexError('%s[:] index is at %d' % (self.location, len(self) - 1)))
-            self[key[0]]['.'.join(key[1:])] = pass_on_value
+            self[key[0]][l2o(key[1:])] = pass_on_value
         elif isinstance(self.omas_data, dict):
             self.omas_data[key[0]] = value
         elif key[0] in self.omas_data:
@@ -210,36 +218,43 @@ class omas(MutableMapping):
         # handle individual keys as well as full paths
         key = _omas_key_dict_preprocessor(key)
 
+        dynamically_created = False
+
         # data slicing
         if key[0] == ':':
             data = []
             for k in self.keys():
-                data.append(self['.'.join([str(k)] + key[1:])])
+                data.append(self[l2o([k] + key[1:])])
             return numpy.array(data)
 
         # dynamic path creation
         elif key[0] not in self.keys():
             if self.dynamic_path_creation:
-                self.__setitem__(key[0], omas(imas_version=self.imas_version,
+                dynamically_created=True
+                self.__setitem__(key[0], ODS(imas_version=self.imas_version,
                                               consistency_check=self.consistency_check,
                                               dynamic_path_creation=self.dynamic_path_creation))
             else:
-                location = '.'.join(filter(None, [self.location, str(key[0])]))
+                location = l2o(filter(None, [self.location, key[0]]))
                 raise(LookupError('Dynamic path creation is disabled, hence `%s` needs to be manually created'%location))
 
         if len(key) > 1:
             # if the user has entered path rather than a single key
-            return self.omas_data[key[0]]['.'.join(key[1:])]
+            try:
+                return self.omas_data[key[0]][l2o(key[1:])]
+            except ValueError:
+                if dynamically_created:
+                    del self[key[0]]
+                raise
         else:
             return self.omas_data[key[0]]
 
     def __delitem__(self, key):
         # handle individual keys as well as full paths
         key = _omas_key_dict_preprocessor(key)
-        print(key)
         if len(key) > 1:
             # if the user has entered path rather than a single key
-            del self[key[0]]['.'.join(key[1:])]
+            del self[key[0]][l2o(key[1:])]
         else:
             return self.omas_data.__delitem__(key[0])
 
@@ -252,7 +267,7 @@ class omas(MutableMapping):
         paths = kw.setdefault('paths', [])
         path = kw.setdefault('path', [])
         for kid in self.keys():
-            if isinstance(self[kid], omas):
+            if isinstance(self[kid], ODS):
                 self[kid].paths(paths=paths, path=path + [kid])
             else:
                 paths.append(path + [kid])
@@ -264,7 +279,7 @@ class omas(MutableMapping):
         """
         tmp = OrderedDict()
         for path in self.paths():
-            tmp['.'.join(map(str, path))] = self[path]
+            tmp[l2o(path)] = self[path]
         return tmp
 
     def __getnewargs__(self):
@@ -282,7 +297,8 @@ class omas(MutableMapping):
         key = _omas_key_dict_preprocessor(key)
         h = self
         for k in key:
-            if k in h.omas_data:
+            # h.omas_data is None when dict/list behaviour is not assigned
+            if h.omas_data is not None and k in h.keys():
                 h = h[k]
                 continue
             else:
@@ -318,6 +334,40 @@ class omas(MutableMapping):
             return default
         else:
             return self[key]
+
+    def __getstate__(self):
+        tmp=copy.copy(self.__dict__)
+        for item in list(tmp.keys()):
+            if item not in omas_dictstate:
+                del tmp[item]
+        return tmp
+
+    def copy(self):
+        '''
+        :return: copy.deepcopy of current ODS object
+        '''
+        return copy.deepcopy(self)
+
+    def clear(self):
+        if isinstance(self.omas_data, dict):
+            self.omas_data.clear()
+            return self.omas_data
+        elif isinstance(self.omas_data, list):
+            self.omas_data[:]=[]
+            return self.omas_data
+# --------------------------------------------
+# import plotting functions and add them as ODS methods
+# --------------------------------------------
+try:
+    from . import omas_plot
+    __all__.append('omas_plot')
+    for item in omas_plot.__all__:
+        setattr(ODS,'plot_'+item,getattr(omas_plot,item))
+except ImportError as _excp:
+    printe('OMAS plotting function are not available: '+repr(_excp))
+
+omas_dictstate=dir(ODS)
+omas_dictstate.extend(['omas_data','_consistency_check','_dynamic_path_creation','imas_version','location','structure'])
 
 
 # --------------------------------------------
@@ -376,14 +426,14 @@ def ods_sample():
     """
     create sample ODS data
     """
-    ods = omas()
+    ods = ODS()
 
     #check effect of disabling dynamic path creation
     try:
         ods.dynamic_path_creation = False
         ods['info.user']
     except LookupError:
-        ods['info'] = omas()
+        ods['info'] = ODS()
         ods['info.user'] = unicode(os.environ['USER'])
     else:
         raise(Exception('OMAS error handling dynamic_path_creation=False'))
@@ -392,14 +442,14 @@ def ods_sample():
 
     #check that accessing leaf that has not been set raises a ValueError, even with dynamic path creation turned on
     try:
-        ods['info.tokamak']
+        ods['info.machine']
     except ValueError:
         pass
     else:
         raise(Exception('OMAS error querying leaf that has not been set'))
 
     # info ODS is used for keeping track of IMAS metadata
-    ods['info.tokamak'] = 'ITER'
+    ods['info.machine'] = 'ITER'
     ods['info.imas_version'] = default_imas_version
     ods['info.shot'] = 1
     ods['info.run'] = 0
@@ -408,6 +458,12 @@ def ods_sample():
     assert (ods.get('info.shot') == ods['info.shot'])
     assert (ods.get('info.bad', None) is None)
 
+    # check that dynamic path creation during __getitem__ does not leave empty fields behind
+    try:
+        print(ods['wall.description_2d.0.limiter.unit.0.outline.r'])
+    except ValueError:
+        assert 'wall.description_2d.0.limiter.unit.0.outline' not in ods
+
     ods['equilibrium']['time_slice'][0]['time'] = 1000.
     ods['equilibrium']['time_slice'][0]['global_quantities']['ip'] = 1.5
 
@@ -415,23 +471,23 @@ def ods_sample():
     ods2['equilibrium']['time_slice'][1] = ods['equilibrium']['time_slice'][0]
     ods2['equilibrium']['time_slice'][2] = ods['equilibrium']['time_slice'][0]
 
-    printd(
-        ods2['equilibrium']['time_slice'][0]['global_quantities'].location, topic='sample')
-    printd(
-        ods2['equilibrium']['time_slice'][2]['global_quantities'].location, topic='sample')
+    printd(ods2['equilibrium']['time_slice'][0]['global_quantities'].location, topic='sample')
+    printd(ods2['equilibrium']['time_slice'][2]['global_quantities'].location, topic='sample')
 
     ods2['equilibrium.time_slice.1.time'] = 2000.
     ods2['equilibrium.time_slice.1.global_quantities.ip'] = 2.
     ods2['equilibrium.time_slice[2].time'] = 3000.
-    ods2['equilibrium.time_slice[2].global_quantities.ip'] = 3.
+
+    # uncertain scalar
+    ods2['equilibrium.time_slice[2].global_quantities.ip'] = ufloat(3,0.1)
+
+    # uncertain array
+    ods2['equilibrium.time_slice[2].profiles_1d.q'] = uarray([0.,1.,2.,3.],[0,.1,.2,.3])
 
     # check different ways of addressing data
     printd(ods2['equilibrium.time_slice']['1.global_quantities.ip'], topic='sample')
-    printd(
-        ods2[['equilibrium', 'time_slice', 1, 'global_quantities', 'ip']], topic='sample')
-    printd(
-        ods2[('equilibrium', 'time_slice', '1', 'global_quantities', 'ip')],
-        topic='sample')
+    printd(ods2[['equilibrium', 'time_slice', 1, 'global_quantities', 'ip']], topic='sample')
+    printd(ods2[('equilibrium', 'time_slice', '1', 'global_quantities', 'ip')], topic='sample')
     printd(ods2['equilibrium.time_slice.1.global_quantities.ip'], topic='sample')
     printd(ods2['equilibrium.time_slice[1].global_quantities.ip'], topic='sample')
 
@@ -440,7 +496,7 @@ def ods_sample():
     # pprint(ods.paths())
     # pprint(ods2.paths())
 
-    # check data slicing is working
+    # check data slicing
     printd(ods2['equilibrium.time_slice[:].global_quantities.ip'], topic='sample')
 
     ckbkp = ods.consistency_check
@@ -449,13 +505,18 @@ def ods_sample():
     if ods2.consistency_check != ckbkp:
         raise (Exception('consistency_check attribute changed'))
 
+    # check picking
     save_omas_pkl(ods2, 'test.pkl')
     ods2 = load_omas_pkl('test.pkl')
 
+    # check flattening
     tmp = ods2.flat()
     # pprint(tmp)
 
-    return ods2
+    # check deepcopy
+    ods3=ods2.copy()
+
+    return ods3
 
 
 def different_ods(ods1, ods2):
@@ -485,13 +546,16 @@ def different_ods(ods1, ods2):
                 return 'DIFF: `%s` differ in value' % k
         elif type(ods1[k]) != type(ods2[k]):
             return 'DIFF: `%s` differ in type (%s,%s)' % (k, type(ods1[k]), type(ods2[k]))
+        elif numpy.atleast_1d(is_uncertain(ods1[k])).any() or numpy.atleast_1d(is_uncertain(ods2[k])).any():
+            if not numpy.allclose(nominal_values(ods1[k]), nominal_values(ods2[k])) and not numpy.allclose(std_devs(ods1[k]), std_devs(ods2[k])):
+                return 'DIFF: `%s` differ in value' % k
         else:
             if not numpy.allclose(ods1[k], ods2[k]):
                 return 'DIFF: `%s` differ in value' % k
     return False
 
 
-_tests = ['pkl', 'json', 'nc', 's3', 'imas']
+_tests = ['pkl', 'json', 'nc', 's3', 'imas', 'hdc']
 
 
 def test_omas_suite(ods=None, test_type=None, do_raise=False):
@@ -529,13 +593,13 @@ def test_omas_suite(ods=None, test_type=None, do_raise=False):
             try:
                 ods1 = globals()['test_omas_' + t1](ods)
             except Exception as _excp:
-                failed1 = True
+                failed1 = _excp
                 if do_raise:
                     raise
             for k2, t2 in enumerate(_tests):
                 try:
                     if failed1:
-                        raise
+                        raise failed1
                     ods2 = globals()['test_omas_' + t2](ods1)
 
                     different = different_ods(ods1, ods2)
@@ -604,3 +668,4 @@ from .omas_nc import *
 from .omas_json import *
 from .omas_structure import *
 from .omas_itm import *
+from .omas_hdc import *

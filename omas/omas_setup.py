@@ -16,16 +16,28 @@ import tempfile
 import uncertainties
 import uncertainties.unumpy as unumpy
 from uncertainties.unumpy import nominal_values, std_devs, uarray
+from uncertainties import ufloat
+from io import StringIO
 
 # Python3/2 import differences
 if sys.version_info < (3, 0):
     import cPickle as pickle
-    from collections import MutableMapping
 else:
     basestring = str
     unicode = str
     import pickle
-    from collections.abc import MutableMapping
+
+    _orig_pickle_loads=pickle.loads
+    def _pickle_loads_python2compatible(*args,**kw):
+        kw.setdefault('encoding','latin1')
+        return _orig_pickle_loads(*args,**kw)
+    pickle.loads=_pickle_loads_python2compatible
+
+    _orig_pickle_load=pickle.load
+    def _pickle_load_python2compatible(*args,**kw):
+        kw.setdefault('encoding','latin1')
+        return _orig_pickle_load(*args,**kw)
+    pickle.load=_pickle_load_python2compatible
 
 separator = '.'
 

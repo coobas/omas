@@ -1,7 +1,7 @@
 from __future__ import print_function, division, unicode_literals
 
 from .omas_setup import *
-
+import sys
 
 # --------------------------
 # general utility functions
@@ -16,33 +16,48 @@ def printd(*objects, **kw):
         topic = [topic]
     topic = list(map(lambda x: x.lower(), topic))
     objects = ['DEBUG:'] + list(objects)
-    if os.environ.get('OMAS_DEBUG_TOPIC', '') and (
-                        os.environ.get('OMAS_DEBUG_TOPIC', '') == '*' or os.environ.get('OMAS_DEBUG_TOPIC',
-                                                                                        '') in topic or '*' in topic):
+    topic_selected=os.environ.get('OMAS_DEBUG_TOPIC', '')
+    dump=False
+    if topic_selected.endswith('_dump'):
+        dump=True
+        topic_selected=re.sub('_dump$','',topic_selected)
+    if topic_selected and (topic_selected == '*' or topic_selected in topic or '*' in topic):
         printe(*objects, **kw)
+        if dump:
+            fb=StringIO.StringIO()
+            print(*objects[1:],file=fb)
+            with open('omas_dump.txt','a') as f:
+                f.write(fb.getvalue())
+            fb.close()
 
 
 def printe(*objects, **kw):
     """
     print to stderr
     """
-    kw['file'] = sys.__stderr__
+    kw['file'] = sys.stderr
     print(*objects, **kw)
 
 
 def is_uncertain(var):
     '''
     :param var: Variable or array to test
+
     :return: True if variable is instance of uncertainties or
              array of shape var with elements indicating uncertainty
     '''
-    def uncertain_check(x):
-        import uncertainties
-        return isinstance(x,uncertainties.core.AffineScalarFunc)
-    if numpy.iterable(var):
-        return numpy.reshape(numpy.array(map(uncertain_check,numpy.array(var).flat)),numpy.array(var).shape)
+    def _uncertain_check(x):
+        return isinstance(x, uncertainties.core.AffineScalarFunc)
+
+    if isinstance(var,basestring):
+        return False
+    elif numpy.iterable(var):
+        tmp=numpy.array(var).flat
+        tmp=numpy.array(list(map(_uncertain_check, tmp)))
+        return numpy.reshape(tmp,numpy.array(var).shape)
     else:
-        return uncertain_check(var)
+        return _uncertain_check(var)
+
 
 def json_dumper(obj):
     """
@@ -52,15 +67,21 @@ def json_dumper(obj):
 
     :return: json-compatible [dict/list] object
     """
-    from omas import omas
-    if isinstance(obj, omas):
+    from omas import ODS
+    if isinstance(obj, ODS):
         return OrderedDict(zip(obj.keys(), obj.values()))
-    elif numpy.atleast_1d(is_uncertain(obj)).any():
-        nomv=nominal_values(obj)
-        return dict(__udarray_tolist_avg__=nomv.tolist(),
-                    __udarray_tolist_std__=std_devs(obj).tolist(),
-                    dtype=str(nomv.dtype),
-                    shape=obj.shape)
+
+    tmp=is_uncertain(obj)
+    if any(numpy.atleast_1d(tmp)):
+        if not len(numpy.array(tmp).shape):
+            return dict(__ufloat__=nominal_values(obj),
+                        __ufloat_std__=std_devs(obj))
+        else:
+            nomv=nominal_values(obj)
+            return dict(__udarray_tolist_avg__=nomv.tolist(),
+                        __udarray_tolist_std__=std_devs(obj).tolist(),
+                        dtype=str(nomv.dtype),
+                        shape=obj.shape)
     elif isinstance(obj, numpy.ndarray):
         if 'complex' in str(obj.dtype).lower():
             return dict(__ndarray_tolist_real__=obj.real.tolist(),
@@ -100,6 +121,8 @@ def json_loader(object_pairs, cls=dict):
     elif '__udarray_tolist_avg__' in dct and '__udarray_tolist_std__' in dct:
         return uarray(numpy.array(dct['__udarray_tolist_avg__'], dtype=dct['dtype']).reshape(dct['shape']),
                       numpy.array(dct['__udarray_tolist_std__'], dtype=dct['dtype']).reshape(dct['shape']))
+    elif '__ufloat__' in dct and '__ufloat_std__' in dct:
+        return ufloat(dct['__ufloat__'],dct['__ufloat_std__'])
     elif '__ndarray__' in dct:
         import base64
         data = base64.b64decode(dct['__ndarray__'])
@@ -223,8 +246,8 @@ _structures_dict = {}
 
 
 def list_structures(imas_version):
-    return list(map(lambda x: os.path.splitext(os.path.split(x)[1])[0],
-                    glob.glob(imas_json_dir + os.sep + re.sub('\.', '_', imas_version) + os.sep + '*' + '.json')))
+    return sorted(list(map(lambda x: os.path.splitext(os.path.split(x)[1])[0],
+                  glob.glob(imas_json_dir + os.sep + re.sub('\.', '_', imas_version) + os.sep + '*' + '.json'))))
 
 
 def load_structure(filename, imas_version):
@@ -245,7 +268,7 @@ def load_structure(filename, imas_version):
                                  'Perhaps the structure files for IMAS version %s must be generated.\n'
                                  'Try running the `omas/samples/build_json_structures.py` script.'% (os.path.split(filename)[0],imas_version)))
             else:
-                raise (Exception('`%s` is not a valid IMAS structure' % filename))
+                raise (Exception('`%s` is not a valid IMAS %s structure' % (filename,imas_version)))
         else:
             filename = os.path.abspath(filename)
     if filename not in _structures:
@@ -278,104 +301,83 @@ def o2i(path):
     return ipath
 
 
-def omas_data_mapper(source, translate, flip_translate=False, consistency_check=False, verbose=False):
+def l2o(path):
+    """
+    Formats a list into an ODS path format
+
+    :param path: list of strings and integers
+
+    :return: ODS path format
+    """
+    return separator.join(map(str,path))
+
+
+def ids_cpo_mapper(ids, cpo=None):
     '''
-    map one data structure organization to another
+    translate (some) IDS fields to CPO
 
-    :param source: source omas data structure
+    :param ids: input omas data object (IDS format) to read
 
-    :param translate: translate dictionary
+    :param cpo: optional omas data object (CPO format) to which to write to
 
-    :param flip_translate: use translate dictionary in reverse
-
-    :param consistency_check: perform imas consistency check on output omas data structure
-
-    :param verbose: print mapping commands
-
-    :return: omas data structure
+    :return: cpo
     '''
+    from omas import ODS
+    if cpo is None:
+        cpo = ODS()
+    cpo.consistency_check = False
 
-    if flip_translate:
-        translate=dict(zip(translate.values(),translate.keys()))
+    for itime in range(len(ids['core_profiles.time'])):
 
-    # generate internal mapping dictionary
-    ntr={}
-    for item in translate.keys():
+        if 'equilibrium' in ids:
+            cpo['equilibrium'][itime]['time'] = ids['equilibrium.time'][itime]
+            cpo['equilibrium'][itime]['profiles_1d.q'] = ids['equilibrium.time_slice'][itime]['profiles_1d.q']
+            cpo['equilibrium'][itime]['profiles_1d.rho_tor'] = ids['equilibrium.time_slice'][itime]['profiles_1d.rho_tor']
+            for iprof in range(len(ids['equilibrium.time_slice'][itime]['profiles_2d'])):
+                cpo['equilibrium'][itime]['profiles_2d'][iprof]['psi'] = ids['equilibrium.time_slice'][itime]['profiles_2d'][iprof]['psi']
 
-        # source paths
-        source_split_path = []
-        for sub in item.split('[{'):
-            source_split_path.extend(sub.split('}]'))
-        source_split_path = filter(None, source_split_path)
-        source_path = copy.deepcopy(source_split_path)
-        for k, sub in enumerate(source_path):
-            if k%2:
-                source_path[k] = '[{%s}]' % sub
+        if 'core_profiles' in ids:
+            cpo['coreprof'][itime]['te.value'] = ids['core_profiles.profiles_1d'][itime]['electrons.temperature']
+            cpo['coreprof'][itime]['ne.value'] = ids['core_profiles.profiles_1d'][itime]['electrons.density']
+            pdim = len(cpo['coreprof'][itime]['te.value'])
+            idim = len(ids['core_profiles.profiles_1d[0].ion'])
+            cpo['coreprof'][itime]['ni.value'] = numpy.zeros((pdim, idim))
+            cpo['coreprof'][itime]['ti.value'] = numpy.zeros((pdim, idim))
+            for iion in range(len(ids['core_profiles.profiles_1d'][itime]['ion'])):
+                if 'density' in ids['core_profiles.profiles_1d'][itime]['ion'][iion]:
+                    cpo['coreprof'][itime]['ni.value'][:, iion] = ids['core_profiles.profiles_1d'][itime]['ion'][iion]['density']
+                cpo['coreprof'][itime]['ti.value'][:, iion] = nominal_values(ids['core_profiles.profiles_1d'][itime]['ion'][iion]['temperature'])
 
-        # target paths
-        target_split_path = []
-        for sub in translate[item].split('[{'):
-            target_split_path.extend(sub.split('}]'))
-        target_split_path = filter(None, target_split_path)
-        target_path = copy.deepcopy(target_split_path)
-        for k, sub in enumerate(target_path):
-            if k%2:
-                target_path[k] = '[{%s}]' % sub
+    return cpo
 
-        # populate internal mapping dictionary
-        ntr['.:'.join(source_split_path[::2])]={'original_source_path':item,
-                                                'original_target_path':translate[item],
-                                                }
 
-        if len(source_split_path)%2:
-            ntr['.:'.join(source_split_path[::2])].update({'source_split_path':source_split_path,
-                                                           'source_path':''.join(source_path),
-                                                           'source_slice':None})
-        else:
-            ntr['.:'.join(source_split_path[::2])].update({'source_split_path':source_split_path[:-1],
-                                                           'source_path':''.join(source_path[:-1]),
-                                                           'source_slice':source_split_path[-1]})
+def omas_info(structures, imas_version=default_imas_version):
+    '''
+    This function returns an ods with the leaf nodes filled with their property informations
 
-        if len(target_split_path)%2:
-            ntr['.:'.join(source_split_path[::2])].update({'target_split_path':target_split_path,
-                                                           'target_path':''.join(target_path),
-                                                           'target_slice':None})
-        else:
-            ntr['.:'.join(source_split_path[::2])].update({'target_split_path':target_split_path[:-1],
-                                                           'target_path':''.join(target_path[:-1]),
-                                                           'target_slice':target_split_path[-1]})
+    :param structures: list with ids names or string with ids name of which to retrieve the info
 
-    #do the actual conversion
-    from omas import omas
-    target = omas(consistency_check=consistency_check)
-    for item in source.flat():
-        an = re.sub('\.[0-9]+\.', '.:.', item)
-        if an in ntr.keys():
-            index_mapper = dict(zip(ntr[an]['source_split_path'][1::2], map(lambda x: x.strip('.'), re.findall('\.[0-9]+\.', item))))
-            index_mapper.setdefault('itime', 0)
+    :return: ods
+    '''
+    from omas import ODS
+    ods = ODS(imas_version=imas_version)
 
-            #one to one mapping
-            if ntr[an]['source_slice'] is None:
-                cmd = ("target['%s']=source['%s']" % (ntr[an]['original_target_path'], ntr[an]['source_path']))
-                cmd = cmd.format(**index_mapper)
-                if verbose: print(cmd)
-                exec (cmd)
-            else:
-                #expand array into floats
-                for step in range(len(eval(("source['%s']" % ntr[an]['source_path']).format(**index_mapper)))):
-                    index_mapper[ntr[an]['source_slice']] = step
-                    cmd = ("target['%s']=source['%s'][%d]" % (ntr[an]['original_target_path'], ntr[an]['source_path'], step))
-                    cmd = cmd.format(**index_mapper)
-                    if verbose: print(cmd)
-                    exec (cmd)
+    if isinstance(structures,basestring):
+        structures=[structures]
 
-    # collect floats into array
-    for item in source.flat():
-        an = re.sub('\.[0-9]+\.', '.:.', item)
-        if an in ntr and ntr[an]['target_slice'] is not None and isinstance(target[ntr[an]['target_path']], omas):
-            cmd = ("target['%s']=numpy.array(target['%s'].values())" % (ntr[an]['target_path'], ntr[an]['target_path']))
-            cmd = cmd.format(**index_mapper)
-            if verbose: print(cmd)
-            exec (cmd)
+    for structure in structures:
+        tmp = load_structure(structure, imas_version)[0]
+        lst = sorted(tmp.keys())
+        for k, item in enumerate(lst):
+            if re.match('.*_error_(index|lower|upper)$', item.split('.')[-1]):
+                continue
+            parent = False
+            for item1 in lst[k + 1:]:
+                if l2o(item1.split(separator)[:-1]).rstrip('[:]') == item:
+                    parent = True
+                    break
+            if parent:
+                continue
+            ods[re.sub(':', '0', item)] = tmp[item]
 
-    return target
+    return ods

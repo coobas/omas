@@ -1,7 +1,7 @@
 from __future__ import print_function, division, unicode_literals
 
 from .omas_utils import *
-from .omas_core import omas
+from .omas_core import ODS
 
 
 # --------------------------------------------
@@ -26,7 +26,8 @@ def save_omas_nc(ods, filename, **kw):
             dims = []
             data = numpy.asarray(odsf[item])
             std  = None
-            if numpy.atleast_1d(is_uncertain(data)).any():
+            tmp=is_uncertain(odsf[item])
+            if any(numpy.atleast_1d(tmp)):
                 std=std_devs(data)
                 data=nominal_values(data)
             for k in range(len(numpy.asarray(odsf[item]).shape)):
@@ -51,7 +52,7 @@ def load_omas_nc(filename):
     printd('Loading from %s' % filename, topic='nc')
 
     from netCDF4 import Dataset
-    ods = omas()
+    ods = ODS()
     with Dataset(filename, 'r') as dataset:
         for item in dataset.variables.keys():
             if item.endswith('_error_upper'):
@@ -64,12 +65,17 @@ def load_omas_nc(filename):
                 else:
                     ods[item] = numpy.array(dataset.variables[item])
             else:
-                try:
-                    # scalars
-                    ods[item] = numpy.asscalar(dataset.variables[item][0])
-                except AttributeError:
-                    # strings
-                    ods[item] = dataset.variables[item][0]
+                # uncertain scalars
+                if item+'_error_upper' in dataset.variables.keys():
+                    ods[item] = ufloat(numpy.asscalar(dataset.variables[item][0]),
+                                       numpy.asscalar(dataset.variables[item+'_error_upper'][0]))
+                else:
+                    try:
+                        # scalars
+                        ods[item] = numpy.asscalar(dataset.variables[item][0])
+                    except AttributeError:
+                        # strings
+                        ods[item] = dataset.variables[item][0]
     return ods
 
 

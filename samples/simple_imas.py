@@ -2,12 +2,12 @@ from __future__ import print_function, division, unicode_literals
 
 import os
 # set OMAS debugging topic
-os.environ['OMAS_DEBUG_TOPIC'] = 'imas_code'
+os.environ['OMAS_DEBUG_TOPIC'] = 'imas_code_dump'
 
 from omas import *
 
 # Instantiate new OMAS Data Structure (ODS)
-ods = omas()
+ods = ODS()
 
 # 0D data
 ods['equilibrium']['time_slice'][0]['time'] = 1000.
@@ -27,9 +27,9 @@ save_omas(ods, 'test.omas')
 ods1 = load_omas('test.omas')
 
 # Save to IMAS
-paths = save_omas_imas(ods, tokamak='ITER', shot=1, new=True)
+paths = save_omas_imas(ods, machine='ITER', shot=1, new=True)
 # Load from IMAS
-ods1 = load_omas_imas(tokamak='ITER', shot=1)#, paths=paths)
+ods1 = load_omas_imas(machine='ITER', shot=1)#, paths=paths)
 
 # check data
 check = different_ods(ods, ods1)
